@@ -1,0 +1,21 @@
+{
+  "name": "php_intern_hn_airport",
+  "description": "",
+  "main": "",
+  "authors": [
+    "sondth-1037 <duong.tran.hoai.son@sun-asterisk.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/sondth-1037/php_intern_hn_airport",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bower_localdriver": "https://gitlab.com/localdriver/bower_localdriver.git"
+  }
+}
