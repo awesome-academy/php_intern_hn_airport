@@ -12,7 +12,18 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::group(['domain' => env('APP_URL')], function () {
+   
+});
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['domain' => env('APP_HOST_URL')], function () {
+    
+});
+
+Route::group(['domain' => env('APP_AGENCY_URL')], function () {
+    
+});
+
+Route::group(['domain' => env('APP_ADMIN_URL')], function () {
+
 });
