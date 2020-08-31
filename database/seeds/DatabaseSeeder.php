@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\CarType;
+use App\Models\Province;
+use App\Models\ProvinceAirport;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -11,6 +14,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UserSeeder::class);
+        $this->call([
+            RoleSeeder::class,
+            ProvinceSeeder::class,
+            CarTypeSeeder::class,
+            ProvinceAirport::class,
+        ]);
     }
 }
