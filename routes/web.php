@@ -12,8 +12,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::group(['domain' => env('APP_URL')], function () {
-   
+Route::group(['domain' => env('APP_URL'), 'namespace' => 'Web'], function () {
+    Route::resource('/', 'RequestController')->only([
+        'index',
+        'store',
+    ]);
 });
 
 Route::group(['domain' => env('APP_HOST_URL')], function () {

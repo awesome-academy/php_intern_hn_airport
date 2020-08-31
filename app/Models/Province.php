@@ -13,6 +13,6 @@ class Province extends Model
 
     public function provinceAirports() 
     {
-        return $this->hasMany(ProvinceAirport::class, 'province_airport_id');
+        return $this->hasMany(ProvinceAirport::class, 'province_id');
     }
 }

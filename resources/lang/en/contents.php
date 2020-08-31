@@ -1,17 +1,26 @@
 <?php
 
 return [
-    'web' => [
-        'login' => 'Login',
-        'register' => 'Register',
+    'common' => [
         'form' => [
-            'title' => 'Book Your Airport Car Today !',
             'car_type' => 'Select Your Car',
             'pickup' => 'Pickup',
             'drop_off' => 'Drop off',
-            'name' => 'Your name',
-            'phone' => 'Phone number',
+            'name' => 'Full name',
+            'phone' => 'Phone',
+            'province' => 'Province',
+            'seat' => 'Seats',
+            'datetime' => 'Date & time',
+            'login' => 'Login',
+            'register' => 'Register',
+        ],
+    ],
+    'web' => [
+        'form' => [
+            'title' => 'Book Your Airport Car Today !',
             'confirm' => 'Confirm Car Booking',
+            'to_airport' => 'Book Car To Airport',
+            'from_airport' => 'Book Car From Airport',
         ],
         'title' => 'the Royal Essence of Journey',
         'headline' => 'Relaxed Journey Ever',

@@ -10,7 +10,7 @@ class ProvinceAirport extends Model
     
     public function provinces() 
     {
-        return $this->belongsTo(Province::class, 'province_airport_id');
+        return $this->belongsTo(Province::class, 'province_id');
     }
 
     public function requests() 
