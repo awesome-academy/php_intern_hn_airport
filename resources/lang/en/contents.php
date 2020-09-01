@@ -2,17 +2,36 @@
 
 return [
     'common' => [
+        'register' => 'Register new account',
+        'has_account' => 'I already have an account',
         'form' => [
+            'name' => 'Full name',
+            'email' => 'Email',
+            'phone' => 'Phone',
+            'password' => 'Password',
+            'retype_password' => 'Retype Password',
+            'register' => 'Register',
+            'signin' => 'Sign In',
+            'forget_password' => 'I forgot my password',
+            'remember_me' => 'Remember Me',
             'car_type' => 'Select Your Car',
             'pickup' => 'Pickup',
             'drop_off' => 'Drop off',
-            'name' => 'Full name',
-            'phone' => 'Phone',
             'province' => 'Province',
             'seat' => 'Seats',
             'datetime' => 'Date & time',
             'login' => 'Login',
             'register' => 'Register',
+        ],
+        'alert' => [
+            'title' => [
+                'create_account_success' => 'Create New Account Successful',
+                'create_account_fail' => 'Oops',
+            ],
+            'message' => [
+                'create_account_success' => 'Your account has bess created successfully!',
+                'create_account_fail' => 'Create New Account Failed!'
+            ],
         ],
     ],
     'web' => [
@@ -50,4 +69,8 @@ return [
             'avatar' => 'Avatar',
         ],
     ],
+    'agency' => [
+        'title' => 'AgencyLocalDriver',
+        ''
+    ]
 ];
