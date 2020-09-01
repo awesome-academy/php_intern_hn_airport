@@ -58,6 +58,7 @@
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
+    @include('sweetalert::alert')
     <div class="wrapper">
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
             <ul class="navbar-nav">
