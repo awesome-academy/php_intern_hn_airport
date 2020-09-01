@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="{{ asset('bower_components/bower_localdriver/carrental/css/owl.carousel.css') }}">
     <link rel="stylesheet" href="{{ asset('bower_components/bower_localdriver/carrental/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('bower_components/bower_localdriver/carrental/css/jquery-ui.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/web.css') }}">
 </head>
 
 <body>
@@ -31,8 +32,8 @@
                 </div>
                 <nav id="nav-menu-container">
                     <ul class="nav-menu">
-                       <li><a href="#" class="genric-btn default circle">{{ trans('contents.web.login') }}</a></li>
-                       <li><a href="#" class="genric-btn default circle">{{ trans('contents.web.register') }}</a></li>
+                       <li><a href="#" class="genric-btn default circle">{{ trans('contents.common.form.login') }}</a></li>
+                       <li><a href="#" class="genric-btn default circle">{{ trans('contents.common.form.register') }}</a></li>
                     </ul>
                 </nav>
             </div>
@@ -58,6 +59,7 @@
     <script src="{{ asset('bower_components/bower_localdriver/carrental/js/main.js') }}"></script>
     <script src="{{ asset('bower_components/bower_localdriver/jquery/src/popper.min.js') }}"></script>
     <script src="{{ asset('bower_components/bower_localdriver/jquery/src/jquery-ui.js') }}"></script>
+    <script src="{{ asset('js/web.js') }}"></script>
 </body>
 
 </html>
