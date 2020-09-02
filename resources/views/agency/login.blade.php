@@ -27,17 +27,26 @@
             <div class="card-body login-card-body">
                 <p class="login-box-msg">{{ trans('contents.common.form.signin') }}</p>
 
-                <form action="#" method="post">
+                <form action="{{ route('agency.postLogin') }}" method="post">
+                    @csrf
+                    @error('phone')
+                        <label class="col-form-label"><i class="far fa-times-circle"></i>{{ $message }}</label>
+                    @enderror
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="{{ trans('contents.common.form.phone') }}">
+                        <input type="text" class="form-control @error('phone') is-invalid @enderror"
+                            placeholder="{{ trans('contents.common.form.phone') }}" name="phone">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-phone"></span>
                             </div>
                         </div>
                     </div>
+                    @error('password')
+                        <label class="col-form-label"><i class="far fa-times-circle"></i>{{ $message }}</label>
+                    @enderror
                     <div class="input-group mb-3">
-                        <input type="password" class="form-control" placeholder="{{ trans('contents.common.form.password') }}">
+                        <input type="password" class="form-control @error('password') is-invalid @enderror"
+                            placeholder="{{ trans('contents.common.form.password') }}" name="password">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -47,14 +56,15 @@
                     <div class="row">
                         <div class="col-8">
                             <div class="icheck-primary">
-                                <input type="checkbox" id="remember">
+                                <input type="checkbox" id="remember" name="remember">
                                 <label for="remember">
                                     {{ trans('contents.common.form.remember_me') }}
                                 </label>
                             </div>
                         </div>
                         <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">{{ trans('contents.common.form.signin') }}</button>
+                            <button type="submit"
+                                class="btn btn-primary btn-block">{{ trans('contents.common.form.signin') }}</button>
                         </div>
                     </div>
                 </form>
@@ -63,7 +73,8 @@
                     <a href="#">{{ trans('contents.common.form.forget_password') }}</a>
                 </p>
                 <p class="mb-0">
-                    <a href="#" class="text-center">{{ trans('contents.common.register') }}</a>
+                    <a href="{{ route('signup.index') }}"
+                        class="text-center">{{ trans('contents.common.register') }}</a>
                 </p>
             </div>
         </div>

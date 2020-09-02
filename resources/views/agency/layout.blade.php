@@ -30,9 +30,6 @@
     <script src="{{ asset('bower_components/bower_localdriver/AdminLTE/plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('bower_components/bower_localdriver/AdminLTE/plugins/jquery-ui/jquery-ui.min.js') }}">
     </script>
-    <script type="text/javascript">
-        $.widget.bridge('uibutton', $.ui.button)
-    </script>
     <script
         src="{{ asset('bower_components/bower_localdriver/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js') }}">
     </script>
@@ -55,6 +52,7 @@
     </script>
     <script src="{{ asset('bower_components/bower_localdriver/AdminLTE/dist/js/adminlte.js') }}"></script>
     <script src="{{ asset('bower_components/bower_localdriver/AdminLTE/dist/js/demo.js') }}"></script>
+    <script src="{{ asset('js/agency.js') }}"></script>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -66,7 +64,15 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="index3.html" class="nav-link">{{ trans('contents.agency.home') }}</a>
+                    <a href="index3.html" class="nav-link">{{ trans('contents.common.home') }}</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <form action="{{ route('agency.postLogout') }}" method="post">
+                        @csrf
+                        <button type="submit" class="btn btn-default"><i class="fas fa-sign-out-alt"></i></button>
+                    </form>
                 </li>
             </ul>
         </nav>
@@ -78,39 +84,48 @@
             </a>
 
             <div class="sidebar">
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
-                        <img src="{{ asset(config('constance.anonymous_user')) }}" class="img-circle elevation-2">
+                @auth
+                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                        <div class="image">
+                            <img src="{{ asset(config('constance.anonymous_user')) }}" class="img-circle elevation-2">
+                        </div>
+                        <div class="info">
+                            <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+                        </div>
                     </div>
-                    <div class="info">
-                        <a href="#" class="d-block"></a>
-                    </div>
-                </div>
+                @endauth
 
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
-                        <li class="nav-item">
+                        <li class="nav-item has-treeview">
                             <a href="#" class="nav-link active">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
-                                    {{ trans('contents.agency.dashboard') }}
+                                    {{ trans('contents.common.request') }}
+                                    <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link active">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>{{ trans('contents.agency.create_request') }}</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>{{ trans('contents.agency.list_request') }}</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
-                                    {{ trans('contents.agency.requests') }}
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    {{ trans('contents.agency.contract') }}
+                                    {{ trans('contents.common.contract') }}
                                 </p>
                             </a>
                         </li>
