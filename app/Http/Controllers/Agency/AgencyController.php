@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Agency;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginPostRequest;
 use App\Http\Requests\StoreUserPost;
 use App\Models\Role;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class AgencyController extends Controller
@@ -45,6 +48,7 @@ class AgencyController extends Controller
         $input = $request->all();
         $input['status'] = config('constance.const.user_active');;
         $input['avatar'] = config('constance.anonymous_user');
+        $input['password'] = Hash::make($request->password);
         $input['role_id'] = $role->id;
 
         $user = User::create($input);
@@ -108,8 +112,31 @@ class AgencyController extends Controller
         return view('agency.login');
     }
 
-    public function postLogin(Request $request) 
+    public function postLogin(LoginPostRequest $request) 
     {
+        $role = Role::where('name', config('constance.role.agency'))->first();
+        $login = [
+            'phone' => $request->phone,
+            'password' =>$request->password,
+            'status' => config('constance.const.user_active'),
+            'role_id' => $role->id,
+        ];
+        if (Auth::attempt($login, $request->remember)) {
+            alert()->success(trans('contents.common.alert.title.login_success'), trans('contents.common.alert.message.login_success'));
 
+            return redirect()->route('requests.create');
+        } else {
+            alert()->error(trans('contents.common.alert.title.login_failed'), trans('contents.common.alert.message.login_failed'));
+
+            return redirect()->back();
+        }
+    }
+
+    public function postLogout(Request $request)
+    {
+        Auth::logout();
+        alert()->success(trans('contents.common.alert.title.logout_success'), trans('contents.common.alert.message.logout_success'));
+        
+        return  redirect()->route('agency.getLogin');
     }
 }

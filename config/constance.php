@@ -8,5 +8,12 @@ return [
     ],
     'const' => [
         'user_active' => 1,
+        'user_inactive' => 0,
+    ],
+    'role' => [
+        'agency' => 'agency',
+        'admin' => 'admin',
+        'host' => 'host',
+        'customer' => 'customer',
     ],
 ];

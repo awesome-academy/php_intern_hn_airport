@@ -4,6 +4,13 @@ return [
     'common' => [
         'register' => 'Register new account',
         'has_account' => 'I already have an account',
+        'dashboard' => 'Dashboard',
+        'agency' => 'Agency',
+        'host' => 'Host',
+        'home' => 'Home',
+        'request' => 'Request',
+        'contract' => 'Contract',
+        'users' => 'Users',
         'form' => [
             'name' => 'Full name',
             'email' => 'Email',
@@ -22,15 +29,34 @@ return [
             'datetime' => 'Date & time',
             'login' => 'Login',
             'register' => 'Register',
+            'to_airport' => 'Book Car To Airport',
+            'from_airport' => 'Book Car From Airport',
+            'airport' => 'Airport',
+            'ways' => 'Ways',
+            '1_way' => 'One Way',
+            '2_way' => 'Two Way',
+            'note' => 'Note',
+            'submit' => 'Book Car',
+            'choose_province' => 'Choose Provice',
+            'choose_airport' => 'Choose Airport',
+            'flight_no' => 'Flight No',
         ],
         'alert' => [
             'title' => [
                 'create_account_success' => 'Create New Account Successful',
                 'create_account_fail' => 'Oops',
+                'login_success' => 'Login Successfully',
+                'login_failed' => 'Login Failed',
+                'logout_success' => 'Logout Successfully',
+                'logout_failed' => 'Logout Failed',
             ],
             'message' => [
                 'create_account_success' => 'Your account has bess created successfully!',
-                'create_account_fail' => 'Create New Account Failed!'
+                'create_account_fail' => 'Create New Account Failed!',
+                'login_success' => 'Login Successfully',
+                'login_failed' => 'Login Failed',
+                'logout_success' => 'Logout Successfully',
+                'logout_failed' => 'Logout Failed',
             ],
         ],
     ],
@@ -38,8 +64,6 @@ return [
         'form' => [
             'title' => 'Book Your Airport Car Today !',
             'confirm' => 'Confirm Car Booking',
-            'to_airport' => 'Book Car To Airport',
-            'from_airport' => 'Book Car From Airport',
         ],
         'title' => 'the Royal Essence of Journey',
         'headline' => 'Relaxed Journey Ever',
@@ -49,11 +73,6 @@ return [
     ],
     'admin' => [
         'title' => 'AdminLocalDriver',
-        'dashboard' => 'Dashboard',
-        'users' => 'Users',
-        'agency' => 'Agency',
-        'host' => 'Host',
-        'home' => 'Home',
         'new_requests' => 'New Requests',
         'new_contracts' => 'New Contracts',
         'unique_requests' => 'Unique Requests',
@@ -71,6 +90,7 @@ return [
     ],
     'agency' => [
         'title' => 'AgencyLocalDriver',
-        ''
+        'create_request' => 'Create Request',
+        'list_request' => 'List Request',
     ]
 ];
