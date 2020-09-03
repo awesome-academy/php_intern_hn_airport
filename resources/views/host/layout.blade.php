@@ -57,6 +57,7 @@
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
+    @include('sweetalert::alert')
     <div class="wrapper">
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
             <ul class="navbar-nav">
@@ -65,6 +66,14 @@
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="index3.html" class="nav-link">{{ trans('contents.host.home') }}</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <form action="{{ route('host.postLogout') }}" method="post">
+                        @csrf
+                        <button type="submit" class="btn btn-default"><i class="fas fa-sign-out-alt"></i></button>
+                    </form>
                 </li>
             </ul>
         </nav>

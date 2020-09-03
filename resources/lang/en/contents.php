@@ -92,5 +92,8 @@ return [
         'title' => 'AgencyLocalDriver',
         'create_request' => 'Create Request',
         'list_request' => 'List Request',
-    ]
+    ],
+    'host' => [
+        'title' => 'HostLocalDriver',
+    ],
 ];
