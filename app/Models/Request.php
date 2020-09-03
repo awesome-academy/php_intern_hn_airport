@@ -7,7 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Request extends Model
 {
-    public function users() 
+    protected $fillable = [
+        'car_type_id',
+        'province_airport_id',
+        'pickup',
+        'user_id',
+        'status',
+        'budget',
+        'note',
+    ];
+
+    public function user() 
     {
         return $this->belongsTo(User::class);
     }
