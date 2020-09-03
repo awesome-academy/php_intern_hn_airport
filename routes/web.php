@@ -38,6 +38,15 @@ Route::group(['domain' => env('APP_AGENCY_URL'), 'namespace' => 'Agency'], funct
     });
 });
 
-Route::group(['domain' => env('APP_ADMIN_URL')], function () {
-
+Route::group(['domain' => env('APP_ADMIN_URL'), 'namespace' => 'Host'], function () {
+    Route::resource('/signup', 'HostController')->only([
+        'index',
+        'store',
+    ]);
+    Route::get('/login', 'HostController@getLogin')->name('host.getLogin');
+    Route::post('/login', 'HostController@postLogin')->name('host.postLogin');
+    Route::post('/logout', 'HostController@postLogout')->name('host.postLogout');
+    Route::group(['middleware' => 'host'], function () {
+        Route::resource('contracts', 'ContractController');  
+    });
 });
