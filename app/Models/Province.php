@@ -8,7 +8,7 @@ class Province extends Model
 {
     public function hostDetails() 
     {
-        return $this->hasMany(HostDetail::class);
+        return $this->hasMany(HostDetail::class, 'province_id');
     }
 
     public function provinceAirports() 

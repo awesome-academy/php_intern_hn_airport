@@ -57,8 +57,16 @@ return [
                 'login_failed' => 'Login Failed',
                 'logout_success' => 'Logout Successfully',
                 'logout_failed' => 'Logout Failed',
+                'update_host_detail_success' => 'Update Host Detail Successfully',
+                'update_host_detail_fail' => 'Update Host Detail Failed',
+                'delete_host_detail_success' => 'Delete Host Detail Successfully',
+                'delete_host_detail_fail' => 'Delete Host Detail Failed',
             ],
         ],
+        'table' => [
+            'view' => 'View',
+            'delete' => 'Delete',
+        ]
     ],
     'web' => [
         'form' => [
