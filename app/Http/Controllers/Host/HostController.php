@@ -196,7 +196,8 @@ class HostController extends Controller
         }
     }
     
-    public function deleteDetail(Request $request, $id) {
+    public function deleteDetail(Request $request, $id) 
+    {
         try {
             $hostDetail = HostDetail::destroy($id);
             if ($hostDetail) {
@@ -207,5 +208,24 @@ class HostController extends Controller
         } catch (Exception $e) {
             return response()->json($e, 500);
         }
+    }
+
+    public function postDetail(StoreHostDetailPost $request)
+    {   
+        $input['province_id'] = $request->province_id;
+        $input['car_type_id'] = $request->car_type_id;
+        $input['user_id'] = Auth::user()->id;
+        $quantity = $request->quantity;
+        $hostDetail = HostDetail::firstOrCreate(
+            $input,
+            ['quantity' => $quantity]
+        );
+        if ($hostDetail->quantity != $quantity) {
+            alert()->error(trans('contents.common.alert.title.create_host_detail_fail'), trans('contents.common.alert.message.create_host_detail_fail'));
+        } else {
+            alert()->success(trans('contents.common.alert.title.create_host_detail_success'), trans('contents.common.alert.message.create_host_detail_success'));
+        }
+
+        return redirect()->back();
     }
 }

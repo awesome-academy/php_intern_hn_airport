@@ -11,6 +11,7 @@ return [
         'request' => 'Yêu cầu',
         'contract' => 'Hợp đồng',
         'users' => 'Người dùng',
+        'error' => 'Lỗi!',
         'form' => [
             'name' => 'Họ tên',
             'email' => 'Email',
@@ -28,6 +29,7 @@ return [
             'seat' => 'chỗ',
             'datetime' => 'Thời gian',
             'login' => 'Đăng nhập',
+            'register' => 'Đăng ký',
             'to_airport' => 'Đặt xe đến sân bay',
             'from_airport' => 'Đặt xe từ sân bay',
             'airport' => 'Sân bay',
@@ -39,6 +41,8 @@ return [
             'choose_province' => 'Chọn tỉnh thành',
             'choose_airport' => 'Chọn sân bay',
             'flight_no' => 'Số hiệu chuyến bay',
+            'quantity' => 'Số lượng',
+            'add_detail' => 'Thêm chi tiết',
         ],
         'alert' => [
             'title' => [
@@ -46,13 +50,31 @@ return [
                 'create_account_fail' => 'Oops',
                 'login_success' => 'Đăng nhập thành công',
                 'login_failed' => 'Đăng nhập thất bại',
+                'logout_success' => 'Đăng xuất thành công',
+                'logout_failed' => 'Đăng xuất thất bại',
+                'create_host_detail_success' => 'Thêm chi tiết thành công',
+                'create_host_detail_fail' => 'Thêm chi tiết thất bại',
             ],
             'message' => [
                 'create_account_success' => 'Tài khoản của bạn đã được tạo thành công!',
                 'create_account_fail' => 'Tạo tài khoản mới thất bại!',
                 'login_success' => 'Đăng nhập thành công',
                 'login_failed' => 'Đăng nhập thất bại',
+                'logout_success' => 'Đăng xuất thất bại',
+                'logout_failed' => 'Đăng xuất thành công',
+                'host_detail' => 'Bạn phải đăng ký tỉnh thành hoạt động trước',
+                'create_host_detail_success' => 'Thêm tỉnh thành hoạt động thành công',
+                'create_host_detail_fail' => 'Thêm tỉnh thành hoạt động thất bại',
             ],
+        ],
+        'table' => [
+            'id' => 'ID',
+            'name' => 'Tên',
+            'phone' => 'Số đt',
+            'avatar' => 'Avatar',
+            'number' => 'STT',
+            'province' => 'Tỉnh',
+            'quantity' => 'Số lượng',
         ],
     ],
     'web' => [
@@ -76,16 +98,15 @@ return [
         'add_agency' => 'Thêm đại lý',
         'list_host' => 'Danh sách nhà xe',
         'add_host' => 'Thêm nhà xe',
-        'table' => [
-            'id' => 'ID',
-            'name' => 'Tên',
-            'phone' => 'Số Đt',
-            'avatar' => 'Avatar',
-        ],
     ],
     'agency' => [
         'title' => 'AgencyLocalDriver',
         'create_request' => 'Tạo yêu cầu',
         'list_request' => 'Danh sách yêu cầu',
-    ]
+    ],
+    'host' => [
+        'title' => 'HostLocalDriver',
+        'add_detail' => 'Thêm chi tiết',
+        'detail' => 'Chi tiết nhà xe'
+    ],
 ];

@@ -31,9 +31,9 @@ Route::group(['domain' => env('APP_AGENCY_URL'), 'namespace' => 'Agency'], funct
     ]);
     Route::get('/login', 'AgencyController@getLogin')->name('agency.getLogin');
     Route::post('/login', 'AgencyController@postLogin')->name('agency.postLogin');
-    Route::post('/logout', 'AgencyController@postLogout')->name('agency.postLogout');
     Route::group(['middleware' => 'agency'], function () {
-        Route::resource('requests', 'RequestController');   
+        Route::post('/logout', 'AgencyController@postLogout')->name('agency.postLogout');
+        Route::resource('requests', 'RequestController');  
     });
 });
 
@@ -44,11 +44,14 @@ Route::group(['domain' => env('APP_HOST_URL'), 'namespace' => 'Host'], function 
     ]);
     Route::get('/login', 'HostController@getLogin')->name('host.getLogin');
     Route::post('/login', 'HostController@postLogin')->name('host.postLogin');
-    Route::post('/logout', 'HostController@postLogout')->name('host.postLogout');
     Route::group(['middleware' => 'host'], function () {
         Route::get('/', 'HostController@getDetail')->name('host.getDetail');
         Route::put('/{id}', 'HostController@putDetail')->name('host.putDetail');
         Route::delete('/{id}', 'HostController@deleteDetail')->name('host.deleteDetail');
-        Route::resource('contracts', 'ContractController');  
+        Route::post('/', 'HostController@postDetail')->name('host.postDetail');
+        Route::post('/logout', 'HostController@postLogout')->name('host.postLogout');
+        Route::group(['middleware' => 'host_detail'], function () {
+            Route::resource('contracts', 'ContractController');       
+        });
     });
 });

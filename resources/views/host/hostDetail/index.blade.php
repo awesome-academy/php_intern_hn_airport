@@ -22,7 +22,7 @@
                     <div class="card-header">
                         <h3 class="card-title">{{ trans('contents.host.detail') }}</h3>
                     </div>
-                    <form>
+                    <form role="form" action="{{ route('host.postDetail') }}" method="POST">
                         @csrf
                         <div class="card-body">
                             <div class="row">
@@ -51,7 +51,6 @@
                                         <label>{{ trans('contents.common.form.car_type') }}</label>
                                         @error('car_type_id')
                                             <label class="text-danger">{{ $message }}</label>
-                                        @enderror
                                         <select class="form-control @error('car_type_id') is-invalid @enderror"
                                             name="car_type_id">
                                             @if (!old('car_type_id'))
@@ -155,8 +154,7 @@
     </div>
 </section>
 
-<script src="{{ asset('bower_components/bower_localdriver/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}">
-</script>
+<script src="{{ asset('bower_components/bower_localdriver/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
 <script
     src="{{ asset('bower_components/bower_localdriver/AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}">
 </script>

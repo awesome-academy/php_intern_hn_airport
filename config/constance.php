@@ -9,6 +9,7 @@ return [
         'title_host_login' => 'Host Login',
     ],
     'const' => [
+        'zero' => 0,
         'user_active' => 1,
         'user_inactive' => 0,
         'request_new' => 0,
