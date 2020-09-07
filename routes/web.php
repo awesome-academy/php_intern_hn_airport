@@ -32,7 +32,6 @@ Route::group(['domain' => env('APP_AGENCY_URL'), 'namespace' => 'Agency'], funct
     Route::get('/login', 'AgencyController@getLogin')->name('agency.getLogin');
     Route::post('/login', 'AgencyController@postLogin')->name('agency.postLogin');
     Route::post('/logout', 'AgencyController@postLogout')->name('agency.postLogout');
-    
     Route::group(['middleware' => 'agency'], function () {
         Route::resource('requests', 'RequestController');   
     });

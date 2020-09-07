@@ -26,6 +26,7 @@
     <link rel="stylesheet"
         href="{{ asset('bower_components/bower_localdriver/AdminLTE/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
     <link href="{{ asset('bower_components/bower_localdriver/AdminLTE/plugins/fonts/fonts.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/agency.css') }}" rel="stylesheet">
 
     <script src="{{ asset('bower_components/bower_localdriver/AdminLTE/plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('bower_components/bower_localdriver/AdminLTE/plugins/jquery-ui/jquery-ui.min.js') }}">
@@ -52,7 +53,8 @@
     </script>
     <script src="{{ asset('bower_components/bower_localdriver/AdminLTE/dist/js/adminlte.js') }}"></script>
     <script src="{{ asset('bower_components/bower_localdriver/AdminLTE/dist/js/demo.js') }}"></script>
-    <script src="{{ asset('js/agency.js') }}"></script>
+    
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -108,13 +110,13 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link active">
+                                    <a href="{{ route('requests.create') }}" class="nav-link active">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>{{ trans('contents.agency.create_request') }}</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="" class="nav-link">
+                                    <a href="{{ route('requests.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>{{ trans('contents.agency.list_request') }}</p>
                                     </a>
@@ -138,6 +140,8 @@
             @yield('content')
         </div>
     </div>
+
+    <script src="{{ asset('js/agency.js') }}"></script>
 </body>
 
 </html>
