@@ -11,6 +11,7 @@ return [
         'request' => 'Request',
         'contract' => 'Contract',
         'users' => 'Users',
+        'error' => 'Error!',
         'form' => [
             'name' => 'Full name',
             'email' => 'Email',
@@ -21,7 +22,7 @@ return [
             'signin' => 'Sign In',
             'forget_password' => 'I forgot my password',
             'remember_me' => 'Remember Me',
-            'car_type' => 'Select Your Car',
+            'car_type' => 'Select Car',
             'pickup' => 'Pickup',
             'drop_off' => 'Drop off',
             'province' => 'Province',
@@ -40,6 +41,8 @@ return [
             'choose_province' => 'Choose Provice',
             'choose_airport' => 'Choose Airport',
             'flight_no' => 'Flight No',
+            'quantity' => 'Quantity',
+            'add_detail' => 'Add Detail',
         ],
         'alert' => [
             'title' => [
@@ -49,6 +52,8 @@ return [
                 'login_failed' => 'Login Failed',
                 'logout_success' => 'Logout Successfully',
                 'logout_failed' => 'Logout Failed',
+                'create_host_detail_success' => 'Add Detail Successful',
+                'create_host_detail_fail' => 'Add Detail Failed',
             ],
             'message' => [
                 'create_account_success' => 'Your account has bess created successfully!',
@@ -61,12 +66,22 @@ return [
                 'update_host_detail_fail' => 'Update Host Detail Failed',
                 'delete_host_detail_success' => 'Delete Host Detail Successfully',
                 'delete_host_detail_fail' => 'Delete Host Detail Failed',
+                'host_detail' => 'You have to register your working province first!',
+                'create_host_detail_success' => 'Add new working province successful',
+                'create_host_detail_fail' => 'Add new working province failed',
             ],
         ],
         'table' => [
             'view' => 'View',
             'delete' => 'Delete',
-        ]
+            'id' => 'ID',
+            'name' => 'Name',
+            'phone' => 'Phone',
+            'avatar' => 'Avatar',
+            'number' => 'Number',
+            'province' => 'Province',
+            'quantity' => 'Quantity',
+        ],
     ],
     'web' => [
         'form' => [
@@ -89,12 +104,6 @@ return [
         'add_agency' => 'Add Agency',
         'list_host' => 'List Host',
         'add_host' => 'Add Host',
-        'table' => [
-            'id' => 'ID',
-            'name' => 'Name',
-            'phone' => 'Phone',
-            'avatar' => 'Avatar',
-        ],
     ],
     'agency' => [
         'title' => 'AgencyLocalDriver',
@@ -103,5 +112,7 @@ return [
     ],
     'host' => [
         'title' => 'HostLocalDriver',
+        'add_detail' => 'Add Host Detail',
+        'detail' => 'Host Detail'
     ],
 ];

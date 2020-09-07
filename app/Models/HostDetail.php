@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class HostDetail extends Model
 {
     protected $table = 'host_details';
+    protected $fillable = [
+        'province_id',
+        'car_type_id',
+        'user_id',
+        'quantity',
+    ];
     
     public function users() 
     {
