@@ -17,6 +17,11 @@ return [
         'admin' => 'admin',
         'host' => 'host',
         'customer' => 'customer',
+        'request_new' => 0,
+        'request_to_contract' => 1,
+        'request_canceled' => 2,
+        'request_pickup' => 0,
+        'request_dropoff' => 1,
     ],
     'role' => [
         'agency' => 'agency',
