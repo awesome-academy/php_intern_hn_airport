@@ -16,7 +16,7 @@ class HostDetail extends Model
 
     public function provinces() 
     {
-        return $this->belongsTo(Province::class);
+        return $this->belongsTo(Province::class, 'province_id');
     }
 
     public function carTypes() 

@@ -4,12 +4,18 @@ namespace App\Http\Controllers\Host;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginPostRequest;
+use App\Http\Requests\StoreHostDetailPost;
 use App\Http\Requests\StoreUserPost;
+use App\Models\CarType;
+use App\Models\HostDetail;
+use App\Models\Province;
 use App\Models\Role;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Yajra\Datatables\Datatables;
 
 class HostController extends Controller
 {
@@ -136,5 +142,70 @@ class HostController extends Controller
         alert()->success(trans('contents.common.alert.title.logout_success'), trans('contents.common.alert.message.logout_success'));
 
         return  redirect()->route('host.getLogin');
+    }
+
+    public function getDetail(Request $request) 
+    {
+        if ($request->ajax()) {
+            $hostDetails = HostDetail::where('user_id', Auth::user()->id)
+                ->with('provinces')
+                ->with('carTypes')    
+                ->get();
+            $number = 1;
+            foreach ($hostDetails as $hostDetail) {
+                $hostDetail->number = $number;
+                $number++;
+            }
+            // return response()->json($hostDetails, 200);
+            return Datatables::of($hostDetails)
+                ->setRowData([
+                    'car_types' => function($hostDetail) {
+                        return ($hostDetail->carTypes->type).' '.trans('contents.common.form.seat');
+                    },
+                ])
+                ->addColumn('action', function ($user) {
+                    return '<button type="button" class="btn btn-warning btn-detail"><i class="fa fa-eye"></i>'.trans('contents.common.table.view').'</button>
+                        <button type="button" class="btn btn-danger btn-delete"><i class="fa fa-trash"></i>'.trans('contents.common.table.delete').'</button>';
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        $provinces = Province::all();
+        $carTypes = CarType::all();
+
+        return view('host.hostDetail.index', compact('provinces', 'carTypes'));
+    }
+
+    public function putDetail(StoreHostDetailPost $request, $id) 
+    {
+        try {
+            $hostDetail = HostDetail::findOrFail($id);
+            if ($hostDetail->province_id != $request->province_id || $hostDetail->car_type_id != $request->car_type_id) {
+                return response()->json(trans('contents.common.alert.title.update_host_detail_fail'), 500);    
+            } else {
+                $hostDetail->quantity = $request->quantity;
+                $hostDetail->save();
+                if ($hostDetail->save()) {
+                    return response()->json(trans('contents.common.alert.title.update_host_detail_success'), 200);
+                } else {
+                    return response()->json(trans('contents.common.alert.title.update_host_detail_fail'), 500);      
+                }
+            }
+        } catch (Exception $e) {
+            return response()->json($e, 500);
+        }
+    }
+    
+    public function deleteDetail(Request $request, $id) {
+        try {
+            $hostDetail = HostDetail::destroy($id);
+            if ($hostDetail) {
+                return response()->json(trans('contents.common.alert.title.delete_host_detail_success'), 200);
+            } else {
+                return response()->json(trans('contents.common.alert.title.delete_host_detail_fail'), 500);      
+            }
+        } catch (Exception $e) {
+            return response()->json($e, 500);
+        }
     }
 }
