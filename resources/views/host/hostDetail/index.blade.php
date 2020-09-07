@@ -51,6 +51,7 @@
                                         <label>{{ trans('contents.common.form.car_type') }}</label>
                                         @error('car_type_id')
                                             <label class="text-danger">{{ $message }}</label>
+                                        @enderror
                                         <select class="form-control @error('car_type_id') is-invalid @enderror"
                                             name="car_type_id">
                                             @if (!old('car_type_id'))

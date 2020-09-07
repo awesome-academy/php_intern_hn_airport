@@ -22,10 +22,7 @@ class RequestController extends Controller
      */
     public function index()
     {
-        $carTypes = CarType::all();
-        $provinces = Province::has('provinceAirports')->get();
-
-        return view('web.index', ['carTypes' => $carTypes, 'provinces' => $provinces]);
+        return view('web.index');
     }
 
     /**

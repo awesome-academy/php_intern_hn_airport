@@ -4,9 +4,12 @@ namespace App\Models;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Request extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'car_type_id',
         'province_airport_id',
@@ -16,7 +19,6 @@ class Request extends Model
         'budget',
         'note',
     ];
-
     public function user() 
     {
         return $this->belongsTo(User::class);
@@ -29,12 +31,12 @@ class Request extends Model
 
     public function provinceAirports() 
     {
-        return $this->belongsTo(ProvincAirport::class, 'province_airport_id');
+        return $this->belongsTo(ProvinceAirport::class, 'province_airport_id');
     }
 
     public function requestDestinations() 
     {
-        return $this->hasMany(RequestDestination::class);
+        return $this->hasMany(RequestDestination::class, 'request_id');
     }
 
     public function requestCustomer() 

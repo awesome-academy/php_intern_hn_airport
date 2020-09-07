@@ -53,7 +53,6 @@
     </script>
     <script src="{{ asset('bower_components/bower_localdriver/AdminLTE/dist/js/adminlte.js') }}"></script>
     <script src="{{ asset('bower_components/bower_localdriver/AdminLTE/dist/js/demo.js') }}"></script>
-    
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
@@ -81,7 +80,7 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <a href="index3.html" class="brand-link">
                 <img src="{{ asset('bower_components/bower_localdriver/AdminLTE/dist/img/AdminLTELogo.png') }}"
-                    alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+                    class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-light">{{ trans('contents.agency.title') }}</span>
             </a>
 
