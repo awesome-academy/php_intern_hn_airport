@@ -10,6 +10,6 @@ class RequestDestination extends Model
 
     public function requests() 
     {
-        return $this->belongsTo(Request::class);
+        return $this->belongsTo(Request::class, 'request_id');
     }
 }

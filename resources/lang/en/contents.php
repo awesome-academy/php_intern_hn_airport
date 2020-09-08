@@ -12,6 +12,7 @@ return [
         'contract' => 'Contract',
         'users' => 'Users',
         'error' => 'Error!',
+        '404' => '404',
         'form' => [
             'name' => 'Full name',
             'email' => 'Email',
@@ -54,6 +55,7 @@ return [
                 'logout_failed' => 'Logout Failed',
                 'create_host_detail_success' => 'Add Detail Successful',
                 'create_host_detail_fail' => 'Add Detail Failed',
+                '404' => 'Oops! Page not found.',
             ],
             'message' => [
                 'create_account_success' => 'Your account has bess created successfully!',
@@ -69,6 +71,11 @@ return [
                 'host_detail' => 'You have to register your working province first!',
                 'create_host_detail_success' => 'Add new working province successful',
                 'create_host_detail_fail' => 'Add new working province failed',
+                'update_request_success' => 'Update request successfully',
+                'update_request_failed' => 'Update request failed',
+                'delete_request_success' => 'Delete request successfully',
+                'delete_request_fail' => 'Delete request failed',
+                '404' => 'We could not find the page you were looking for.',
             ],
         ],
         'table' => [

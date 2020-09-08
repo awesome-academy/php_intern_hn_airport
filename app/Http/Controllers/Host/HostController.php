@@ -171,9 +171,8 @@ class HostController extends Controller
                 ->make(true);
         }
         $provinces = Province::all();
-        $carTypes = CarType::all();
 
-        return view('host.hostDetail.index', compact('provinces', 'carTypes'));
+        return view('host.hostDetail.index', compact('provinces'));
     }
 
     public function putDetail(StoreHostDetailPost $request, $id) 

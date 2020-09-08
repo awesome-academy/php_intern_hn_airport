@@ -12,6 +12,7 @@ return [
         'contract' => 'Hợp đồng',
         'users' => 'Người dùng',
         'error' => 'Lỗi!',
+        '404' => '404',
         'form' => [
             'name' => 'Họ tên',
             'email' => 'Email',
@@ -54,6 +55,7 @@ return [
                 'logout_failed' => 'Đăng xuất thất bại',
                 'create_host_detail_success' => 'Thêm chi tiết thành công',
                 'create_host_detail_fail' => 'Thêm chi tiết thất bại',
+                '404' => 'Oops! Không tìm thấy trang.',
             ],
             'message' => [
                 'create_account_success' => 'Tài khoản của bạn đã được tạo thành công!',
@@ -65,6 +67,11 @@ return [
                 'host_detail' => 'Bạn phải đăng ký tỉnh thành hoạt động trước',
                 'create_host_detail_success' => 'Thêm tỉnh thành hoạt động thành công',
                 'create_host_detail_fail' => 'Thêm tỉnh thành hoạt động thất bại',
+                'update_request_success' => 'Cập nhật yêu cầu thành công',
+                'update_request_failed' => 'Cập nhật yêu cầu thất bại',
+                'delete_request_success' => 'Xóa yêu cầu thành công',
+                'delete_request_fail' => 'Xóa yêu cầu thất bại',
+                '404' => 'Chúng tôi không thể tìm thấy trang bạn muôn truy cập',
             ],
         ],
         'table' => [

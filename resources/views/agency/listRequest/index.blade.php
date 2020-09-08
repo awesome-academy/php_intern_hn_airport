@@ -49,13 +49,14 @@
                                         style="float: right">{{ trans('contents.agency.create_request') }}</button>
                                 </div>
                                 <div class="card-body">
-                                    <table id="example2" class="table table-bordered table-hover">
+                                    <table id="table-request-new" class="table table-bordered table-hover">
                                         <thead>
                                             <tr>
-                                                <th>{{ trans('contents.common.table.id') }}</th>
-                                                <th>{{ trans('contents.common.table.pickup_location') }}</th>
-                                                <th>{{ trans('contents.common.table.droopoff_location') }}</th>
-                                                <th>{{ trans('contents.common.table.pickup_time') }}</th>
+                                                <th>{{ trans('contents.agency.table.id') }}</th>
+                                                <th>{{ trans('contents.agency.table.pickup_location') }}</th>
+                                                <th>{{ trans('contents.agency.table.droopoff_location') }}</th>
+                                                <th>{{ trans('contents.agency.table.pickup_time') }}</th>
+                                                <th>{{ trans('contents.agency.table.car_type') }}</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -75,13 +76,14 @@
                                     <h3 class="card-title col-md-8">{{ trans('contents.agency.list_request') }}</h3>
                                 </div>
                                 <div class="card-body">
-                                    <table id="example2" class="table table-bordered table-hover">
+                                    <table id="table-request-canceled" class="table table-bordered table-hover">
                                         <thead>
                                             <tr>
-                                                <th>{{ trans('contents.common.table.id') }}</th>
-                                                <th>{{ trans('contents.common.table.pickup_location') }}</th>
-                                                <th>{{ trans('contents.common.table.droopoff_location') }}</th>
-                                                <th>{{ trans('contents.common.table.pickup_time') }}</th>
+                                                <th>{{ trans('contents.agency.table.id') }}</th>
+                                                <th>{{ trans('contents.agency.table.pickup_location') }}</th>
+                                                <th>{{ trans('contents.agency.table.droopoff_location') }}</th>
+                                                <th>{{ trans('contents.agency.table.pickup_time') }}</th>
+                                                <th>{{ trans('contents.agency.table.car_type') }}</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
