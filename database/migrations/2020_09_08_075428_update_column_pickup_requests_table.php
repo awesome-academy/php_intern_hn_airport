@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateRequestsTable extends Migration
+class UpdateColumnPickupRequestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,7 @@ class UpdateRequestsTable extends Migration
     public function up()
     {
         Schema::table('requests', function (Blueprint $table) {
-            $table->integer('user_id')->nullable()->change();
-            $table->text('note')->nullable()->change();
+            $table->dateTime('pickup')->change();
         });
     }
 
@@ -27,8 +26,7 @@ class UpdateRequestsTable extends Migration
     public function down()
     {
         Schema::table('requests', function (Blueprint $table) {
-            $table->integer('user_id')->change();
-            $table->text('note')->change();
+            $table->date('pickup')->change();
         });
     }
 }

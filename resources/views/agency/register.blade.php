@@ -29,7 +29,7 @@
             <div class="card-body register-card-body">
                 <p class="login-box-msg">{{ trans('contents.common.register') }}</p>
 
-                <form action="{{ route('signup.store') }}" method="post">
+                <form action="{{ route('agency.signup.store') }}" method="post">
                     @csrf
                     @error('name')
                         <label class="col-form-label"><i class="far fa-times-circle"></i>{{ $message }}</label>

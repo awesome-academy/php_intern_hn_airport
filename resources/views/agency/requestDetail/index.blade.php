@@ -23,6 +23,10 @@
                 <div class="card-body">
                     <form role="form">
                         <div class="form-group">
+                            <input type="text" id="request-id" class="form-control"
+                                value="{{ $requestDetail->id }}" hidden>
+                        </div>
+                        <div class="form-group">
                             <label>{{ trans('contents.common.form.car_type') }}</label>
                             <label id="airport-car-type-error" class="text-danger"></label>
                             <select class="form-control" id="airport-car-type"
@@ -122,8 +126,8 @@
                         <div class="form-group">
                             <label>{{ trans('contents.common.form.note') }}</label>
                             <textarea class="form-control" rows="3" id="airport-note"
-                                value="{{ $requestDetail->note }}" @if ($requestDetail->status != config('constance.const.request_new')) disabled @endif>
-                            </textarea>
+                                @if ($requestDetail->status != config('constance.const.request_new')) disabled @endif
+                                >{{ $requestDetail->note }}</textarea>
                         </div>
                         <div class="form-group">
                             @foreach ($requestDetail->requestDestinations as $requestDestination)

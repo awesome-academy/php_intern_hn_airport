@@ -317,7 +317,7 @@ $('#btn-from-airport-submit').click(function(e)
     var flight_no = $('#from-airport-flight').val()
     var note;
     if (flight_no) {
-        note = "<li>Fligt no: " + flight_no + "</li> ";
+        note = `Flight no: ${flight_no}\n`;
     }
     note += $('#from-airport-note').val();
 
@@ -348,6 +348,7 @@ $('#btn-from-airport-submit').click(function(e)
     $.ajax({
         type: 'POST',
         url: '/requests',
+        data: data,
         success: function (data) {
             Swal.fire({
                 icon: 'success',

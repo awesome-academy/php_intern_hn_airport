@@ -61,7 +61,7 @@ class RequestController extends Controller
                     ])
                     ->addColumn('action', function ($user) 
                     {
-                        return '<a href="' . route('requests.show', $user->id) . '" class="btn btn-warning btn-detail">
+                        return '<a href="' . route('agency.requests.show', $user->id) . '" class="btn btn-warning btn-detail">
                             <i class="fa fa-eye"></i>' . trans('contents.common.table.view') . '</a>
                             <button type="button" class="btn btn-danger btn-delete-request">
                             <i class="fa fa-trash"></i>' . trans('contents.common.table.delete') . '</button>';
@@ -100,7 +100,7 @@ class RequestController extends Controller
                     ])
                     ->addColumn('action', function ($user) 
                     {
-                        return '<a href="' . route('requests.show', $user->id) . '" class="btn btn-warning btn-detail">
+                        return '<a href="' . route('agency.requests.show', $user->id) . '" class="btn btn-warning btn-detail">
                             <i class="fa fa-eye"></i>' . trans('contents.common.table.view') . '</a>';
                     })
                     ->rawColumns(['action'])
