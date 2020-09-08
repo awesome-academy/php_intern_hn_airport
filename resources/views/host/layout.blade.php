@@ -66,7 +66,7 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="index3.html" class="nav-link">{{ trans('contents.common.home') }}</a>
+                    <a href="{{ route('host.getDetail') }}" class="nav-link">{{ trans('contents.common.home') }}</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
@@ -110,15 +110,15 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('host.requests.index') }}" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <i class="nav-icon fas fa-car"></i>
                                 <p>
                                     {{ trans('contents.common.request') }}
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <a href="{{ route('host.contracts.index') }}" class="nav-link">
+                                <i class="nav-icon fas fa-file-contract"></i>
                                 <p>
                                     {{ trans('contents.common.contract') }}
                                 </p>

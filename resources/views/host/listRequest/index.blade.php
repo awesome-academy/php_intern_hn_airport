@@ -12,7 +12,7 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">{{ trans('contents.common.home') }}</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('host.getDetail') }}">{{ trans('contents.common.home') }}</a></li>
                     <li class="breadcrumb-item active">{{ trans('contents.common.request') }}</li>
                 </ol>
             </div>
@@ -28,7 +28,7 @@
                     <li class="nav-item">
                         <a class="nav-link active" id="custom-tabs-four-home-tab" data-toggle="pill"
                             href="#custom-tabs-four-home" role="tab" aria-controls="custom-tabs-four-home"
-                            aria-selected="true">{{ trans('contents.host.new') }}</a>
+                            aria-selected="true">{{ trans('contents.common.table.new') }}</a>
                     </li>
                 </ul>
             </div>
@@ -39,16 +39,16 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title col-md-8">{{ trans('contents.host.list_requests') }}</h3>
+                                    <h3 class="card-title col-md-8">{{ trans('contents.common.list_request') }}</h3>
                                 </div>
                                 <div class="card-body">
                                     <table id="table-request-new" class="table table-bordered table-hover">
                                         <thead>
                                             <tr>
                                                 <th>{{ trans('contents.common.table.id') }}</th>
-                                                <th>{{ trans('contents.common.table.pickup_location') }}</th>
-                                                <th>{{ trans('contents.common.table.droopoff_location') }}</th>
-                                                <th>{{ trans('contents.common.table.pickup_time') }}</th>
+                                                <th>{{ trans('contents.common.form.pickup') }}</th>
+                                                <th>{{ trans('contents.common.form.drop_off') }}</th>
+                                                <th>{{ trans('contents.common.form.datetime') }}</th>
                                                 <th>{{ trans('contents.common.table.car_type') }}</th>
                                                 <th></th>
                                             </tr>

@@ -95,21 +95,48 @@
                                 <i class="fas fa-minus"></i></button>
                         </div>
                     </div>
-                    <form action="{{ route('host.requests.update', $requestDetail->id) }}" method="post">
+                    <form action="{{ route('host.requests.update', $requestDetail->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="card-body">
                             <div class="form-group">
-                                <h5>{{ trans('contents.common.form.driver_name') }}</h5>
-                                <input type="text" class="form-control">
+                                <label>{{ trans('contents.common.form.driver_name') }}</label>
+                                @error('name')
+                                    <label class="text-danger"><i class="far fa-times-circle"></i>{{ $message }}</label>
+                                @enderror
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" 
+                                    name="name" value="{{ old('name') }}">
                             </div>
                             <div class="form-group">
-                                <h5>{{ trans('contents.common.form.driver_phone') }}</h5>
-                                <input type="text" class="form-control">
+                                <label>{{ trans('contents.common.form.driver_phone') }}</label>
+                                @error('phone')
+                                    <label class="text-danger"><i class="far fa-times-circle"></i>{{ $message }}</label>
+                                @enderror
+                                <input type="text" class="form-control @error('phone') is-invalid @enderror" 
+                                    name="phone" value="{{ old('phone') }}">
                             </div>
                             <div class="form-group">
-                                <h5>{{ trans('contents.common.form.driver_image') }}</h5>
-                                <input type="file" name="" class="form-control">
+                                <label>{{ trans('contents.common.form.car_plate') }}</label>
+                                @error('car_plate')
+                                    <label class="text-danger"><i class="far fa-times-circle"></i>{{ $message }}</label>
+                                @enderror
+                                <input type="text" class="form-control @error('car_plate') is-invalid @enderror" 
+                                    name="car_plate" value="{{ old('car_plate') }}">
+                            </div>
+                            <div class="form-group">
+                                <label>{{ trans('contents.common.form.car_name') }}</label>
+                                @error('car_name')
+                                    <label class="text-danger"><i class="far fa-times-circle"></i>{{ $message }}</label>
+                                @enderror
+                                <input type="text" class="form-control @error('car_name') is-invalid @enderror" 
+                                    name="car_name" value="{{ old('car_name') }}">
+                            </div>
+                            <div class="form-group">
+                                <label>{{ trans('contents.common.form.driver_image') }}</label>
+                                @error('avatar')
+                                    <label class="text-danger"><i class="far fa-times-circle"></i>{{ $message }}</label>
+                                @enderror
+                                <input type="file" class="form-control @error('avatar') is-invalid @enderror" name="avatar">
                             </div>
                         </div>
                         <div class="card-footer">
