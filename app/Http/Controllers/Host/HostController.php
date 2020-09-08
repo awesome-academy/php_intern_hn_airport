@@ -128,7 +128,7 @@ class HostController extends Controller
         if (Auth::attempt($login, $request->remember)) {
             alert()->success(trans('contents.common.alert.title.login_success'), trans('contents.common.alert.message.login_success'));
 
-            return redirect()->route('contracts.index');
+            return redirect()->route('host.contracts.index');
         } else {
             alert()->error(trans('contents.common.alert.title.login_failed'), trans('contents.common.alert.message.login_failed'));
 
