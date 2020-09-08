@@ -13,6 +13,9 @@ return [
         'users' => 'Người dùng',
         'error' => 'Lỗi!',
         '404' => '404',
+        'x' => 'x',
+        'request_detail' => 'Chi tiết yêu cầu',
+        'driver' => 'Lái xe',
         'form' => [
             'name' => 'Họ tên',
             'email' => 'Email',
@@ -44,6 +47,12 @@ return [
             'flight_no' => 'Số hiệu chuyến bay',
             'quantity' => 'Số lượng',
             'add_detail' => 'Thêm chi tiết',
+            'close' => 'Đóng',
+            'update' => 'Cập nhật',
+            'driver_name' => 'Tên lái xe',
+            'driver_phone' => 'Số điện thoại lái xe',
+            'driver_image' => 'Ảnh lái xe',
+            'add_driver' => 'Thêm lái xe',
         ],
         'alert' => [
             'title' => [
@@ -64,6 +73,10 @@ return [
                 'login_failed' => 'Đăng nhập thất bại',
                 'logout_success' => 'Đăng xuất thất bại',
                 'logout_failed' => 'Đăng xuất thành công',
+                'update_host_detail_success' => 'Cập nhật thông tin thành công',
+                'update_host_detail_fail' => 'Cập nhật thông tin thất bại',
+                'delete_host_detail_success' => 'Xóa thông tin thành công',
+                'delete_host_detail_fail' => 'Xóa thông tin thất bại',
                 'host_detail' => 'Bạn phải đăng ký tỉnh thành hoạt động trước',
                 'create_host_detail_success' => 'Thêm tỉnh thành hoạt động thành công',
                 'create_host_detail_fail' => 'Thêm tỉnh thành hoạt động thất bại',
@@ -75,6 +88,8 @@ return [
             ],
         ],
         'table' => [
+            'view' => 'Chi tiết',
+            'delete' => 'Xóa',
             'id' => 'ID',
             'name' => 'Tên',
             'phone' => 'Số đt',
@@ -82,6 +97,9 @@ return [
             'number' => 'STT',
             'province' => 'Tỉnh',
             'quantity' => 'Số lượng',
+            'car_type' => 'Loại xe',
+            'user_name' => 'Tên khách',
+            'user_phone' => 'Số đt khách',
         ],
     ],
     'web' => [

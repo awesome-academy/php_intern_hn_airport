@@ -79,30 +79,40 @@
             </ul>
         </nav>
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <a href="index3.html" class="brand-link">
+            <a href="#" class="brand-link">
                 <img src="{{ asset('bower_components/bower_localdriver/AdminLTE/dist/img/AdminLTELogo.png') }}"
                     class="brand-image img-circle elevation-3">
                 <span class="brand-text font-weight-light">{{ trans('contents.host.title') }}</span>
             </a>
 
             <div class="sidebar">
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
-                        <img src="{{ asset(config('constance.anonymous_user')) }}" class="img-circle elevation-2">
+                @auth
+                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                        <div class="image">
+                            <img src="{{ asset(Auth::user()->avatar) }}" class="img-circle elevation-2">
+                        </div>
+                        <div class="info">
+                            <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+                        </div>
                     </div>
-                    <div class="info">
-                        <a href="#" class="d-block"></a>
-                    </div>
-                </div>
+                @endauth
 
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
                         <li class="nav-item">
-                            <a href="#" class="nav-link active">
+                            <a href="{{ route('host.getDetail') }}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
-                                    {{ trans('contents.host.dashboard') }}
+                                    {{ trans('contents.common.dashboard') }}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('host.requests.index') }}" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    {{ trans('contents.common.request') }}
                                 </p>
                             </a>
                         </li>
@@ -110,15 +120,7 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
-                                    {{ trans('contents.host.requests') }}
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    {{ trans('contents.host.contract') }}
+                                    {{ trans('contents.common.contract') }}
                                 </p>
                             </a>
                         </li>
@@ -131,6 +133,8 @@
             @yield('content')
         </div>
     </div>
+
+    <script src="{{ asset('js/host/host.js') }}"></script>
 </body>
 
 </html>

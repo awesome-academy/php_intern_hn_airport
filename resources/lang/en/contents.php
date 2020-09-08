@@ -13,6 +13,9 @@ return [
         'users' => 'Users',
         'error' => 'Error!',
         '404' => '404',
+        'x' => 'x',
+        'request_detail' => 'Request Detail',
+        'driver' => 'Driver',
         'form' => [
             'name' => 'Full name',
             'email' => 'Email',
@@ -44,6 +47,12 @@ return [
             'flight_no' => 'Flight No',
             'quantity' => 'Quantity',
             'add_detail' => 'Add Detail',
+            'close' => 'Close',
+            'update' => 'Update',
+            'driver_name' => 'Driver Name',
+            'driver_phone' => 'Driver Phone',
+            'driver_image' => 'Driver Image',
+            'add_driver' => 'Add Driver',
         ],
         'alert' => [
             'title' => [
@@ -88,6 +97,9 @@ return [
             'number' => 'Number',
             'province' => 'Province',
             'quantity' => 'Quantity',
+            'car_type' => 'Car Type',
+            'user_name' => 'Client Name',
+            'user_phone' => 'Client Phone',
         ],
     ],
     'web' => [
