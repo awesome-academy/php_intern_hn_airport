@@ -12,9 +12,9 @@
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a
-                            href="{{ route('requests.create') }}">{{ trans('contents.common.home') }}</a></li>
+                        href="{{ route('agency.requests.create') }}">{{ trans('contents.common.home') }}</a></li>
                     <li class="breadcrumb-item"><a
-                            href="{{ route('requests.index') }}">{{ trans('contents.common.request') }}</a></li>
+                        href="{{ route('agency.requests.index') }}">{{ trans('contents.common.request') }}</a></li>
                     <li class="breadcrumb-item active">{{ trans('contents.agency.create_request') }}</li>
                 </ol>
             </div>

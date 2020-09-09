@@ -124,7 +124,7 @@ class AgencyController extends Controller
         if (Auth::attempt($login, $request->remember)) {
             alert()->success(trans('contents.common.alert.title.login_success'), trans('contents.common.alert.message.login_success'));
 
-            return redirect()->route('requests.create');
+            return redirect()->route('agency.requests.create');
         } else {
             alert()->error(trans('contents.common.alert.title.login_failed'), trans('contents.common.alert.message.login_failed'));
 
@@ -137,6 +137,6 @@ class AgencyController extends Controller
         Auth::logout();
         alert()->success(trans('contents.common.alert.title.logout_success'), trans('contents.common.alert.message.logout_success'));
         
-        return  redirect()->route('agency.getLogin');
+        return redirect()->route('agency.agency.getLogin');
     }
 }

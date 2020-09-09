@@ -109,13 +109,13 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="{{ route('requests.create') }}" class="nav-link active">
+                                    <a href="{{ route('agency.requests.create') }}" class="nav-link active">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>{{ trans('contents.agency.create_request') }}</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('requests.index') }}" class="nav-link">
+                                    <a href="{{ route('agency.requests.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>{{ trans('contents.agency.list_request') }}</p>
                                     </a>

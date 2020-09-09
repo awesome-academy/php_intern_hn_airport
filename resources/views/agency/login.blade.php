@@ -73,7 +73,7 @@
                     <a href="#">{{ trans('contents.common.form.forget_password') }}</a>
                 </p>
                 <p class="mb-0">
-                    <a href="{{ route('signup.index') }}"
+                    <a href="{{ route('agency.signup.index') }}"
                         class="text-center">{{ trans('contents.common.register') }}</a>
                 </p>
             </div>
