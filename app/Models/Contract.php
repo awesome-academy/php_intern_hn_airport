@@ -3,9 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Contract extends Model
-{
+{   
+    use SoftDeletes;
+    
+    protected $fillable = [
+        'request_id',
+        'supplier_id',
+        'pickup',
+        'status',
+    ];
+
     public function request() 
     {
         return $this->belongsTo(Request::class);

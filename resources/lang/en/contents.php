@@ -15,6 +15,9 @@ return [
         '404' => '404',
         'x' => 'x',
         'request_detail' => 'Request Detail',
+        'contract_detail' => 'Contract Detail',
+        'list_request' => 'List Request',
+        'list_contract' => 'List Contract',
         'driver' => 'Driver',
         'form' => [
             'name' => 'Full name',
@@ -53,6 +56,9 @@ return [
             'driver_phone' => 'Driver Phone',
             'driver_image' => 'Driver Image',
             'add_driver' => 'Add Driver',
+            'car_plate' => 'Car Plate',
+            'car_name' => 'Car Name',
+            'update_driver' => 'Update Driver',
         ],
         'alert' => [
             'title' => [
@@ -65,6 +71,12 @@ return [
                 'create_host_detail_success' => 'Add Detail Successful',
                 'create_host_detail_fail' => 'Add Detail Failed',
                 '404' => 'Oops! Page not found.',
+                'create_contract_fail' => 'Create Contract Failed',
+                'create_contract_success' => 'Create Contract Successful',
+                'update_contract_success' => 'Update Contract Successful',
+                'update_contract_fail' => 'Update Contract Failed',
+                'delete_contract_success' => 'Cancel Contract Successful',
+                'delete_contract_fail' => 'Cancel Contract Failed',
             ],
             'message' => [
                 'create_account_success' => 'Your account has bess created successfully!',
@@ -85,6 +97,12 @@ return [
                 'delete_request_success' => 'Delete request successfully',
                 'delete_request_fail' => 'Delete request failed',
                 '404' => 'We could not find the page you were looking for.',
+                'create_contract_fail' => 'Create New Contract Failed',
+                'create_contract_success' => 'Create New Contract Successful',
+                'update_contract_success' => 'Update Contract Successful',
+                'update_contract_fail' => 'Update Contract Failed',
+                'delete_contract_success' => 'Cancel Contract Successful',
+                'delete_contract_fail' => 'Cancel Contract Failed',
             ],
         ],
         'table' => [
@@ -100,6 +118,8 @@ return [
             'car_type' => 'Car Type',
             'user_name' => 'Client Name',
             'user_phone' => 'Client Phone',
+            'new' => 'New',
+            'cancel' => 'Canceled',
         ],
     ],
     'web' => [
@@ -127,7 +147,6 @@ return [
     'agency' => [
         'title' => 'AgencyLocalDriver',
         'create_request' => 'Create Request',
-        'list_request' => 'List Request',
     ],
     'host' => [
         'title' => 'HostLocalDriver',

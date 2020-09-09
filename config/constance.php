@@ -20,6 +20,8 @@ return [
         'request_dropoff' => 1,
         'request_to_contract' => 1,
         'request_canceled' => 2,
+        'contract_new' => 0,
+        'contract_cancel' => 1,
     ],
     'role' => [
         'agency' => 'agency',
@@ -30,5 +32,8 @@ return [
     'status' => [
         'new' => 'new',
         'cancel' => 'cancel',
+    ],
+    'image' => [
+        'contract' => 'public/images/contracts',
     ],
 ];

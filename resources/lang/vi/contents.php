@@ -15,6 +15,9 @@ return [
         '404' => '404',
         'x' => 'x',
         'request_detail' => 'Chi tiết yêu cầu',
+        'contract_detail' => 'Chi tiết hợp đồng',
+        'list_request' => 'Danh sách yêu cầu',
+        'list_contract' => 'Danh sách hợp đồng',
         'driver' => 'Lái xe',
         'form' => [
             'name' => 'Họ tên',
@@ -53,6 +56,9 @@ return [
             'driver_phone' => 'Số điện thoại lái xe',
             'driver_image' => 'Ảnh lái xe',
             'add_driver' => 'Thêm lái xe',
+            'car_plate' => 'Biển số xe',
+            'car_name' => 'Tên xe',
+            'update_driver' => 'Cập nhật lái xe',
         ],
         'alert' => [
             'title' => [
@@ -65,6 +71,12 @@ return [
                 'create_host_detail_success' => 'Thêm chi tiết thành công',
                 'create_host_detail_fail' => 'Thêm chi tiết thất bại',
                 '404' => 'Oops! Không tìm thấy trang.',
+                'create_contract_fail' => 'Tạo hợp đồng thất bại',
+                'create_contract_success' => 'Tạo hợp đồng thành công',
+                'update_contract_success' => 'Cập nhật hợp đồng thành công',
+                'update_contract_fail' => 'Cập nhật hợp đồng thất bại',
+                'delete_contract_success' => 'Hủy hợp đồng thành công',
+                'delete_contract_fail' => 'Hủy hợp đồng thất bại',
             ],
             'message' => [
                 'create_account_success' => 'Tài khoản của bạn đã được tạo thành công!',
@@ -85,6 +97,14 @@ return [
                 'delete_request_success' => 'Xóa yêu cầu thành công',
                 'delete_request_fail' => 'Xóa yêu cầu thất bại',
                 '404' => 'Chúng tôi không thể tìm thấy trang bạn muôn truy cập',
+                'create_contract_fail' => 'Tạo hợp đồng mới thất bại',
+                'create_contract_success' => 'Tạo hợp đồng mới thành công',
+                'update_contract_success' => 'Cập nhật hợp đồng thành công',
+                'update_contract_fail' => 'Cập nhật hợp đồng thất bại',
+                'delete_contract_success' => 'Cancel Contract Successful',
+                'delete_contract_fail' => 'Cancel Contract Failed',
+                'delete_contract_success' => 'Hủy hợp đồng thành công',
+                'delete_contract_fail' => 'Hủy hợp đồng thất bại',
             ],
         ],
         'table' => [
@@ -100,6 +120,8 @@ return [
             'car_type' => 'Loại xe',
             'user_name' => 'Tên khách',
             'user_phone' => 'Số đt khách',
+            'new' => 'Mới',
+            'cancel' => 'Đã hủy',
         ],
     ],
     'web' => [
@@ -127,11 +149,10 @@ return [
     'agency' => [
         'title' => 'AgencyLocalDriver',
         'create_request' => 'Tạo yêu cầu',
-        'list_request' => 'Danh sách yêu cầu',
     ],
     'host' => [
         'title' => 'HostLocalDriver',
         'add_detail' => 'Thêm chi tiết',
-        'detail' => 'Chi tiết nhà xe'
+        'detail' => 'Chi tiết nhà xe',
     ],
 ];
