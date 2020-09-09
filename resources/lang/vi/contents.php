@@ -77,6 +77,9 @@ return [
                 'update_contract_fail' => 'Cập nhật hợp đồng thất bại',
                 'delete_contract_success' => 'Hủy hợp đồng thành công',
                 'delete_contract_fail' => 'Hủy hợp đồng thất bại',
+                'calculate_price_success' => "Chuyến đi của bạn đã sẵn sàng",
+                'create_request_success' => 'Tạo yêu cầu mới thành công',
+                'create_request_fail' => 'Tạo yêu cầu mới thất bại',
             ],
             'message' => [
                 'create_account_success' => 'Tài khoản của bạn đã được tạo thành công!',
@@ -105,6 +108,10 @@ return [
                 'delete_contract_fail' => 'Cancel Contract Failed',
                 'delete_contract_success' => 'Hủy hợp đồng thành công',
                 'delete_contract_fail' => 'Hủy hợp đồng thất bại',
+                'calculate_price_fail' => 'Xin lỗi, chúng tôi không thể nhận chuyến của bạn!',
+                'calculate_price_success' => "Chuyến đi của bạn là :budget VNĐ. Bạn có muốn tạo yêu cầu này?",
+                'create_request_success' => 'Tạo yêu cầu dặt xe thành công',
+                'create_request_fail' => 'Tạo yêu cầu đặt xe thất bại',
             ],
         ],
         'table' => [

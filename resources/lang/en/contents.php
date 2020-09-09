@@ -77,6 +77,9 @@ return [
                 'update_contract_fail' => 'Update Contract Failed',
                 'delete_contract_success' => 'Cancel Contract Successful',
                 'delete_contract_fail' => 'Cancel Contract Failed',
+                'calculate_price_success' => "Your Request Is Ready!",
+                'create_request_success' => 'Create Request Successful',
+                'create_request_fail' => 'Create Request Failed',
             ],
             'message' => [
                 'create_account_success' => 'Your account has bess created successfully!',
@@ -103,6 +106,10 @@ return [
                 'update_contract_fail' => 'Update Contract Failed',
                 'delete_contract_success' => 'Cancel Contract Successful',
                 'delete_contract_fail' => 'Cancel Contract Failed',
+                'calculate_price_fail' => 'Sorry your request is not supported!',
+                'calculate_price_success' => "Your request's price is :budget VND. Do you want to create this request?",
+                'create_request_success' => 'Create New Request Successful',
+                'create_request_fail' => 'Create New Request Failed',
             ],
         ],
         'table' => [

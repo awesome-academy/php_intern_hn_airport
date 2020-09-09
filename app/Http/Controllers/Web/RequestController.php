@@ -45,7 +45,7 @@ class RequestController extends Controller
     {
         $input = $request->all();
 
-        $input['pickup'] = date('Y-m-d', strtotime($request->pickup));
+        $input['pickup'] = date(config('constance.datetime'), strtotime($request->pickup));
         $input['status'] = config('constance.const.request_new');;
 
         $createRequest = ModelsRequest::create($input);

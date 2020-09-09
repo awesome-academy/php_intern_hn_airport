@@ -18,6 +18,9 @@ Route::group(['namespace' => 'Api'], function () {
         'index'
     ]);
     Route::resource('province-airport', 'ProvinceAirportController')->only([
-        'index', 'show'
+        'index', 
+        'show',
     ]);
+    Route::get('province-search', 'ProvinceController@searchByName');
+    Route::post('calculate-price', 'RequestController@calculatePrice');
 });
