@@ -54,6 +54,15 @@
                                                     @endforeach
                                                 </select>
                                             </div>
+                                            <div class="form-group to-airport-pickup">
+                                                <label>{{ trans('contents.common.form.pickup') }}</label>
+                                                <label id="to-airport-pickup-error" class="text-danger"></label>
+                                                <button type="button" class="btn btn-sm btn-default float-right"
+                                                    id="btn-to-airport-add-pickup">{{ trans('contents.common.form.add_pickup') }}</i></button>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                            </div>
                                             <div class="form-group">
                                                 <label>{{ trans('contents.common.form.province') }}</label>
                                                 <label id="to-airport-province-error" class="text-danger"></label>
@@ -70,15 +79,6 @@
                                                 <label>{{ trans('contents.common.form.airport') }}</label>
                                                 <input type="text" class="form-control" disabled
                                                     id="to-airport-airport">
-                                            </div>
-                                            <div class="form-group to-airport-pickup">
-                                                <label>{{ trans('contents.common.form.pickup') }}</label>
-                                                <label id="to-airport-pickup-error" class="text-danger"></label>
-                                                <button type="button" class="btn btn-sm btn-default float-right"
-                                                    id="btn-to-airport-add-pickup">{{ trans('contents.common.form.add_pickup') }}</i></button>
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control">
-                                                </div>
                                             </div>
                                             <div class="form-group">
                                                 <label>{{ trans('contents.common.form.datetime') }}</label>
