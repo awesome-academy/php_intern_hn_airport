@@ -16,6 +16,8 @@
     "tests"
   ],
   "dependencies": {
-    "bower_localdriver": "https://gitlab.com/localdriver/bower_localdriver.git"
+    "bower_localdriver": "https://gitlab.com/localdriver/bower_localdriver.git",
+    "eonasdan-bootstrap-datetimepicker": "^4.17.47",
+    "moment": "^2.27.0"
   }
 }

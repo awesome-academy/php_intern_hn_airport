@@ -100,8 +100,8 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
                         <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link active">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-car"></i>
                                 <p>
                                     {{ trans('contents.common.request') }}
                                     <i class="right fas fa-angle-left"></i>
@@ -109,7 +109,7 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="{{ route('agency.requests.create') }}" class="nav-link active">
+                                    <a href="{{ route('agency.requests.create') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>{{ trans('contents.agency.create_request') }}</p>
                                     </a>
@@ -117,14 +117,14 @@
                                 <li class="nav-item">
                                     <a href="{{ route('agency.requests.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>{{ trans('contents.agency.list_request') }}</p>
+                                        <p>{{ trans('contents.common.list_request') }}</p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <a href="{{ route('agency.contracts.index') }}" class="nav-link">
+                                <i class="nav-icon fas fa-file-contract"></i>
                                 <p>
                                     {{ trans('contents.common.contract') }}
                                 </p>

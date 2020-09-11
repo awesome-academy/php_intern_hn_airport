@@ -14,17 +14,19 @@
     <link rel="stylesheet" href="{{ asset('bower_components/bower_localdriver/carrental/fonts/fonts.css') }}">
     <link rel="stylesheet" href="{{ asset('bower_components/bower_localdriver/carrental/css/linearicons.css') }}">
     <link rel="stylesheet" href="{{ asset('bower_components/bower_localdriver/carrental/css/font-awesome.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('bower_components/bower_localdriver/carrental/css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bower_components/bower_localdriver/carrental/css/magnific-popup.css') }}">
     <link rel="stylesheet" href="{{ asset('bower_components/bower_localdriver/carrental/css/nice-select.css') }}">
     <link rel="stylesheet" href="{{ asset('bower_components/bower_localdriver/carrental/css/animate.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bower_components/bower_localdriver/carrental/css/owl.carousel.css') }}">
     <link rel="stylesheet" href="{{ asset('bower_components/bower_localdriver/carrental/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('bower_components/bower_localdriver/carrental/css/jquery-ui.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/smalot-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/web.css') }}">
 </head>
 
 <body>
+    @include('sweetalert::alert')
     <header id="header" id="home">
         <div class="container">
             <div class="row align-items-center justify-content-between d-flex">
@@ -33,8 +35,8 @@
                 </div>
                 <nav id="nav-menu-container">
                     <ul class="nav-menu">
-                       <li><a href="#" class="genric-btn default circle">{{ trans('contents.common.form.login') }}</a></li>
-                       <li><a href="#" class="genric-btn default circle">{{ trans('contents.common.form.register') }}</a></li>
+                       <li><a href="{{ route('agency.getLogin') }}" class="genric-btn default circle">{{ trans('contents.common.form.login') }}</a></li>
+                       <li><a href="{{ route('agency.signup.index') }}" class="genric-btn default circle">{{ trans('contents.common.form.register') }}</a></li>
                     </ul>
                 </nav>
             </div>
@@ -44,6 +46,7 @@
     @yield('content')
 
     <script src="{{ asset('bower_components/bower_localdriver/carrental/js/vendor/jquery-2.2.4.min.js') }}"></script>
+    <script src="{{ asset('bower_components/moment/min/moment.min.js') }}"></script>
     <script src="{{ asset('bower_components/bower_localdriver/carrental/js/vendor/bootstrap.min.js') }}"></script>
     <script src="{{ asset('bower_components/bower_localdriver/carrental/js/easing.min.js') }}"></script>
     <script src="{{ asset('bower_components/bower_localdriver/carrental/js/hoverIntent.js') }}"></script>
@@ -60,6 +63,9 @@
     <script src="{{ asset('bower_components/bower_localdriver/carrental/js/main.js') }}"></script>
     <script src="{{ asset('bower_components/bower_localdriver/jquery/src/popper.min.js') }}"></script>
     <script src="{{ asset('bower_components/bower_localdriver/jquery/src/jquery-ui.js') }}"></script>
+    <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bower_components/smalot-bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_API_KEY') }}&libraries=places&language=vi"></script>
     <script src="{{ asset('js/web.js') }}"></script>
 </body>
 
