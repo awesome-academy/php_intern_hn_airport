@@ -55,6 +55,7 @@
     </script>
     <script src="{{ asset('bower_components/bower_localdriver/AdminLTE/dist/js/adminlte.js') }}"></script>
     <script src="{{ asset('bower_components/bower_localdriver/AdminLTE/dist/js/demo.js') }}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_API_KEY') }}&libraries=places&language=vi"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 

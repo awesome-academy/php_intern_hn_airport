@@ -196,6 +196,17 @@ class ContractController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $checkContract = Contract::findOrFail($id);
+            if ($checkContract->status != config('constance.const.contract_new')) {
+                return response()->json(trans('contents.common.alert.message.delete_contract_fail'), 500);
+            }
+            $checkContract->update(['status' => config('constance.const.contract_cancel')]);
+            $checkContract->delete();
+    
+            return response()->json(trans('contents.common.alert.message.delete_contract_success'), 200);
+        } catch (Exception $e) {
+            return response()->json($e, 500);
+        }
     }
 }

@@ -8,7 +8,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">{{ trans('contents.agency.request_detail') }}</h1>
+                <h1 class="m-0 text-dark">{{ trans('contents.common.request_detail') }}</h1>
             </div>
         </div>
     </div>
@@ -18,13 +18,17 @@
         <div class="col-md-12">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">{{ trans('contents.agency.request_detail') }}</h3>
+                    <h3 class="card-title">{{ trans('contents.common.request_detail') }}</h3>
                 </div>
                 <div class="card-body">
                     <form role="form">
                         <div class="form-group">
                             <input type="text" id="request-id" class="form-control"
                                 value="{{ $requestDetail->id }}" hidden>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="request-budget" class="form-control"
+                                value="{{ $requestDetail->budget }} {{ trans('contents.common.vnd') }}" disabled>
                         </div>
                         <div class="form-group">
                             <label>{{ trans('contents.common.form.car_type') }}</label>

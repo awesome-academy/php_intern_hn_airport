@@ -87,8 +87,11 @@ class RequestController extends Controller
         //
     }
 
-    public function calculatePrice(StoreRequestWebPost $request) {
+    public function calculatePrice(StoreRequestPost $request) {
         try {
+            $update = false;
+            $update = $request->budget != config('constance.const.zero');
+            
             $pickupLocation = $request->pickup_location;
             $dropoffLocation = $request->dropoff_location;
             $carTypeId = $request->car_type_id;
@@ -105,22 +108,26 @@ class RequestController extends Controller
                 $destinations .= $dropoffPoint . "|";
             }
             $numPickup = count($pickupLocation);
-
-            $client = new Client();
-            $response = $client->get(config('constance.google_map') . $origins . 
-                '&destinations=' . $destinations . '&key=' . env('GOOGLE_API_KEY'));
-            $json = json_decode($response->getBody(), true);
-            $distance = (int)$json['rows'][0]['elements'][0]['distance']['value'] / config('constance.const.m_to_km');
+            $distance = calculateDistance($pickupLocation, $dropoffLocation);
 
             if (function_exists('calculatePrice')) {
                 $budget = calculatePrice($distance, $carTypeId, $provinceAirportId, $hour, $numPickup);
                 $budget = round($budget, config('constance.const.format_money'));
 
-                $data = [
-                    "title" => trans('contents.common.alert.title.calculate_price_success'),
-                    "message" => trans('contents.common.alert.message.calculate_price_success', ['budget' => $budget]),
-                    "budget" => $budget,
-                ];
+                if ($update) {
+                    $data = [
+                        "title" => trans('contents.common.alert.title.calculate_price_update_success'),
+                        "message" => trans('contents.common.alert.message.calculate_price_update_success', ['budget' => $budget]),
+                        "budget" => $budget,
+                    ];
+                } else {
+                    $data = [
+                        "title" => trans('contents.common.alert.title.calculate_price_success'),
+                        "message" => trans('contents.common.alert.message.calculate_price_success', ['budget' => $budget]),
+                        "budget" => $budget,
+                    ];
+                }
+                
                 if ($budget != config('constance.const.zero')) {
                     return response()->json($data, 200);
                 } else {
