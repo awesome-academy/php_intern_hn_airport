@@ -19,6 +19,8 @@ return [
         'list_request' => 'Danh sách yêu cầu',
         'list_contract' => 'Danh sách hợp đồng',
         'driver' => 'Lái xe',
+        'en' => 'English',
+        'vi' => 'Tiếng Việt',
         'form' => [
             'name' => 'Họ tên',
             'email' => 'Email',
