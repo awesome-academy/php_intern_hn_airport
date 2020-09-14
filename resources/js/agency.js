@@ -1,4 +1,6 @@
-const { divide } = require("lodash");
+const {
+    divide
+} = require("lodash");
 
 $.widget.bridge('uibutton', $.ui.button);
 
@@ -13,8 +15,7 @@ var to_airport_ways;
 var province_airport_id;
 
 
-$(document).ready(function () 
-{
+$(document).ready(function () {
     initVarible();
 
     $.fn.dataTable.ext.errMode = 'none';
@@ -69,6 +70,56 @@ $(document).ready(function ()
         ]
     });
 
+    var table_contract_new = $('#table-contract-new').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: '/contracts?type=new',
+        columns: [{
+                data: 'id'
+            },
+            {
+                data: 'DT_RowData.pickup_location.location'
+            },
+            {
+                data: 'DT_RowData.dropoff_location.location'
+            },
+            {
+                data: 'pickup'
+            },
+            {
+                data: 'DT_RowData.car_types'
+            },
+            {
+                data: 'action'
+            },
+        ]
+    });
+
+    var table_contract_cancel = $('#table-contract-cancel').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: '/contracts?type=cancel',
+        columns: [{
+                data: 'id'
+            },
+            {
+                data: 'DT_RowData.pickup_location.location'
+            },
+            {
+                data: 'DT_RowData.dropoff_location.location'
+            },
+            {
+                data: 'pickup'
+            },
+            {
+                data: 'DT_RowData.car_types'
+            },
+            {
+                data: 'action'
+            },
+        ]
+    });
+
     $('#table-request-new').on('click', 'button.btn-delete-request', function () {
         var data = table_request_new.row($(this).parent()).data();
         $.ajaxSetup({
@@ -99,10 +150,52 @@ $(document).ready(function ()
             }
         });
     });
+
+    $('#table-contract-new').on('click', 'button.btn-delete-contract', function () {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var data = table_request_new.row($(this).parent()).data();
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/requests/' + data.id,
+                    success: function (data) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: data,
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then((result) => {
+                            window.location.href = "/requests";
+                        });
+                    },
+                    error: function (data) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: data,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
+                });
+            }
+        })
+    });
 });
 
-function initVarible() 
-{
+function initVarible() {
     to_airport_province = $('#to-airport-province');
     to_airport_airport = $('#to-airport-airport');
     from_airport_province = $('#from-airport-province');
@@ -149,16 +242,14 @@ function addInput(name, id) {
     document.getElementsByClassName(name)[0].appendChild(div);
 }
 
-function clearInput() 
-{
+function clearInput() {
     if (this.parentElement.parentElement) {
         this.parentElement.parentElement.remove();
     }
 }
 
 
-$('#to-airport-province').change(function () 
-{
+$('#to-airport-province').change(function () {
     $.ajax({
         type: 'GET',
         url: '/api/province-airport/' + to_airport_province.val(),
@@ -184,8 +275,7 @@ $('#airport-province').change(function () {
     });
 });
 
-$('#from-airport-province').change(function () 
-{
+$('#from-airport-province').change(function () {
     $.ajax({
         type: 'GET',
         url: '/api/province-airport/' + from_airport_province.val(),
@@ -198,23 +288,19 @@ $('#from-airport-province').change(function ()
     });
 });
 
-$('#btn-to-airport-add-pickup').click(function() 
-{
+$('#btn-to-airport-add-pickup').click(function () {
     addInput("to-airport-pickup", "to-aiport-pickup-");
 });
 
-$('#btn-to-airport-add-drop-off').click(function() 
-{
+$('#btn-to-airport-add-drop-off').click(function () {
     addInput("to-airport-drop-off", "to-aiport-drop-off-");
 });
 
-$('#btn-from-airport-add-drop-off').click(function() 
-{
+$('#btn-from-airport-add-drop-off').click(function () {
     addInput("from-airport-drop-off", "from-airport-drop-off-");
 });
 
-$('input[name=ways]').change(function() 
-{
+$('input[name=ways]').change(function () {
     to_airport_ways = $('input[name=ways]:checked').val();
     if (to_airport_ways == 0) {
         $('.to-airport-drop-off').css('display', 'none');
@@ -223,8 +309,7 @@ $('input[name=ways]').change(function()
     }
 });
 
-$('#btn-to-airport-submit').click(function(e) 
-{
+$('#btn-to-airport-submit').click(function (e) {
     e.preventDefault();
     $.ajaxSetup({
         headers: {
@@ -280,17 +365,17 @@ $('#btn-to-airport-submit').click(function(e)
                 showConfirmButton: false,
                 timer: 1500
             }).then((result) => {
-                window.location.href = "/requests";  
+                window.location.href = "/requests";
             });
         },
-        error: function(data) {
+        error: function (data) {
             var errors = data.responseJSON;
             if (errors.errors.car_type_id) {
                 $('#to-airport-car-type-error').text(errors.errors.car_type_id[0]);
-            } 
+            }
             if (errors.errors.pickup_location) {
                 $('#to-airport-pickup-error').text(errors.errors.pickup_location[0]);
-            } 
+            }
             if (errors.errors.pickup) {
                 $('#to-airport-datetime-error').text(errors.errors.pickup[0]);
             }
@@ -301,8 +386,7 @@ $('#btn-to-airport-submit').click(function(e)
     })
 });
 
-$('#btn-from-airport-submit').click(function(e) 
-{
+$('#btn-from-airport-submit').click(function (e) {
     e.preventDefault();
     $.ajaxSetup({
         headers: {
@@ -356,17 +440,17 @@ $('#btn-from-airport-submit').click(function(e)
                 showConfirmButton: false,
                 timer: 1500
             }).then((result) => {
-                window.location.href = "/requests";  
+                window.location.href = "/requests";
             });
         },
-        error: function(data) {
+        error: function (data) {
             var errors = data.responseJSON;
             if (errors.errors.car_type_id) {
                 $('#from-airport-car-type-error').text(errors.errors.car_type_id[0]);
-            } 
+            }
             if (errors.errors.dropoff_location) {
                 $('#from-airport-drop-off-error').text(errors.errors.dropoff_location[0]);
-            } 
+            }
             if (errors.errors.pickup) {
                 $('#from-airport-datetime-error').text(errors.errors.pickup[0]);
             }
@@ -397,7 +481,7 @@ $('#btn-update-request').click(function () {
         if (pickup) {
             pickup_location.push(pickup);
         }
-    } 
+    }
 
     var dropoff_location = [];
     let dropoff_inputs = $('.airport-drop-off').children().find('input');
@@ -435,7 +519,7 @@ $('#btn-update-request').click(function () {
                 showConfirmButton: false,
                 timer: 1500
             }).then((result) => {
-                window.location.href = "/requests";   
+                window.location.href = "/requests";
             });
         },
         error: function (data) {

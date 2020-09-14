@@ -55,6 +55,12 @@
                             </p>
                         </div>
                         <div class="form-group row">
+                            <h5 class="col-md-4">{{ trans('contents.common.form.price') }}</h5>
+                            <p class="col-md-8 lead">
+                                {{ $requestDetail->budget }} {{ trans('contents.common.vnd') }}
+                            </p>
+                        </div>
+                        <div class="form-group row">
                             <h5 class="col-md-4">{{ trans('contents.common.form.datetime') }}</h5>
                             <p class="col-md-8 lead">{{ $requestDetail->pickup }}</p>
                         </div>

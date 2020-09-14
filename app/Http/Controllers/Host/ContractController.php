@@ -7,6 +7,7 @@ use App\Http\Requests\StoreContractDriverPost;
 use App\Http\Requests\UpdateContractDriverPost;
 use App\Models\Contract;
 use App\Models\ContractDriver;
+use App\Models\Request as ModelsRequest;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -217,6 +218,10 @@ class ContractController extends Controller
             }
             $checkContract->update(['status' => config('constance.const.contract_cancel')]);
             $checkContract->delete();
+
+            $checkRequest = ModelsRequest::findOrFail($checkContract->request_id);
+            $checkRequest->update(['status' => config('constance.const.request_cancel')]);
+            $checkRequest->delete();
 
             return response()->json(trans('contents.alert.message.delete_contract_success'), 200);
         } catch (Exception $e) {

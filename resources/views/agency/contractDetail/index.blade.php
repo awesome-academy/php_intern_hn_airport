@@ -1,6 +1,6 @@
-@extends('host.layout')
+@extends('agency.layout')
 
-@section('title', 'Host Local Driver')
+@section('title', 'Agency Local Driver')
 
 @section('content')
 
@@ -103,17 +103,14 @@
                             </button>
                         </div>
                     </div>
-                    <form action="{{ route('host.contracts.update', $contractDetail->contractDriver->id) }}" method="post" enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
+                    <form>
                         <div class="card-body">
                             <div class="form-group">
                                 <label>{{ trans('contents.common.form.driver_name') }}</label>
                                 @error('name')
                                     <label class="text-danger"><i class="far fa-times-circle"></i>{{ $message }}</label>
                                 @enderror
-                                <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                    @if ($contractDetail->status == config('constance.const.contract_cancel')) disabled @endif 
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" disabled
                                     name="name" value="{{ $contractDetail->contractDriver->name }}">
                             </div>
                             <div class="form-group">
@@ -121,8 +118,7 @@
                                 @error('phone')
                                     <label class="text-danger"><i class="far fa-times-circle"></i>{{ $message }}</label>
                                 @enderror
-                                <input type="text" class="form-control @error('phone') is-invalid @enderror" 
-                                    @if ($contractDetail->status == config('constance.const.contract_cancel')) disabled @endif
+                                <input type="text" class="form-control @error('phone') is-invalid @enderror" disabled
                                     name="phone" value="{{ $contractDetail->contractDriver->phone }}">
                             </div>
                             <div class="form-group">
@@ -130,8 +126,7 @@
                                 @error('car_plate')
                                     <label class="text-danger"><i class="far fa-times-circle"></i>{{ $message }}</label>
                                 @enderror
-                                <input type="text" class="form-control @error('car_plate') is-invalid @enderror"
-                                    @if ($contractDetail->status == config('constance.const.contract_cancel')) disabled @endif
+                                <input type="text" class="form-control @error('car_plate') is-invalid @enderror" disabled
                                     name="car_plate" value="{{ $contractDetail->contractDriver->car_plate }}">
                             </div>
                             <div class="form-group">
@@ -139,8 +134,7 @@
                                 @error('car_name')
                                     <label class="text-danger"><i class="far fa-times-circle"></i>{{ $message }}</label>
                                 @enderror
-                                <input type="text" class="form-control @error('car_name') is-invalid @enderror" 
-                                    @if ($contractDetail->status == config('constance.const.contract_cancel')) disabled @endif
+                                <input type="text" class="form-control @error('car_name') is-invalid @enderror" disabled
                                     name="car_name" value="{{ $contractDetail->contractDriver->car_name }}">
                             </div>
                             <div class="form-group">
@@ -152,11 +146,6 @@
                                     id="driver-avatar">
                                 <input type="file" name="avatar" hidden>
                             </div>
-                        </div>
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-primary float-right" 
-                                @if ($contractDetail->status == config('constance.const.contract_cancel')) hidden @endif>
-                                {{ trans('contents.common.form.update_driver') }}</button>
                         </div>
                     </form>
                 </div>

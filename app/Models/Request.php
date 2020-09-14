@@ -46,6 +46,6 @@ class Request extends Model
 
     public function contract() 
     {
-        return $this->hasOne(Contract::class);
+        return $this->hasOne(Contract::class, 'request_id');
     }
 }
