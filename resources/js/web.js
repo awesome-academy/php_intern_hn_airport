@@ -63,9 +63,6 @@ function initVarible() {
             }
         })
     });
-    autoCompleteDropOff.addListener("place_changed", () => {
-        const place = autoCompleteDropOff.getPlace();
-    });
 }
 
 function initAutocomplete() {

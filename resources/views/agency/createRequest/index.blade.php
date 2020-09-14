@@ -60,7 +60,7 @@
                                                 <button type="button" class="btn btn-sm btn-default float-right"
                                                     id="btn-to-airport-add-pickup">{{ trans('contents.common.form.add_pickup') }}</i></button>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="form-control" id="to-airport-pickup">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -106,7 +106,7 @@
                                                 <button type="button" class="btn btn-sm btn-default float-right"
                                                     id="btn-to-airport-add-drop-off">{{ trans('contents.common.form.add_dropoff') }}</i></button>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="form-control" id="to-airport-dropoff">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -176,7 +176,7 @@
                                                 <button type="button" class="btn btn-sm btn-default float-right"
                                                     id="btn-from-airport-add-drop-off">{{ trans('contents.common.form.add_dropoff') }}</i></button>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="form-control" id="from-airport-dropoff">
                                                 </div>
                                             </div>
                                             <div class="form-group">

@@ -37,6 +37,7 @@ class RequestController extends Controller
                         'requestDestinations',
                         'carTypes',
                     ])
+                    ->distinct()
                     ->get();
 
                 return DataTables::of($requests)

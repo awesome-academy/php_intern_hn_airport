@@ -46,9 +46,9 @@ return [
         'contract' => 'public/images/contracts',
     ],
     'distance' => [
-        'tier_1' => 10000,
-        'tier_2' => 20000,
-        'tier_special' => 30000,
+        'tier_1' => 10,
+        'tier_2' => 20,
+        'tier_special' => 30,
     ],
     'car' => [
         'type_1' => 4,

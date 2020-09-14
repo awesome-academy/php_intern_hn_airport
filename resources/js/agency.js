@@ -11,8 +11,11 @@ var from_airport_airport;
 var number_to_airport_pickup = 1;
 var number_to_airport_drop_off = 1;
 var number_from_airport_drop_off = 1;
+var update_number_pickup;
+var update_number_drop_off;
 var to_airport_ways;
 var province_airport_id;
+var options;
 
 
 $(document).ready(function () {
@@ -121,37 +124,6 @@ $(document).ready(function () {
     });
 
     $('#table-request-new').on('click', 'button.btn-delete-request', function () {
-        var data = table_request_new.row($(this).parent()).data();
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            type: 'DELETE',
-            url: '/requests/' + data.id,
-            success: function (data) {
-                Swal.fire({
-                    icon: 'success',
-                    title: data,
-                    showConfirmButton: false,
-                    timer: 1500
-                }).then((result) => {
-                    window.location.href = "/requests";
-                });
-            },
-            error: function (data) {
-                Swal.fire({
-                    icon: 'error',
-                    title: data,
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            }
-        });
-    });
-
-    $('#table-contract-new').on('click', 'button.btn-delete-contract', function () {
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -193,6 +165,50 @@ $(document).ready(function () {
             }
         })
     });
+
+    $('#table-contract-new').on('click', 'button.btn-delete-contract', function () {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var data = table_contract_new.row($(this).parent()).data();
+                console.log(data);
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/contracts/' + data.contract.id,
+                    success: function (data) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: data,
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then((result) => {
+                            window.location.href = "/contracts";
+                        });
+                    },
+                    error: function (data) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: data,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
+                });
+            }
+        })
+    });
 });
 
 function initVarible() {
@@ -201,6 +217,41 @@ function initVarible() {
     from_airport_province = $('#from-airport-province');
     from_airport_airport = $('#from-airport-airport');
     province_airport_id = $('#airport-province-airport-id').val();
+
+    options = {
+        componentRestrictions: {
+            country: 'VN'
+        }
+    };
+    autoCompletePickUp = new google.maps.places.Autocomplete(document.getElementById('to-airport-pickup'), options);
+    autoCompleteDropOffToAirport = new google.maps.places.Autocomplete(document.getElementById('to-airport-dropoff'), options);
+    autoCompleteDropOffFromAiprort = new google.maps.places.Autocomplete(document.getElementById('from-airport-dropoff'), options);
+    autoCompletePickUp.addListener("place_changed", () => {
+        const place = autoCompletePickUp.getPlace();
+        var result_array_length = place.address_components.length;
+        for (var index = 0; index < result_array_length; index++) {
+            if (place.address_components[index].types[0] == "administrative_area_level_1") {
+                var city_name = place.address_components[index].short_name.trim();
+            }
+        }
+        $.ajax({
+            type: 'GET',
+            url: `/api/province-search?city=${city_name}`,
+            success: function (data) {
+                to_airport_province.val(data.id);
+                $.ajax({
+                    type: 'GET',
+                    url: `/api/province-airport/${data.id}`,
+                    success: function (data) {
+                        if (data.provinceAirport) {
+                            to_airport_airport.val(data.provinceAirport.name);
+                            province_airport_id = data.provinceAirport.id;
+                        }
+                    }
+                });
+            }
+        })
+    });
 }
 
 $('.btn-clear').click(function () {
@@ -217,7 +268,7 @@ $('#btn-airport-add-drop-off').click(function () {
     addInput("airport-drop-off", "aiport-drop-off-");
 });
 
-function addInput(name, id) {
+function addInput(name, id, number) {
     let div = document.createElement("div");
     div.classList.add("input-group");
 
@@ -233,6 +284,7 @@ function addInput(name, id) {
     divPrepend.appendChild(button);
 
     let input = document.createElement("input");
+    input.id = `${id}${number}`
     input.type = "text";
     input.classList.add("form-control");
 
@@ -240,6 +292,7 @@ function addInput(name, id) {
     div.appendChild(divPrepend);
 
     document.getElementsByClassName(name)[0].appendChild(div);
+    addAutocomplete(input.id);
 }
 
 function clearInput() {
@@ -248,6 +301,9 @@ function clearInput() {
     }
 }
 
+function addAutocomplete(id) {
+    autoComplete = new google.maps.places.Autocomplete(document.getElementById(id), options);
+}
 
 $('#to-airport-province').change(function () {
     $.ajax({
@@ -289,15 +345,18 @@ $('#from-airport-province').change(function () {
 });
 
 $('#btn-to-airport-add-pickup').click(function () {
-    addInput("to-airport-pickup", "to-aiport-pickup-");
+    number_to_airport_pickup += 1;
+    addInput("to-airport-pickup", "to-aiport-pickup-", number_to_airport_pickup);
 });
 
 $('#btn-to-airport-add-drop-off').click(function () {
-    addInput("to-airport-drop-off", "to-aiport-drop-off-");
+    number_to_airport_drop_off += 1;
+    addInput("to-airport-drop-off", "to-aiport-drop-off-", number_to_airport_drop_off);
 });
 
 $('#btn-from-airport-add-drop-off').click(function () {
-    addInput("from-airport-drop-off", "from-airport-drop-off-");
+    number_from_airport_drop_off += 1;
+    addInput("from-airport-drop-off", "from-airport-drop-off-", number_from_airport_drop_off);
 });
 
 $('input[name=ways]').change(function () {
@@ -311,15 +370,9 @@ $('input[name=ways]').change(function () {
 
 $('#btn-to-airport-submit').click(function (e) {
     e.preventDefault();
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
+
     var car_type_id = $('#to-airport-car-type').val();
     var pickup = $('#to-airport-datetime').val();
-    // Hiện tại để budget mặc định viết hàm tính tiền sau
-    var budget = 100000;
     var note = $('#to-airport-note').val();
 
     var pickup_location = [];
@@ -344,11 +397,11 @@ $('#btn-to-airport-submit').click(function (e) {
         }
     }
 
-    var data = {
+    var dataCalculate = {
         car_type_id: car_type_id,
         province_airport_id: province_airport_id,
         pickup: pickup,
-        budget: budget,
+        budget: 0,
         pickup_location: pickup_location,
         dropoff_location: dropoff_location,
         note: note,
@@ -356,48 +409,92 @@ $('#btn-to-airport-submit').click(function (e) {
 
     $.ajax({
         type: 'POST',
-        url: '/requests',
-        data: data,
+        url: '/api/calculate-price',
+        data: dataCalculate,
         success: function (data) {
             Swal.fire({
-                icon: 'success',
-                title: data,
-                showConfirmButton: false,
-                timer: 1500
+                title: data.title,
+                text: data.message,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
             }).then((result) => {
-                window.location.href = "/requests";
-            });
+                if (result.isConfirmed) {
+                    data = {
+                        car_type_id: car_type_id,
+                        province_airport_id: province_airport_id,
+                        pickup: pickup,
+                        dropoff_location: dropoff_location,
+                        pickup_location: pickup_location,
+                        budget: data.budget,
+                    }
+
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/requests',
+                        data: data,
+                        success: function (data) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: data,
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then((result) => {
+                                window.location.href = "/requests";
+                            });
+                        },
+                        error: function (data) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: data,
+                                showConfirmButton: false,
+                                timer: 1500,
+                            })
+                        },
+                    });
+                }
+            })
         },
         error: function (data) {
             var errors = data.responseJSON;
-            if (errors.errors.car_type_id) {
-                $('#to-airport-car-type-error').text(errors.errors.car_type_id[0]);
-            }
-            if (errors.errors.pickup_location) {
-                $('#to-airport-pickup-error').text(errors.errors.pickup_location[0]);
-            }
-            if (errors.errors.pickup) {
-                $('#to-airport-datetime-error').text(errors.errors.pickup[0]);
-            }
-            if (errors.errors.dropoff_location) {
-                $('#to-airport-province-error').text(errors.errors.dropoff_location[0]);
+            if (errors.errors) {
+                if (errors.errors.car_type_id) {
+                    $('#to-airport-car-type-error').text(errors.errors.car_type_id[0]);
+                }
+                if (errors.errors.pickup_location) {
+                    $('#to-airport-pickup-error').text(errors.errors.pickup_location[0]);
+                }
+                if (errors.errors.pickup) {
+                    $('#to-airport-datetime-error').text(errors.errors.pickup[0]);
+                }
+                if (errors.errors.dropoff_location) {
+                    $('#to-airport-province-error').text(errors.errors.dropoff_location[0]);
+                }
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: errors,
+                    showConfirmButton: false,
+                    timer: 1500,
+                })
             }
         },
-    })
+    });
 });
 
 $('#btn-from-airport-submit').click(function (e) {
     e.preventDefault();
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
 
     var car_type_id = $('#from-airport-car-type').val();
     var pickup = $('#from-airport-datetime').val();
-    // Hiện tại để budget mặc định viết hàm tính tiền sau
-    var budget = 100000;
     var flight_no = $('#from-airport-flight').val()
     var note;
     if (flight_no) {
@@ -419,11 +516,11 @@ $('#btn-from-airport-submit').click(function (e) {
         }
     }
 
-    var data = {
+    var dataCalculate = {
         car_type_id: car_type_id,
         province_airport_id: province_airport_id,
         pickup: pickup,
-        budget: budget,
+        budget: 0,
         pickup_location: pickup_location,
         dropoff_location: dropoff_location,
         note: note,
@@ -431,47 +528,93 @@ $('#btn-from-airport-submit').click(function (e) {
 
     $.ajax({
         type: 'POST',
-        url: '/requests',
-        data: data,
+        url: '/api/calculate-price',
+        data: dataCalculate,
         success: function (data) {
             Swal.fire({
-                icon: 'success',
-                title: data,
-                showConfirmButton: false,
-                timer: 1500
+                title: data.title,
+                text: data.message,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
             }).then((result) => {
-                window.location.href = "/requests";
-            });
+                if (result.isConfirmed) {
+                    data = {
+                        car_type_id: car_type_id,
+                        province_airport_id: province_airport_id,
+                        pickup: pickup,
+                        budget: data.budget,
+                        pickup_location: pickup_location,
+                        dropoff_location: dropoff_location,
+                        note: note,
+                    }
+
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/requests',
+                        data: data,
+                        success: function (data) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: data,
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then((result) => {
+                                window.location.href = "/requests";
+                            });
+                        },
+                        error: function (data) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: data,
+                                showConfirmButton: false,
+                                timer: 1500,
+                            })
+                        },
+                    });
+                }
+            })
         },
         error: function (data) {
             var errors = data.responseJSON;
-            if (errors.errors.car_type_id) {
-                $('#from-airport-car-type-error').text(errors.errors.car_type_id[0]);
-            }
-            if (errors.errors.dropoff_location) {
-                $('#from-airport-drop-off-error').text(errors.errors.dropoff_location[0]);
-            }
-            if (errors.errors.pickup) {
-                $('#from-airport-datetime-error').text(errors.errors.pickup[0]);
-            }
-            if (errors.errors.pickup_location) {
-                $('#from-airport-province-error').text(errors.errors.pickup_location[0]);
+            if (errors.errors) {
+                if (errors.errors.car_type_id) {
+                    $('#from-airport-car-type-error').text(errors.errors.car_type_id[0]);
+                }
+                if (errors.errors.dropoff_location) {
+                    $('#from-airport-drop-off-error').text(errors.errors.dropoff_location[0]);
+                }
+                if (errors.errors.pickup) {
+                    $('#from-airport-datetime-error').text(errors.errors.pickup[0]);
+                }
+                if (errors.errors.pickup_location) {
+                    $('#from-airport-province-error').text(errors.errors.pickup_location[0]);
+                }
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: errors,
+                    showConfirmButton: false,
+                    timer: 1500,
+                })
             }
         },
-    })
+    });
 });
 
 $('#btn-update-request').click(function () {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
     var id = $('#request-id').val();
     var car_type_id = $('#airport-car-type').val();
     var pickup = $('#airport-datetime').val();
-    // Hiện tại để budget mặc định viết hàm tính tiền sau
-    var budget = 100000;
+    var budget = parseInt($('#request-budget').val().split(" ", 1));
     var note = $('#airport-note').val();
 
     var pickup_location = [];
@@ -498,7 +641,7 @@ $('#btn-update-request').click(function () {
         dropoff_location.push($('#airport-province-airport').val());
     }
 
-    var data = {
+    var dataCalculate = {
         car_type_id: car_type_id,
         province_airport_id: province_airport_id,
         pickup: pickup,
@@ -509,33 +652,85 @@ $('#btn-update-request').click(function () {
     }
 
     $.ajax({
-        type: 'PUT',
-        url: '/requests/' + id,
-        data: data,
+        type: 'POST',
+        url: '/api/calculate-price',
+        data: dataCalculate,
         success: function (data) {
             Swal.fire({
-                icon: 'success',
-                title: data,
-                showConfirmButton: false,
-                timer: 1500
+                title: data.title,
+                text: data.message,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
             }).then((result) => {
-                window.location.href = "/requests";
-            });
+                if (result.isConfirmed) {
+                    data = {
+                        car_type_id: car_type_id,
+                        province_airport_id: province_airport_id,
+                        pickup: pickup,
+                        budget: data.budget,
+                        pickup_location: pickup_location,
+                        dropoff_location: dropoff_location,
+                        note: note,
+                    }
+
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+
+                    $.ajax({
+                        type: 'PUT',
+                        url: '/requests/' + id,
+                        data: data,
+                        success: function (data) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: data,
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then((result) => {
+                                window.location.href = "/requests";
+                            });
+                        },
+                        error: function (data) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: data,
+                                showConfirmButton: false,
+                                timer: 1500,
+                            })
+                        },
+                    });
+                }
+            })
         },
         error: function (data) {
             var errors = data.responseJSON;
-            if (errors.errors.car_type_id) {
-                $('#airport-car-type-error').text(errors.errors.car_type_id[0]);
-            }
-            if (errors.errors.pickup_location) {
-                $('#airport-pickup-error').text(errors.errors.pickup_location[0]);
-            }
-            if (errors.errors.pickup) {
-                $('#airport-datetime-error').text(errors.errors.pickup[0]);
-            }
-            if (errors.errors.dropoff_location) {
-                $('#airport-province-error').text(errors.errors.dropoff_location[0]);
+            if (errors.errors) {
+                if (errors.errors.car_type_id) {
+                    $('#airport-car-type-error').text(errors.errors.car_type_id[0]);
+                }
+                if (errors.errors.pickup_location) {
+                    $('#airport-pickup-error').text(errors.errors.pickup_location[0]);
+                }
+                if (errors.errors.pickup) {
+                    $('#airport-datetime-error').text(errors.errors.pickup[0]);
+                }
+                if (errors.errors.dropoff_location) {
+                    $('#airport-province-error').text(errors.errors.dropoff_location[0]);
+                }
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: errors,
+                    showConfirmButton: false,
+                    timer: 1500,
+                })
             }
         },
-    })
+    });
 });

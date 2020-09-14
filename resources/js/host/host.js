@@ -77,34 +77,46 @@ $(document).ready(function () {
     });
 
     $('#table-contract-new').on('click', 'button.btn-delete-contract', function () {
-        var data = table_contract_new.row($(this).parent()).data();
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            type: 'DELETE',
-            url: '/contracts/' + data.id,
-            success: function (data) {
-                Swal.fire({
-                    icon: 'success',
-                    title: data,
-                    showConfirmButton: false,
-                    timer: 1500
-                }).then((result) => {
-                    window.location.href = "/contracts";
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var data = table_contract_new.row($(this).parent()).data();
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
                 });
-            },
-            error: function (data) {
-                Swal.fire({
-                    icon: 'error',
-                    title: data,
-                    showConfirmButton: false,
-                    timer: 1500
-                })
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/contracts/' + data.id,
+                    success: function (data) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: data,
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then((result) => {
+                            window.location.href = "/contracts";
+                        });
+                    },
+                    error: function (data) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: data,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
+                });
             }
-        });
+        })
     });
 })
 

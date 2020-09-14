@@ -130,7 +130,7 @@ class RequestController extends Controller
     {   
         $input = $request->all();
         $input['user_id'] = Auth::user()->id;
-        $input['pickup'] = date('Y-m-d', strtotime($request->pickup));
+        $input['pickup'] = date(config('constance.datetime'), strtotime($request->pickup));
         $input['status'] = config('constance.const.request_new');
         
         $createRequest = ModelsRequest::create($input);
@@ -226,9 +226,9 @@ class RequestController extends Controller
                 $requestDestination->save();
             }
             
-            return response()->json(trans('contents.alert.message.update_request_success'), 200);
+            return response()->json(trans('contents.common.alert.message.update_request_success'), 200);
         } else {
-            return response()->json(trans('contents.alert.message.update_request_failed'), 500);
+            return response()->json(trans('contents.common.alert.message.update_request_failed'), 500);
         }
         try {
             
@@ -248,12 +248,12 @@ class RequestController extends Controller
         try {
             $checkRequest = ModelsRequest::findOrFail($id);
             if ($checkRequest->status != config('constance.const.request_new')) {
-                return response()->json(trans('contents.alert.message.delete_request_success'), 500);
+                return response()->json(trans('contents.common.alert.message.delete_request_fail'), 500);
             }
             $checkRequest->update(['status' => config('constance.const.request_cancel')]);
             $checkRequest->delete();
 
-            return response()->json(trans('contents.alert.message.delete_request_fail'), 200);
+            return response()->json(trans('contents.common.alert.message.delete_request_success'), 200);
         } catch (Exception $e) {
             return response()->json($e, 500);
         }

@@ -21,6 +21,7 @@ return [
         'driver' => 'Lái xe',
         'en' => 'English',
         'vi' => 'Tiếng Việt',
+        'vnd' => 'VNĐ',
         'form' => [
             'name' => 'Họ tên',
             'email' => 'Email',
@@ -49,6 +50,9 @@ return [
             'submit' => 'Đặt xe',
             'choose_province' => 'Chọn tỉnh thành',
             'choose_airport' => 'Chọn sân bay',
+            'choose_car' => 'Chọn xe',
+            'add_pickup' => 'Thêm điểm đón',
+            'add_dropoff' => 'Thêm điểm đến',
             'flight_no' => 'Số hiệu chuyến bay',
             'quantity' => 'Số lượng',
             'add_detail' => 'Thêm chi tiết',
@@ -61,6 +65,7 @@ return [
             'car_plate' => 'Biển số xe',
             'car_name' => 'Tên xe',
             'update_driver' => 'Cập nhật lái xe',
+            'price' => 'Gía tiền',
         ],
         'alert' => [
             'title' => [
@@ -80,6 +85,7 @@ return [
                 'delete_contract_success' => 'Hủy hợp đồng thành công',
                 'delete_contract_fail' => 'Hủy hợp đồng thất bại',
                 'calculate_price_success' => "Chuyến đi của bạn đã sẵn sàng",
+                'calculate_price_update_success' => "Giá mới cho chuyến đi của bạn đã sẵn sàng",
                 'create_request_success' => 'Tạo yêu cầu mới thành công',
                 'create_request_fail' => 'Tạo yêu cầu mới thất bại',
             ],
@@ -111,7 +117,8 @@ return [
                 'delete_contract_success' => 'Hủy hợp đồng thành công',
                 'delete_contract_fail' => 'Hủy hợp đồng thất bại',
                 'calculate_price_fail' => 'Xin lỗi, chúng tôi không thể nhận chuyến của bạn!',
-                'calculate_price_success' => "Chuyến đi của bạn là :budget VNĐ. Bạn có muốn tạo yêu cầu này?",
+                'calculate_price_success' => "Giá chuyến đi của bạn là :budget VNĐ. Bạn có muốn tạo yêu cầu này?",
+                'calculate_price_update_success' => "Giá mới chuyến đi của bạn là :budget VNĐ. Bạn có muốn cập nhật yêu cầu này?",
                 'create_request_success' => 'Tạo yêu cầu dặt xe thành công',
                 'create_request_fail' => 'Tạo yêu cầu đặt xe thất bại',
             ],

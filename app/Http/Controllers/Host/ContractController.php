@@ -214,16 +214,12 @@ class ContractController extends Controller
         try {
             $checkContract = Contract::findOrFail($id);
             if ($checkContract->status != config('constance.const.contract_new')) {
-                return response()->json(trans('contents.alert.message.delete_contract_fail'), 500);
+                return response()->json(trans('contents.common.alert.message.delete_contract_fail'), 500);
             }
             $checkContract->update(['status' => config('constance.const.contract_cancel')]);
             $checkContract->delete();
 
-            $checkRequest = ModelsRequest::findOrFail($checkContract->request_id);
-            $checkRequest->update(['status' => config('constance.const.request_cancel')]);
-            $checkRequest->delete();
-
-            return response()->json(trans('contents.alert.message.delete_contract_success'), 200);
+            return response()->json(trans('contents.common.alert.message.delete_contract_success'), 200);
         } catch (Exception $e) {
             return response()->json($e, 500);
         }

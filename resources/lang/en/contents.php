@@ -21,6 +21,7 @@ return [
         'driver' => 'Driver',
         'en' => 'English',
         'vi' => 'Vietnam',
+        'vnd' => 'VND',
         'form' => [
             'name' => 'Full name',
             'email' => 'Email',
@@ -49,6 +50,9 @@ return [
             'submit' => 'Book Car',
             'choose_province' => 'Choose Provice',
             'choose_airport' => 'Choose Airport',
+            'choose_car' => 'Choose Car',
+            'add_pickup' => 'Add Pickup',
+            'add_dropoff' => 'Add Drop Off',
             'flight_no' => 'Flight No',
             'quantity' => 'Quantity',
             'add_detail' => 'Add Detail',
@@ -61,6 +65,7 @@ return [
             'car_plate' => 'Car Plate',
             'car_name' => 'Car Name',
             'update_driver' => 'Update Driver',
+            'price' => 'Price',
         ],
         'alert' => [
             'title' => [
@@ -80,6 +85,7 @@ return [
                 'delete_contract_success' => 'Cancel Contract Successful',
                 'delete_contract_fail' => 'Cancel Contract Failed',
                 'calculate_price_success' => "Your Request Is Ready!",
+                'calculate_price_update_success' => "Your Request's New Price Is Ready!",
                 'create_request_success' => 'Create Request Successful',
                 'create_request_fail' => 'Create Request Failed',
             ],
@@ -110,6 +116,7 @@ return [
                 'delete_contract_fail' => 'Cancel Contract Failed',
                 'calculate_price_fail' => 'Sorry your request is not supported!',
                 'calculate_price_success' => "Your request's price is :budget VND. Do you want to create this request?",
+                'calculate_price_update_success' => "Your request's new price is :budget VND. Do you want to update your request?",
                 'create_request_success' => 'Create New Request Successful',
                 'create_request_fail' => 'Create New Request Failed',
             ],
