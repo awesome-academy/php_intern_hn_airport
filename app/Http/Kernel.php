@@ -66,5 +66,6 @@ class Kernel extends HttpKernel
         'agency' => \App\Http\Middleware\CheckAgencyLogin::class,
         'host' => \App\Http\Middleware\CheckHostLogin::class,
         'host_detail' => \App\Http\Middleware\CheckHostDetail::class,
+        'locale' => \App\Http\Middleware\Locale::class,
     ];
 }

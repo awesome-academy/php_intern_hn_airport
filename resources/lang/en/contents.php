@@ -19,6 +19,8 @@ return [
         'list_request' => 'List Request',
         'list_contract' => 'List Contract',
         'driver' => 'Driver',
+        'en' => 'English',
+        'vi' => 'Vietnam',
         'form' => [
             'name' => 'Full name',
             'email' => 'Email',

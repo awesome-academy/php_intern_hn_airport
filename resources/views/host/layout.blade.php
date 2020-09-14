@@ -26,8 +26,9 @@
     <link rel="stylesheet"
         href="{{ asset('bower_components/bower_localdriver/AdminLTE/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
     <link href="{{ asset('bower_components/bower_localdriver/AdminLTE/plugins/fonts/fonts.css') }}" rel="stylesheet">
-    <link rel="stylesheet"
-        href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" 
+        href="{{ asset('bower_components/bower_localdriver/AdminLTE/plugins/flag-icon-css/css/flag-icon.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
     <script src="{{ asset('bower_components/bower_localdriver/AdminLTE/plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('bower_components/bower_localdriver/AdminLTE/plugins/jquery-ui/jquery-ui.min.js') }}">
@@ -70,6 +71,34 @@
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    @switch (Lang::locale())
+                        @case (config('constance.lang.en'))
+                            <a class="nav-link" data-toggle="dropdown" href="#">
+                                <i class="flag-icon flag-icon-us"></i>
+                            </a>
+                            @break
+                        @case (config('constance.lang.vi'))
+                            <a class="nav-link" data-toggle="dropdown" href="#">
+                                <i class="flag-icon flag-icon-vn"></i>
+                            </a>
+                            @break
+                        @default
+                            @break
+                    @endswitch
+                    <div class="dropdown-menu dropdown-menu-right p-0">
+                        <a href="{{ route('changeLanguage', config('constance.lang.en')) }}"
+                            class="dropdown-item @if (Lang::locale() == config('constance.lang.en')) active @endif">
+                            <i class="flag-icon flag-icon-us mr-2"></i>
+                            {{ trans('contents.common.en') }}
+                        </a>
+                        <a href="{{ route('changeLanguage', config('constance.lang.vi')) }}"
+                            class="dropdown-item @if (Lang::locale() == config('constance.lang.vi')) active @endif">
+                            <i class="flag-icon flag-icon-vn mr-2"></i>
+                            {{ trans('contents.common.vi') }}
+                        </a>
+                    </div>
+                </li>
                 <li class="nav-item">
                     <form action="{{ route('host.postLogout') }}" method="post">
                         @csrf
