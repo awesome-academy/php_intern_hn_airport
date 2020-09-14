@@ -27,7 +27,7 @@ $factory->define(User::class, function (Faker $faker) {
         'email_verified_at' => now(),
         'password' => Hash::make('123'),
         'remember_token' => Str::random(10),
-        'phone' => $faker->regexify('(09|01[2|6|8|9])+([0-9]{8})'),
+        'phone' => $faker->regexify('(0)[0-9]{9}'),
         'role_id' => rand(1,4),
         'status' => 1,
     ];

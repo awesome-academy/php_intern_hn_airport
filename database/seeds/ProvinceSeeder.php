@@ -43,7 +43,7 @@ class ProvinceSeeder extends Seeder
             ['name' => 'Hậu Giang'],
             ['name' => 'Hòa Bình'],
             ['name' => 'Hưng Yên'],
-            ['name' => 'Hồ Chí Minh'],
+            ['name' => 'Thành phố Hồ Chí Minh'],
             ['name' => 'Khánh Hòa'],
             ['name' => 'Kiên Giang'],
             ['name' => 'Kon Tum'],
