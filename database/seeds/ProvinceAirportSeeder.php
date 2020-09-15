@@ -23,7 +23,7 @@ class ProvinceAirportSeeder extends Seeder
             ],
             [
                 'name' => 'Sân bay Quốc tế Tân Sơn Nhất',
-                'province_id' => array_search('Hồ Chí Minh', array_column($provinceNames, 'name')) + 1,
+                'province_id' => array_search('Thành phố  Hồ Chí Minh', array_column($provinceNames, 'name')) + 1,
             ],
             [
                 'name' => 'Sân bay Quốc tế Đà Nẵng',

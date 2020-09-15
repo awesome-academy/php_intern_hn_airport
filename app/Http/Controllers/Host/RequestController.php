@@ -62,6 +62,10 @@ class RequestController extends Controller
                                 }
                             }
                         },
+                        'budget' => function($request)
+                        {
+                            return ($request->budget) . ' ' . trans('contents.common.vnd');
+                        },
                     ])
                     ->addColumn('action', function ($user) 
                     {
@@ -69,6 +73,7 @@ class RequestController extends Controller
                         <i class="fa fa-eye"></i>' . trans('contents.common.table.view') . '</a>';
                     })
                     ->rawColumns(['action'])
+                    ->addIndexColumn()
                     ->make(true);
             }
         }

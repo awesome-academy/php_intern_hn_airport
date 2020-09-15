@@ -28,7 +28,7 @@ $(document).ready(function () {
         serverSide: true,
         ajax: '/requests?type=new',
         columns: [{
-                data: 'id'
+                data: 'DT_RowIndex'
             },
             {
                 data: 'DT_RowData.pickup_location.location'
@@ -41,6 +41,9 @@ $(document).ready(function () {
             },
             {
                 data: 'DT_RowData.car_types'
+            },
+            {
+                data: 'DT_RowData.budget'
             },
             {
                 data: 'action'
@@ -53,7 +56,7 @@ $(document).ready(function () {
         serverSide: true,
         ajax: '/requests?type=cancel',
         columns: [{
-                data: 'id'
+                data: 'DT_RowIndex'
             },
             {
                 data: 'DT_RowData.pickup_location.location'
@@ -66,6 +69,9 @@ $(document).ready(function () {
             },
             {
                 data: 'DT_RowData.car_types'
+            },
+            {
+                data: 'DT_RowData.budget'
             },
             {
                 data: 'action'
@@ -78,7 +84,7 @@ $(document).ready(function () {
         serverSide: true,
         ajax: '/contracts?type=new',
         columns: [{
-                data: 'id'
+                data: 'DT_RowIndex'
             },
             {
                 data: 'DT_RowData.pickup_location.location'
@@ -91,6 +97,9 @@ $(document).ready(function () {
             },
             {
                 data: 'DT_RowData.car_types'
+            },
+            {
+                data: 'DT_RowData.budget'
             },
             {
                 data: 'action'
@@ -103,7 +112,7 @@ $(document).ready(function () {
         serverSide: true,
         ajax: '/contracts?type=cancel',
         columns: [{
-                data: 'id'
+                data: 'DT_RowIndex'
             },
             {
                 data: 'DT_RowData.pickup_location.location'
@@ -116,6 +125,9 @@ $(document).ready(function () {
             },
             {
                 data: 'DT_RowData.car_types'
+            },
+            {
+                data: 'DT_RowData.budget'
             },
             {
                 data: 'action'
