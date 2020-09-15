@@ -137,6 +137,25 @@ return [
             'new' => 'New',
             'cancel' => 'Canceled',
         ],
+        'month' => [
+            'jan' => 'January',
+            'feb' => 'February',
+            'mar' => 'March',
+            'apr' => 'April',
+            'may' => 'May',
+            'june' => 'June',
+            'july' => 'July',
+            'aug' => 'August',
+            'sep' => 'September',
+            'oct' => 'October',
+            'nov' => 'November',
+            'dec' => 'December',
+        ],
+        'chart' => [
+            'title' => 'Chart',
+            'monthly' => 'Monthly',
+            'yearly' => 'Yearly',
+        ],
     ],
     'web' => [
         'form' => [
@@ -152,6 +171,7 @@ return [
     'admin' => [
         'title' => 'AdminLocalDriver',
         'new_requests' => 'New Requests',
+        'cancel_requests' => 'Cancel Requests',
         'new_contracts' => 'New Contracts',
         'unique_requests' => 'Unique Requests',
         'monthly_chart' => 'Monthly Chart',
@@ -159,6 +179,10 @@ return [
         'add_agency' => 'Add Agency',
         'list_host' => 'List Host',
         'add_host' => 'Add Host',
+        'config' => [
+            'config' => 'Config',
+            'basic' => 'Basic',
+        ],
     ],
     'agency' => [
         'title' => 'AgencyLocalDriver',

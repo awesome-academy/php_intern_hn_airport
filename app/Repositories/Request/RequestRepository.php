@@ -4,6 +4,7 @@ namespace App\Repositories\Request;
 use App\Models\Request;
 use App\Repositories\BaseRepository;
 use App\Repositories\Request\RequestRepositoryInterface;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -117,5 +118,47 @@ class RequestRepository extends BaseRepository implements RequestRepositoryInter
             ])
             ->distinct()
             ->get();
+    }
+
+    public function countRequestByDate($date)
+    {
+        return $this->model->whereDate('created_at', $date)
+            ->whereNotNull('user_id')
+            ->count();
+    }
+
+    public function countUniqueRequestByDate($date)
+    {
+        return $this->model->whereDate('created_at', $date)
+            ->whereNull('user_id')
+            ->count();
+    }
+
+    public function getRequestByMonth($month)
+    {
+        return $this->model->whereMonth('created_at', $month)
+            ->get()
+            ->groupBy(function ($data) {
+                return Carbon::parse($data->created_at)->format('d');
+            });
+    }
+
+    public function getCancelRequestByMonth($month)
+    {
+        return $this->model->onlyTrashed()->whereMonth('deleted_at', $month)
+            ->get()
+            ->groupBy(function ($data) {
+                return Carbon::parse($data->deleted_at)->format('d');
+            });
+    }
+
+    public function countRequestByMonth($month)
+    {
+        return $this->model->whereMonth('created_at', $month)->count();
+    }
+
+    public function countCancelRequestByMonth($month)
+    {
+        return $this->model->withTrashed()->whereMonth('deleted_at', $month)->count();
     }
 }

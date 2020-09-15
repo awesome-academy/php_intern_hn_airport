@@ -63,7 +63,7 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">{{ trans('contents.common.home') }}</a>
+                    <a href="{{ route('admin.dashboard.index') }}" class="nav-link">{{ trans('contents.common.home') }}</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
@@ -104,7 +104,7 @@
             </ul>
         </nav>
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <a href="index3.html" class="brand-link">
+            <a href="#" class="brand-link">
                 <img src="{{ asset('bower_components/bower_localdriver/AdminLTE/dist/img/AdminLTELogo.png') }}"
                     class="brand-image img-circle elevation-3">
                 <span class="brand-text font-weight-light">{{ trans('contents.admin.title') }}</span>
@@ -158,6 +158,23 @@
                                     <a href="#" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>{{ trans('contents.common.host') }}</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-cog"></i>
+                                <p>
+                                    {{ trans('contents.admin.config.config') }}
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.config.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>{{ trans('contents.admin.config.basic') }}</p>
                                     </a>
                                 </li>
                             </ul>

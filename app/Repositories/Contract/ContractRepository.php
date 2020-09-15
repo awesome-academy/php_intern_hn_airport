@@ -56,4 +56,9 @@ class ContractRepository extends BaseRepository implements ContractRepositoryInt
 
         return false;
     }
+
+    public function countContractByDate($date)
+    {
+        return $this->model->whereDate('created_at', $date)->count();
+    }
 }

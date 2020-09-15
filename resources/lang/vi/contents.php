@@ -2,6 +2,7 @@
 
 return [
     'common' => [
+        'chart' => 'Thống kê',
         'register' => 'Đăng ký tài khoảng mới',
         'has_account' => 'Bạn đã có tài khoản?',
         'dashboard' => 'Dashboard',
@@ -139,6 +140,25 @@ return [
             'new' => 'Mới',
             'cancel' => 'Đã hủy',
         ],
+        'month' => [
+            'jan' => 'Tháng 1',
+            'feb' => 'Tháng 2',
+            'mar' => 'Tháng 3',
+            'apr' => 'Tháng 4',
+            'may' => 'Tháng 5',
+            'june' => 'Tháng 6',
+            'july' => 'Tháng 7',
+            'aug' => 'Tháng 8',
+            'sep' => 'Tháng 9',
+            'oct' => 'Tháng 10',
+            'nov' => 'Tháng 11',
+            'dec' => 'Tháng 12',
+        ],
+        'chart' => [
+            'title' => 'Thống kê',
+            'monthly' => 'Hàng Tháng',
+            'yearly' => 'Hàng Năm',
+        ],
     ],
     'web' => [
         'form' => [
@@ -154,6 +174,7 @@ return [
     'admin' => [
         'title' => 'AdminLocalDriver',
         'new_requests' => 'Yêu cầu mới',
+        'cancel_requests' => 'Yêu cầu hủy',
         'new_contracts' => 'Hợp đồng mới',
         'unique_requests' => 'Yêu cầu ẩn danh',
         'monthly_chart' => 'Monthly Chart',
@@ -161,6 +182,10 @@ return [
         'add_agency' => 'Thêm đại lý',
         'list_host' => 'Danh sách nhà xe',
         'add_host' => 'Thêm nhà xe',
+        'config' => [
+            'config' => 'Cài đặt',
+            'basic' => 'Cơ bản',
+        ],
     ],
     'agency' => [
         'title' => 'AgencyLocalDriver',
