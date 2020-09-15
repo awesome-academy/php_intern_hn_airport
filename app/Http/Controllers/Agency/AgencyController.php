@@ -137,6 +137,6 @@ class AgencyController extends Controller
         Auth::logout();
         alert()->success(trans('contents.common.alert.title.logout_success'), trans('contents.common.alert.message.logout_success'));
         
-        return redirect()->route('agency.agency.getLogin');
+        return redirect()->route('agency.getLogin');
     }
 }

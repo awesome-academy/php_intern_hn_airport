@@ -58,6 +58,10 @@ class ContractController extends Controller
                                 }
                             }
                         },
+                        'budget' => function($contract)
+                        {
+                            return ($contract->request->budget) . ' ' . trans('contents.common.vnd');
+                        },
                     ])
                     ->addColumn('action', function ($contract) 
                     {
@@ -67,6 +71,7 @@ class ContractController extends Controller
                             <i class="fa fa-trash"></i>' . trans('contents.common.table.delete') . '</button>';
                     })
                     ->rawColumns(['action'])
+                    ->addIndexColumn()
                     ->make(true);
             } else if ($request->type == config('constance.status.cancel')) {
                 $contracts = Contract::onlyTrashed()
@@ -99,6 +104,10 @@ class ContractController extends Controller
                                 }
                             }
                         },
+                        'budget' => function($contract)
+                        {
+                            return ($contract->request->budget) . ' ' . trans('contents.common.vnd');
+                        },
                     ])
                     ->addColumn('action', function ($contract) 
                     {
@@ -106,6 +115,7 @@ class ContractController extends Controller
                             <i class="fa fa-eye"></i>' . trans('contents.common.table.view') . '</a>';
                     })
                     ->rawColumns(['action'])
+                    ->addIndexColumn()
                     ->make(true);
             }
         } 

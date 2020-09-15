@@ -55,6 +55,7 @@
                                                 <th>{{ trans('contents.common.form.drop_off') }}</th>
                                                 <th>{{ trans('contents.common.form.datetime') }}</th>
                                                 <th>{{ trans('contents.common.table.car_type') }}</th>
+                                                <th>{{ trans('contents.common.form.price') }}</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -82,6 +83,7 @@
                                                 <th>{{ trans('contents.common.form.drop_off') }}</th>
                                                 <th>{{ trans('contents.common.form.datetime') }}</th>
                                                 <th>{{ trans('contents.common.table.car_type') }}</th>
+                                                <th>{{ trans('contents.common.form.price') }}</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
