@@ -10,6 +10,7 @@ return [
         'title_agency_login' => 'Agency Login',
         'title_host_register' => 'Host Register',
         'title_host_login' => 'Host Login',
+        'title_admin_login' => 'Admin Login',
         '404' => 'Page Not Found',
     ],
     'const' => [

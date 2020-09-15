@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             ProvinceSeeder::class,
             CarTypeSeeder::class,
-            ProvinceAirport::class,
+            ProvinceAirportSeeder::class,
+            UserSeeder::class,
         ]);
     }
 }

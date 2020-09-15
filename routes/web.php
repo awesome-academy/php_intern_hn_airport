@@ -23,8 +23,13 @@ Route::group(['middleware' => 'locale'], function () {
         ]);
     });
     
-    Route::group(['domain' => env('APP_ADMIN_URL')], function () {
-        
+    Route::group(['domain' => env('APP_ADMIN_URL'), 'namespace' => 'Admin', 'as' => 'admin.'], function () {
+        Route::get('login', 'AdminController@getLogin')->name('getLogin');
+        Route::post('login', 'AdminController@postLogin')->name('postLogin');
+        Route::group(['middleware' => 'admin'], function () {
+            Route::post('logout', 'AdminController@postLogout')->name('postLogout');
+            Route::get('/', 'DashboardController@index')->name('dashboard.index'); 
+        });
     });
     
     Route::group(['domain' => env('APP_AGENCY_URL'), 'namespace' => 'Agency', 'as' => 'agency.'], function () {
