@@ -190,7 +190,6 @@ $(document).ready(function () {
         }).then((result) => {
             if (result.isConfirmed) {
                 var data = table_contract_new.row($(this).parent()).data();
-                console.log(data);
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -399,7 +398,7 @@ $('#btn-to-airport-submit').click(function (e) {
     if (to_airport_airport.val()) {
         dropoff_location.push(to_airport_airport.val());
     }
-    if (to_airport_ways == 0) {
+    if (to_airport_ways) {
         let dropoff_inputs = $('.to-airport-drop-off').children().find('input');
         for (let index = 0; index < dropoff_inputs.length; index++) {
             let dropoff = dropoff_inputs[index].value;
@@ -537,7 +536,6 @@ $('#btn-from-airport-submit').click(function (e) {
         dropoff_location: dropoff_location,
         note: note,
     }
-
     $.ajax({
         type: 'POST',
         url: '/api/calculate-price',
