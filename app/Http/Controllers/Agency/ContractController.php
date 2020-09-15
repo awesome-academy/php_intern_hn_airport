@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Agency;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ViewShare\ViewShareController;
 use App\Models\Contract;
 use App\Models\Request as ModelsRequest;
 use Exception;
@@ -11,7 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
-class ContractController extends Controller
+class ContractController extends ViewShareController
 {
     /**
      * Display a listing of the resource.

@@ -26,12 +26,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $carTypes = CarType::all();
-        $provinces = Province::has('provinceAirports')->get();
-
-        View::share([
-            'carTypes' => $carTypes,
-            'provinces' => $provinces,
-        ]);
+        
     }
 }
