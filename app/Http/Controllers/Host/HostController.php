@@ -148,7 +148,7 @@ class HostController extends ViewShareController
     public function getDetail(Request $request) 
     {
         if ($request->ajax()) {
-            $hostDetails = HostDetail::where('user_id', Auth::user()->id)
+            $hostDetails = HostDetail::where('user_id', Auth::id())
                 ->with('provinces')
                 ->with('carTypes')    
                 ->get();
@@ -214,7 +214,7 @@ class HostController extends ViewShareController
     {   
         $input['province_id'] = $request->province_id;
         $input['car_type_id'] = $request->car_type_id;
-        $input['user_id'] = Auth::user()->id;
+        $input['user_id'] = Auth::id();
         $quantity = $request->quantity;
         $hostDetail = HostDetail::firstOrCreate(
             $input,

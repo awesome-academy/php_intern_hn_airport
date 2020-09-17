@@ -131,7 +131,7 @@ if (!function_exists('calculateDistance')) {
         if ($numPickup > config('constance.const.one')) {
             for ($i = 0; $i < $numPickup - config('constance.const.one'); $i++) { 
                 $origins = $pickupLocation[$i];
-                $j = $i++;
+                $j = $i + 1;
                 $destinations = $pickupLocation[$j];
                 $client = new Client();
                 $response = $client->get(config('constance.google_map') . $origins . 
@@ -150,7 +150,7 @@ if (!function_exists('calculateDistance')) {
         if ($numDropoff > config('constance.const.one')) {
             for ($i = 0; $i < $numDropoff - config('constance.const.one'); $i++) { 
                 $origins = $dropoffLocation[$i];
-                $j = $i++;
+                $j = $i + 1;
                 $destinations = $dropoffLocation[$j];
                 $client = new Client();
                 $response = $client->get(config('constance.google_map') . $origins . 
