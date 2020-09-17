@@ -60,7 +60,7 @@
                                             @foreach ($carTypes as $carType)
                                                 <option value="{{ $carType->id }}"
                                                     {{ old('car_type_id') == $carType->id ? 'selected' : '' }}>
-                                                    {{ $carType->type }}</option>
+                                                    {{ $carType->type }} {{ trans('contents.common.form.seat') }}</option>
                                             @endforeach
                                         </select>
                                     </div>

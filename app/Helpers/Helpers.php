@@ -131,7 +131,8 @@ if (!function_exists('calculateDistance')) {
         if ($numPickup > config('constance.const.one')) {
             for ($i = 0; $i < $numPickup - config('constance.const.one'); $i++) { 
                 $origins = $pickupLocation[$i];
-                $destinations = $pickupLocation[$i++];
+                $j = $i++;
+                $destinations = $pickupLocation[$j];
                 $client = new Client();
                 $response = $client->get(config('constance.google_map') . $origins . 
                     '&destinations=' . $destinations . '&key=' . env('GOOGLE_API_KEY'));
@@ -149,7 +150,8 @@ if (!function_exists('calculateDistance')) {
         if ($numDropoff > config('constance.const.one')) {
             for ($i = 0; $i < $numDropoff - config('constance.const.one'); $i++) { 
                 $origins = $dropoffLocation[$i];
-                $destinations = $dropoffLocation[$i++];
+                $j = $i++;
+                $destinations = $dropoffLocation[$j];
                 $client = new Client();
                 $response = $client->get(config('constance.google_map') . $origins . 
                     '&destinations=' . $destinations . '&key=' . env('GOOGLE_API_KEY'));
