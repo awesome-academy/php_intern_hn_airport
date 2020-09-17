@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ViewShare\ViewShareController;
 use App\Http\Requests\StoreRequestPost;
 use App\Http\Requests\StoreRequestWebPost;
 use App\Models\CarType;
@@ -13,7 +14,7 @@ use App\Models\RequestDestination;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
-class RequestController extends Controller
+class RequestController extends ViewShareController
 {
     /**
      * Display a listing of the resource.

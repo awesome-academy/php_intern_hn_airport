@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Agency;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ViewShare\ViewShareController;
 use App\Http\Requests\StoreRequestPost;
 use App\Models\CarType;
 use App\Models\Province;
@@ -15,7 +16,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Datatables;
 
-class RequestController extends Controller
+class RequestController extends ViewShareController
 {
     /**
      * Display a listing RequestControllerof the resource.

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Host;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ViewShare\ViewShareController;
 use App\Http\Requests\LoginPostRequest;
 use App\Http\Requests\StoreHostDetailPost;
 use App\Http\Requests\StoreUserPost;
@@ -17,7 +18,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Yajra\Datatables\Datatables;
 
-class HostController extends Controller
+class HostController extends ViewShareController
 {
     /**
      * Display a listing of the resource.

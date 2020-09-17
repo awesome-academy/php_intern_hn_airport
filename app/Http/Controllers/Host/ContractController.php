@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Host;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ViewShare\ViewShareController;
 use App\Http\Requests\StoreContractDriverPost;
 use App\Http\Requests\UpdateContractDriverPost;
 use App\Models\Contract;
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
-class ContractController extends Controller
+class ContractController extends ViewShareController
 {
     /**
      * Display a listing of the resource.
