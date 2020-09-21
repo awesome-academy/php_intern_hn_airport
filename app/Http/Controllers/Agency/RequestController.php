@@ -28,7 +28,7 @@ class RequestController extends ViewShareController
         if ($request->ajax()) {
             if ($request->type == config('constance.status.new')) {
                 $requests = ModelsRequest::where([
-                        'user_id'=> Auth::user()->id,
+                        'user_id'=> Auth::id(),
                         'status' => config('constance.const.request_new')
                     ])
                     ->with([
@@ -76,7 +76,7 @@ class RequestController extends ViewShareController
                     ->make(true);
             } else if ($request->type == config('constance.status.cancel')) {
                 $requests = ModelsRequest::onlyTrashed()
-                    ->where('user_id', Auth::user()->id)
+                    ->where('user_id', Auth::id())
                     ->with('carTypes')
                     ->with('requestDestinations')
                     ->get();
@@ -140,7 +140,7 @@ class RequestController extends ViewShareController
     public function store(StoreRequestPost $request)
     {   
         $input = $request->all();
-        $input['user_id'] = Auth::user()->id;
+        $input['user_id'] = Auth::id();
         $input['pickup'] = date(config('constance.datetime'), strtotime($request->pickup));
         $input['status'] = config('constance.const.request_new');
         

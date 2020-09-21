@@ -16,11 +16,11 @@ var update_number_drop_off;
 var to_airport_ways;
 var province_airport_id;
 var options;
+const two_ways = 1;
 
 
 $(document).ready(function () {
     initVarible();
-
     $.fn.dataTable.ext.errMode = 'none';
 
     var table_request_new = $('#table-request-new').DataTable({
@@ -398,7 +398,7 @@ $('#btn-to-airport-submit').click(function (e) {
     if (to_airport_airport.val()) {
         dropoff_location.push(to_airport_airport.val());
     }
-    if (to_airport_ways) {
+    if (to_airport_ways == two_ways) {
         let dropoff_inputs = $('.to-airport-drop-off').children().find('input');
         for (let index = 0; index < dropoff_inputs.length; index++) {
             let dropoff = dropoff_inputs[index].value;

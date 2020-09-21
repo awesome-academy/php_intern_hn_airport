@@ -32,7 +32,7 @@ class ContractController extends ViewShareController
                     'requestDestinations',
                 ])
                 ->where([
-                    'user_id' => Auth::user()->id,
+                    'user_id' => Auth::id(),
                     'status' => config('constance.const.request_to_contract'),
                 ])
                 ->get();
@@ -86,7 +86,7 @@ class ContractController extends ViewShareController
                     },
                 ])
                 ->where([
-                    'user_id' => Auth::user()->id,
+                    'user_id' => Auth::id(),
                     'status' => config('constance.const.request_to_contract'),
                 ])
                 ->get();

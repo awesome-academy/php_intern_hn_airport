@@ -28,7 +28,7 @@ class ContractController extends ViewShareController
         if ($request->ajax()) {
             if ($request->type == config('constance.status.new')) {
                 $contracts =  Contract::where([
-                    'supplier_id' => Auth::user()->id,
+                    'supplier_id' => Auth::id(),
                     'status' => config('constance.const.request_new')
                 ])
                 ->with([
@@ -76,7 +76,7 @@ class ContractController extends ViewShareController
                     ->make(true);
             } else if ($request->type == config('constance.status.cancel')) {
                 $contracts = Contract::onlyTrashed()
-                    ->where('supplier_id', Auth::user()->id)
+                    ->where('supplier_id', Auth::id())
                     ->with([
                         'request.carTypes',
                         'request.requestDestinations'

@@ -32,8 +32,11 @@ class RequestController extends ViewShareController
                         $query->on('host_details.province_id', 'province_airports.province_id')
                             ->on('host_details.car_type_id', 'requests.car_type_id');
                     })
+                    ->where([
+                        'requests.status' => config('constance.const.request_new'),
+                        'host_details.user_id' => Auth::id(),
+                    ])
                     ->select('requests.*')
-                    ->where('status', config('constance.const.request_new'))
                     ->with([
                         'requestDestinations',
                         'carTypes',
@@ -151,7 +154,7 @@ class RequestController extends ViewShareController
             $requestDetail = ModelsRequest::findOrFail($id);
             $inputContract = [];
             $inputContract['request_id'] = $id;
-            $inputContract['supplier_id'] = Auth::user()->id;
+            $inputContract['supplier_id'] = Auth::id();
             $inputContract['pickup'] = $requestDetail->pickup;
             $inputContract['status'] = config('constance.const.contract_new');
             $contract = Contract::create($inputContract);

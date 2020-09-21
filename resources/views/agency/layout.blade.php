@@ -170,7 +170,6 @@
             @yield('content')
         </div>
     </div>
-
     <script src="{{ asset('js/agency.js') }}"></script>
 </body>
 
