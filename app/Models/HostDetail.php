@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class HostDetail extends Model
@@ -17,7 +16,7 @@ class HostDetail extends Model
     
     public function users() 
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function provinces() 
