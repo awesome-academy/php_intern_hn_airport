@@ -9,6 +9,8 @@ use App\Models\CarType;
 use App\Models\Province;
 use App\Models\Request as ModelsRequest;
 use App\Models\RequestDestination;
+use App\Repositories\Request\RequestRepositoryInterface;
+use App\Repositories\RequestDestination\RequestDestinationRepositoryInterface;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -18,6 +20,19 @@ use Yajra\Datatables\Datatables;
 
 class RequestController extends ViewShareController
 {
+    protected $requestRepo;
+    protected $viewShare;
+    protected $requestDestinationRepo;
+
+    public function __construct(
+        RequestRepositoryInterface $requestRepo, 
+        RequestDestinationRepositoryInterface $requestDestinationRepo
+    ) {
+        $this->requestRepo = $requestRepo;
+        $this->requestDestinationRepo = $requestDestinationRepo;
+        $this->viewShare = new ViewShareController();
+    }
+    
     /**
      * Display a listing RequestControllerof the resource.
      *
@@ -27,15 +42,7 @@ class RequestController extends ViewShareController
     {
         if ($request->ajax()) {
             if ($request->type == config('constance.status.new')) {
-                $requests = ModelsRequest::where([
-                        'user_id'=> Auth::id(),
-                        'status' => config('constance.const.request_new')
-                    ])
-                    ->with([
-                        'carTypes',
-                        'requestDestinations'
-                    ])
-                    ->get();
+                $requests = $this->requestRepo->getRequestNew();
 
                 return Datatables::of($requests)
                     ->setRowData([
@@ -75,11 +82,7 @@ class RequestController extends ViewShareController
                     ->addIndexColumn()
                     ->make(true);
             } else if ($request->type == config('constance.status.cancel')) {
-                $requests = ModelsRequest::onlyTrashed()
-                    ->where('user_id', Auth::id())
-                    ->with('carTypes')
-                    ->with('requestDestinations')
-                    ->get();
+                $requests = $this->requestRepo->getRequestCancel();
                 
                 return Datatables::of($requests)
                     ->setRowData([
@@ -143,25 +146,27 @@ class RequestController extends ViewShareController
         $input['user_id'] = Auth::id();
         $input['pickup'] = date(config('constance.datetime'), strtotime($request->pickup));
         $input['status'] = config('constance.const.request_new');
-        
-        $createRequest = ModelsRequest::create($input);
+
+        $createRequest = $this->requestRepo->create($input);
         if ($createRequest) {
             $requestId = $createRequest->id;
             $pickup_location = $request->get('pickup_location');
             $dropoff_location = $request->get('dropoff_location');
             for ($i = 0; $i < count($pickup_location); $i++) {
-                $requestDestination = new RequestDestination();
-                $requestDestination->request_id = $requestId;
-                $requestDestination->location = $pickup_location[$i];
-                $requestDestination->type = config('constance.const.request_pickup');
-                $requestDestination->save();
+                $inputPickup = [];
+                $inputPickup['request_id'] = $requestId;
+                $inputPickup['location'] = $pickup_location[$i];
+                $inputPickup['type'] = config('constance.const.request_pickup');
+
+                $this->requestDestinationRepo->create($inputPickup);
             }
             for ($i = 0; $i < count($dropoff_location); $i++) {
-                $requestDestination = new RequestDestination();
-                $requestDestination->request_id = $requestId;
-                $requestDestination->location = $dropoff_location[$i];
-                $requestDestination->type = config('constance.const.request_dropoff');
-                $requestDestination->save();
+                $inputPickup = [];
+                $inputPickup['request_id'] = $requestId;
+                $inputPickup['location'] = $dropoff_location[$i];
+                $inputPickup['type'] = config('constance.const.request_dropoff');
+                
+                $this->requestDestinationRepo->create($inputPickup);
             }
 
             return response()->json(trans('contents.common.alert.message.create_request_success'), 201);
@@ -179,13 +184,7 @@ class RequestController extends ViewShareController
     public function show($id)
     {   
         try {
-            $requestDetail = ModelsRequest::withTrashed()
-                ->with(['carTypes', 
-                    'provinceAirports', 
-                    'requestDestinations',
-                    'provinceAirports.provinces'
-                ])
-                ->findOrFail($id);
+            $requestDetail = $this->requestRepo->find($id);
             return view('agency.requestDetail.index', compact('requestDetail'));   
         } catch (Exception $th) {
             return view('404');
@@ -212,37 +211,34 @@ class RequestController extends ViewShareController
      */
     public function update(StoreRequestPost $request, $id)
     {
-        $checkRequest = ModelsRequest::findOrFail($id);
-        if ($checkRequest->status == config('constance.const.request_new')) {
+        try {
             $input = $request->all();
             $input['status'] = config('constance.const.request_new');
             $input['pickup'] = date('Y-m-d H:i:s', strtotime($request->pickup));
-            $checkRequest->update($input);
-            RequestDestination::where('request_id', $id)->delete();
+            $this->requestRepo->update($id, $input);
+
+            $this->requestDestinationRepo->delete($id);
 
             $pickup_location = $request->get('pickup_location');
             $dropoff_location = $request->get('dropoff_location');
             for ($i = 0; $i < count($pickup_location); $i++) {
-                $requestDestination = new RequestDestination();
-                $requestDestination->request_id = $id;
-                $requestDestination->location = $pickup_location[$i];
-                $requestDestination->type = config('constance.const.request_pickup');
-                $requestDestination->save();
+                $inputPickup = [];
+                $inputPickup['request_id'] = $id;
+                $inputPickup['location'] = $pickup_location[$i];
+                $inputPickup['type'] = config('constance.const.request_pickup');
+
+                $this->requestDestinationRepo->create($inputPickup);
             }
             for ($i = 0; $i < count($dropoff_location); $i++) {
-                $requestDestination = new RequestDestination();
-                $requestDestination->request_id = $id;
-                $requestDestination->location = $dropoff_location[$i];
-                $requestDestination->type = config('constance.const.request_dropoff');
-                $requestDestination->save();
+                $inputPickup = [];
+                $inputPickup['request_id'] = $id;
+                $inputPickup['location'] = $dropoff_location[$i];
+                $inputPickup['type'] = config('constance.const.request_dropoff');
+                
+                $this->requestDestinationRepo->create($inputPickup);
             }
             
             return response()->json(trans('contents.common.alert.message.update_request_success'), 200);
-        } else {
-            return response()->json(trans('contents.common.alert.message.update_request_failed'), 500);
-        }
-        try {
-            
         } catch (Exception $e) {
             return response()->json($e, 500);
         }
@@ -257,12 +253,7 @@ class RequestController extends ViewShareController
     public function destroy($id)
     {
         try {
-            $checkRequest = ModelsRequest::findOrFail($id);
-            if ($checkRequest->status != config('constance.const.request_new')) {
-                return response()->json(trans('contents.common.alert.message.delete_request_fail'), 500);
-            }
-            $checkRequest->update(['status' => config('constance.const.request_cancel')]);
-            $checkRequest->delete();
+            $this->requestRepo->delete($id);
 
             return response()->json(trans('contents.common.alert.message.delete_request_success'), 200);
         } catch (Exception $e) {
