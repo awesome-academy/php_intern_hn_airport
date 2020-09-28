@@ -62,7 +62,35 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @php $indexNew = 1; @endphp
 
+                                            @foreach ($requestNew as $request)
+                                                <tr>
+                                                    <td>{{ $indexNew }}</td>
+                                                    @foreach ($request->requestDestinations as $requestDestination)
+                                                        @if ($requestDestination->type == config('constance.const.request_pickup'))
+                                                            <td>{{ $requestDestination->location }}</td>
+                                                            @php break; @endphp
+                                                        @endif
+                                                    @endforeach
+                                                    @foreach ($request->requestDestinations as $requestDestination)
+                                                        @if ($requestDestination->type == config('constance.const.request_dropoff'))
+                                                            <td>{{ $requestDestination->location }}</td>
+                                                            @php break; @endphp
+                                                        @endif
+                                                    @endforeach
+                                                    <td>{{ $request->pickup }}</td>
+                                                    <td>{{ $request->carTypes->type }} {{ trans('contents.common.form.seat') }}</td>
+                                                    <td>{{ $request->budget }} {{ trans('contents.common.vnd') }}</td>
+                                                    <td>
+                                                        <a href="{{ route('agency.requests.show', $request->id) }}" class="btn btn-warning btn-detail">
+                                                            <i class="fa fa-eye"></i>{{ trans('contents.common.table.view') }}</a>
+                                                        <button type="button" class="btn btn-danger btn-delete-request" value="{{ $request->id }}">
+                                                            <i class="fa fa-trash"></i>{{ trans('contents.common.table.delete') }}</button>
+                                                    </td>
+                                                </tr>
+                                                @php $indexNew++; @endphp
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -90,7 +118,33 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @php $indexCancel = 1; @endphp
 
+                                            @foreach ($requestCancel as $request)
+                                                <tr>
+                                                    <td>{{ $indexCancel }}</td>
+                                                    @foreach ($request->requestDestinations as $requestDestination)
+                                                        @if ($requestDestination->type == config('constance.const.request_pickup'))
+                                                            <td>{{ $requestDestination->location }}</td>
+                                                            @php break; @endphp
+                                                        @endif
+                                                    @endforeach
+                                                    @foreach ($request->requestDestinations as $requestDestination)
+                                                        @if ($requestDestination->type == config('constance.const.request_dropoff'))
+                                                            <td>{{ $requestDestination->location }}</td>
+                                                            @php break; @endphp
+                                                        @endif
+                                                    @endforeach
+                                                    <td>{{ $request->pickup }}</td>
+                                                    <td>{{ $request->carTypes->type }} {{ trans('contents.common.form.seat') }}</td>
+                                                    <td>{{ $request->budget }} {{ trans('contents.common.vnd') }}</td>
+                                                    <td>
+                                                        <a href="{{ route('agency.requests.show', $request->id) }}" class="btn btn-warning btn-detail">
+                                                            <i class="fa fa-eye"></i>{{ trans('contents.common.table.view') }}</a>
+                                                    </td>
+                                                </tr>
+                                                @php $indexCancel++; @endphp
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
