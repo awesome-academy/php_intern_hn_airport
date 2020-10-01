@@ -26,11 +26,12 @@ class RequestController extends ViewShareController
 
     public function __construct(
         RequestRepositoryInterface $requestRepo, 
-        RequestDestinationRepositoryInterface $requestDestinationRepo
+        RequestDestinationRepositoryInterface $requestDestinationRepo,
+        ViewShareController $viewShare
     ) {
         $this->requestRepo = $requestRepo;
         $this->requestDestinationRepo = $requestDestinationRepo;
-        $this->viewShare = new ViewShareController();
+        $this->viewShare = $viewShare;
     }
     
     /**
@@ -38,90 +39,12 @@ class RequestController extends ViewShareController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        if ($request->ajax()) {
-            if ($request->type == config('constance.status.new')) {
-                $requests = $this->requestRepo->getRequestNew();
+        $requestNew = $this->requestRepo->getRequestNew();
+        $requestCancel = $this->requestRepo->getRequestCancel();
 
-                return Datatables::of($requests)
-                    ->setRowData([
-                        'car_types' => function($request) 
-                        {
-                            return ($request->carTypes->type) . ' ' . trans('contents.common.form.seat');
-                        },
-                        'pickup_location' => function($request) 
-                        {
-                            foreach ($request->requestDestinations as $requestDestination) {
-                                if ($requestDestination->type == config('constance.const.request_pickup')) {
-                                    return $requestDestination;
-                                }
-                            }
-                        },
-                        'dropoff_location' => function($request) 
-                        {
-                            foreach ($request->requestDestinations as $requestDestination) {
-                                if ($requestDestination->type == config('constance.const.request_dropoff')) {
-                                    return $requestDestination;
-                                }
-                            }
-                        },
-                        'budget' => function($request)
-                        {
-                            return ($request->budget) . ' ' . trans('contents.common.vnd');
-                        },
-                    ])
-                    ->addColumn('action', function ($user) 
-                    {
-                        return '<a href="' . route('agency.requests.show', $user->id) . '" class="btn btn-warning btn-detail">
-                            <i class="fa fa-eye"></i>' . trans('contents.common.table.view') . '</a>
-                            <button type="button" class="btn btn-danger btn-delete-request">
-                            <i class="fa fa-trash"></i>' . trans('contents.common.table.delete') . '</button>';
-                    })
-                    ->rawColumns(['action'])
-                    ->addIndexColumn()
-                    ->make(true);
-            } else if ($request->type == config('constance.status.cancel')) {
-                $requests = $this->requestRepo->getRequestCancel();
-                
-                return Datatables::of($requests)
-                    ->setRowData([
-                        'car_types' => function($request) 
-                        {
-                            return ($request->carTypes->type) . ' ' . trans('contents.common.form.seat');
-                        },
-                        'pickup_location' => function($request) 
-                        {
-                            foreach ($request->requestDestinations as $requestDestination) {
-                                if ($requestDestination->type == config('constance.const.request_pickup')) {
-                                    return $requestDestination;
-                                }
-                            }
-                        },
-                        'dropoff_location' => function($request) 
-                        {
-                            foreach ($request->requestDestinations as $requestDestination) {
-                                if ($requestDestination->type == config('constance.const.request_dropoff')) {
-                                    return $requestDestination;
-                                }
-                            }
-                        },
-                        'budget' => function($request)
-                        {
-                            return ($request->budget) . ' ' . trans('contents.common.vnd');
-                        },
-                    ])
-                    ->addColumn('action', function ($user) 
-                    {
-                        return '<a href="' . route('agency.requests.show', $user->id) . '" class="btn btn-warning btn-detail">
-                            <i class="fa fa-eye"></i>' . trans('contents.common.table.view') . '</a>';
-                    })
-                    ->rawColumns(['action'])
-                    ->addIndexColumn()
-                    ->make(true);
-            }
-        }
-        return view('agency.listRequest.index');
+        return view('agency.listRequest.index', compact('requestNew', 'requestCancel'));
     }
 
     /**
@@ -189,17 +112,6 @@ class RequestController extends ViewShareController
         } catch (Exception $th) {
             return view('404');
         }
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**

@@ -23,61 +23,9 @@ $(document).ready(function () {
     initVarible();
     $.fn.dataTable.ext.errMode = 'none';
 
-    var table_request_new = $('#table-request-new').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: '/requests?type=new',
-        columns: [{
-                data: 'DT_RowIndex'
-            },
-            {
-                data: 'DT_RowData.pickup_location.location'
-            },
-            {
-                data: 'DT_RowData.dropoff_location.location'
-            },
-            {
-                data: 'pickup'
-            },
-            {
-                data: 'DT_RowData.car_types'
-            },
-            {
-                data: 'DT_RowData.budget'
-            },
-            {
-                data: 'action'
-            },
-        ]
-    });
+    var table_request_new = $('#table-request-new').DataTable();
 
-    var table_request_cancel = $('#table-request-canceled').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: '/requests?type=cancel',
-        columns: [{
-                data: 'DT_RowIndex'
-            },
-            {
-                data: 'DT_RowData.pickup_location.location'
-            },
-            {
-                data: 'DT_RowData.dropoff_location.location'
-            },
-            {
-                data: 'pickup'
-            },
-            {
-                data: 'DT_RowData.car_types'
-            },
-            {
-                data: 'DT_RowData.budget'
-            },
-            {
-                data: 'action'
-            },
-        ]
-    });
+    var table_request_cancel = $('#table-request-canceled').DataTable();
 
     var table_contract_new = $('#table-contract-new').DataTable({
         processing: true,
@@ -154,7 +102,7 @@ $(document).ready(function () {
                 });
                 $.ajax({
                     type: 'DELETE',
-                    url: '/requests/' + data.id,
+                    url: '/requests/' + $(this).val(),
                     success: function (data) {
                         Swal.fire({
                             icon: 'success',
