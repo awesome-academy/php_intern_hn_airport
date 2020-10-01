@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\ViewShare\ViewShareController;
 use App\Models\Contract;
 use App\Models\Request as ModelsRequest;
+use App\Repositories\Contract\ContractRepositoryInterface;
+use App\Repositories\Request\RequestRepositoryInterface;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -14,6 +16,18 @@ use Yajra\DataTables\Facades\DataTables;
 
 class ContractController extends ViewShareController
 {
+    protected $viewShare;
+    protected $requestRepo;
+    protected $contractRepo;
+    public function __construct(
+        ViewShareController $viewShare,
+        RequestRepositoryInterface $requestRepo,
+        ContractRepositoryInterface $contractRepo
+    ) {
+        $this->viewShare = $viewShare;
+        $this->requestRepo = $requestRepo;
+        $this->contractRepo = $contractRepo;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -23,19 +37,7 @@ class ContractController extends ViewShareController
     {   
         if ($request->ajax()) {
             if ($request->type == config('constance.status.new')) {
-                $requests =  ModelsRequest::whereHas('contract', function(Builder $query) {
-                    $query->where('status', config('constance.const.contract_new'));
-                })
-                ->with([
-                    'contract',
-                    'carTypes',
-                    'requestDestinations',
-                ])
-                ->where([
-                    'user_id' => Auth::id(),
-                    'status' => config('constance.const.request_to_contract'),
-                ])
-                ->get();
+                $requests =  $this->requestRepo->getContractNewAgency();
 
                 return DataTables::of($requests)
                     ->setRowData([
@@ -75,21 +77,7 @@ class ContractController extends ViewShareController
                     ->addIndexColumn()
                     ->make(true);
             } else if ($request->type == config('constance.status.cancel')) {
-                $requests =  ModelsRequest::whereHas('contract', function(Builder $query) {
-                    $query->where('status', config('constance.const.contract_cancel'))->withTrashed();
-                })
-                ->with([
-                    'carTypes',
-                    'requestDestinations',
-                    'contract' => function($query) {
-                        $query->where('status', config('constance.const.contract_cancel'))->withTrashed();
-                    },
-                ])
-                ->where([
-                    'user_id' => Auth::id(),
-                    'status' => config('constance.const.request_to_contract'),
-                ])
-                ->get();
+                $requests =  $this->requestRepo->getContractCancelAgency();
                 
                 return Datatables::of($requests)
                     ->setRowData([
@@ -162,13 +150,7 @@ class ContractController extends ViewShareController
     public function show($id)
     {
         try {
-            $contractDetail = Contract::withTrashed()
-                ->with([
-                    'request.requestDestinations',
-                    'request.requestCustomer',
-                    'contractDriver',
-                ])
-                ->findOrFail($id);
+            $contractDetail = $this->contractRepo->find($id);
                 
             return view('agency.contractDetail.index', compact('contractDetail'));
         } catch (Exception $th) {
@@ -208,12 +190,7 @@ class ContractController extends ViewShareController
     public function destroy($id)
     {
         try {
-            $checkContract = Contract::findOrFail($id);
-            if ($checkContract->status != config('constance.const.contract_new')) {
-                return response()->json(trans('contents.common.alert.message.delete_contract_fail'), 500);
-            }
-            $checkContract->update(['status' => config('constance.const.contract_cancel')]);
-            $checkContract->delete();
+            $this->contractRepo->delete($id);
     
             return response()->json(trans('contents.common.alert.message.delete_contract_success'), 200);
         } catch (Exception $e) {

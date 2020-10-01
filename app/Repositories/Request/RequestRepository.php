@@ -4,6 +4,7 @@ namespace App\Repositories\Request;
 use App\Models\Request;
 use App\Repositories\BaseRepository;
 use App\Repositories\Request\RequestRepositoryInterface;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 
 class RequestRepository extends BaseRepository implements RequestRepositoryInterface
@@ -63,5 +64,35 @@ class RequestRepository extends BaseRepository implements RequestRepositoryInter
             
             return true;
         }
+    }
+
+    public function getContractNewAgency()
+    {
+        return $this->model->whereHas('contract', function(Builder $query) {
+            $query->where('status', config('constance.const.contract_new'));
+        })->with([
+            'contract',
+            'carTypes',
+            'requestDestinations',
+        ])->where([
+            'user_id' => Auth::id(),
+            'status' => config('constance.const.request_to_contract'),
+        ])->get();
+    }
+
+    public function getContractCancelAgency()
+    {
+        return $this->model->whereHas('contract', function(Builder $query) {
+            $query->where('status', config('constance.const.contract_cancel'))->withTrashed();
+        })->with([
+            'carTypes',
+            'requestDestinations',
+            'contract' => function($query) {
+                $query->where('status', config('constance.const.contract_cancel'))->withTrashed();
+            },
+        ])->where([
+            'user_id' => Auth::id(),
+            'status' => config('constance.const.request_to_contract'),
+        ])->get();
     }
 }

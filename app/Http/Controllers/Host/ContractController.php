@@ -9,6 +9,9 @@ use App\Http\Requests\UpdateContractDriverPost;
 use App\Models\Contract;
 use App\Models\ContractDriver;
 use App\Models\Request as ModelsRequest;
+use App\Repositories\Contract\ContractRepositoryInterface;
+use App\Repositories\ContractDriver\ContractDriverRepositoryInterface;
+use App\Repositories\Request\RequestRepositoryInterface;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +21,22 @@ use Yajra\DataTables\Facades\DataTables;
 
 class ContractController extends ViewShareController
 {
+    protected $viewShare;
+    protected $contractRepo;
+    protected $requestRepo;
+    protected $contractDriverRepo;
+
+    public function __construct(
+        ViewShareController $viewShare,
+        RequestRepositoryInterface $requestRepo,
+        ContractRepositoryInterface $contractRepo,
+        ContractDriverRepositoryInterface $contractDriverRepo
+    ) {
+        $this->viewShare = $viewShare;
+        $this->requestRepo = $requestRepo;
+        $this->contractRepo = $contractRepo;
+        $this->contractDriverRepo = $contractDriverRepo;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -27,15 +46,7 @@ class ContractController extends ViewShareController
     {
         if ($request->ajax()) {
             if ($request->type == config('constance.status.new')) {
-                $contracts =  Contract::where([
-                    'supplier_id' => Auth::id(),
-                    'status' => config('constance.const.request_new')
-                ])
-                ->with([
-                    'request.carTypes',
-                    'request.requestDestinations',
-                ])
-                ->get();
+                $contracts =  $this->contractRepo->getContractNewHost();
 
                 return DataTables::of($contracts)
                     ->setRowData([
@@ -75,13 +86,7 @@ class ContractController extends ViewShareController
                     ->addIndexColumn()
                     ->make(true);
             } else if ($request->type == config('constance.status.cancel')) {
-                $contracts = Contract::onlyTrashed()
-                    ->where('supplier_id', Auth::id())
-                    ->with([
-                        'request.carTypes',
-                        'request.requestDestinations'
-                    ])
-                    ->get();
+                $contracts = $this->contractRepo->getContractCancelHost();
                 
                 return Datatables::of($contracts)
                     ->setRowData([
@@ -154,13 +159,8 @@ class ContractController extends ViewShareController
     public function show($id)
     {   
         try {
-            $contractDetail = Contract::withTrashed()
-                ->with([
-                    'request.requestDestinations',
-                    'request.requestCustomer',
-                    'contractDriver',
-                ])
-                ->findOrFail($id);
+            $contractDetail = $this->contractRepo->find($id);
+
             return view('host.contractDetail.index', compact('contractDetail'));
         } catch (Exception $th) {
             return view('404');
@@ -189,15 +189,15 @@ class ContractController extends ViewShareController
     {
         try {
             DB::beginTransaction();
-            $contractDriver = ContractDriver::findOrFail($id);
-            $input = $request->all();
+            $contractDriver = $this->contractDriverRepo->find($id);
+            $input = $request->except(['_token', '_method']);
             if ($request->hasFile('avatar')) {
                 Storage::delete('public' . $contractDriver->avatar);
                 $path = Storage::putFile(config('constance.image.contract'), $request->file('avatar'));
                 $path = str_replace("public", "", $path);
                 $input['avatar'] = $path;
             }
-            $updateDriver = $contractDriver->update($input);
+            $updateDriver = $this->contractDriverRepo->update($id, $input);
 
             if ($updateDriver) {
                 alert()->success(trans('contents.common.alert.title.update_contract_success'), trans('contents.common.alert.message.update_contract_success'));
@@ -209,7 +209,7 @@ class ContractController extends ViewShareController
             return redirect()->back();
         } catch (\Throwable $th) {
             DB::rollBack();
-            
+
             return view('404');
         }
     }
@@ -223,14 +223,13 @@ class ContractController extends ViewShareController
     public function destroy($id)
     {
         try {
-            $checkContract = Contract::findOrFail($id);
-            if ($checkContract->status != config('constance.const.contract_new')) {
-                return response()->json(trans('contents.common.alert.message.delete_contract_fail'), 500);
-            }
-            $checkContract->update(['status' => config('constance.const.contract_cancel')]);
-            $checkContract->delete();
+            $result = $this->contractRepo->delete($id);
 
-            return response()->json(trans('contents.common.alert.message.delete_contract_success'), 200);
+            if ($result) {
+                return response()->json(trans('contents.common.alert.message.delete_contract_success'), 200);
+            } else {
+                return response()->json(trans('contents.common.alert.message.update_contract_fail'), 500);
+            }
         } catch (Exception $e) {
             return response()->json($e, 500);
         }
