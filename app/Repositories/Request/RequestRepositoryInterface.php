@@ -6,4 +6,8 @@ interface RequestRepositoryInterface
     public function getRequestNew();
 
     public function getRequestCancel();
+
+    public function getContractNewAgency();
+
+    public function getContractCancelAgency();
 }

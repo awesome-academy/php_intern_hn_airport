@@ -7,6 +7,8 @@ use App\Http\Requests\LoginPostRequest;
 use App\Http\Requests\StoreUserPost;
 use App\Models\Role;
 use App\Models\User;
+use App\Repositories\Role\RoleRepositoryInterface;
+use App\Repositories\User\UserRepositoryInterface;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +17,17 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class AgencyController extends Controller
 {
+    protected $roleRepo;
+    protected $userRepo;
+
+    public function __construct(
+        RoleRepositoryInterface $roleRepo,
+        UserRepositoryInterface $userRepo
+    ) {
+        $this->roleRepo = $roleRepo;
+        $this->userRepo = $userRepo;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -43,7 +56,7 @@ class AgencyController extends Controller
      */
     public function store(StoreUserPost $request)
     {
-        $role = Role::where('name', 'agency')->select('id')->first();
+        $role = $this->roleRepo->findRoleByName(config('constance.role.agency'));
 
         $input = $request->all();
         $input['status'] = config('constance.const.user_active');;
@@ -51,7 +64,7 @@ class AgencyController extends Controller
         $input['password'] = Hash::make($request->password);
         $input['role_id'] = $role->id;
 
-        $user = User::create($input);
+        $user = $this->userRepo->create($input);
 
         if ($user) {
             alert()->success(trans('contents.common.alert.title.create_account_success'), trans('contents.common.alert.message.create_account_success'));
@@ -114,7 +127,7 @@ class AgencyController extends Controller
 
     public function postLogin(LoginPostRequest $request) 
     {
-        $role = Role::where('name', config('constance.role.agency'))->first();
+        $role = $this->roleRepo->findRoleByName(config('constance.role.agency'));
         $login = [
             'phone' => $request->phone,
             'password' =>$request->password,
