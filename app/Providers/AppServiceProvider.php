@@ -8,8 +8,14 @@ use App\Repositories\Contract\ContractRepository;
 use App\Repositories\Contract\ContractRepositoryInterface;
 use App\Repositories\ContractDriver\ContractDriverRepository;
 use App\Repositories\ContractDriver\ContractDriverRepositoryInterface;
+use App\Repositories\HostDetail\HostDetailRepository;
+use App\Repositories\HostDetail\HostDetailRepositoryInterface;
+use App\Repositories\Province\ProvinceRepository;
+use App\Repositories\Province\ProvinceRepositoryInterface;
 use App\Repositories\Request\RequestRepository;
 use App\Repositories\Request\RequestRepositoryInterface;
+use App\Repositories\RequestCustomer\RequestCustomerRepository;
+use App\Repositories\RequestCustomer\RequestCustomerRepositoryInterface;
 use App\Repositories\RequestDestination\RequestDestinationRepository;
 use App\Repositories\RequestDestination\RequestDestinationRepositoryInterface;
 use App\Repositories\Role\RoleRepository;
@@ -56,6 +62,21 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             ContractDriverRepositoryInterface::class,
             ContractDriverRepository::class
+        );
+
+        $this->app->singleton(
+            HostDetailRepositoryInterface::class,
+            HostDetailRepository::class
+        );
+
+        $this->app->singleton(
+            ProvinceRepositoryInterface::class,
+            ProvinceRepository::class
+        );
+
+        $this->app->singleton(
+            RequestCustomerRepositoryInterface::class,
+            RequestCustomerRepository::class
         );
     }
 

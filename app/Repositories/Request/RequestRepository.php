@@ -5,6 +5,7 @@ use App\Models\Request;
 use App\Repositories\BaseRepository;
 use App\Repositories\Request\RequestRepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 class RequestRepository extends BaseRepository implements RequestRepositoryInterface
@@ -64,6 +65,8 @@ class RequestRepository extends BaseRepository implements RequestRepositoryInter
             
             return true;
         }
+
+        return false;
     }
 
     public function getContractNewAgency()
@@ -94,5 +97,25 @@ class RequestRepository extends BaseRepository implements RequestRepositoryInter
             'user_id' => Auth::id(),
             'status' => config('constance.const.request_to_contract'),
         ])->get();
+    }
+
+    public function getRequestNewHost()
+    {
+        return $this->model->join('province_airports', 'province_airports.id', '=', 'requests.province_airport_id')
+            ->join('host_details', function($query) {
+                $query->on('host_details.province_id', 'province_airports.province_id')
+                    ->on('host_details.car_type_id', 'requests.car_type_id');
+            })
+            ->where([
+                'requests.status' => config('constance.const.request_new'),
+                'host_details.user_id' => Auth::id(),
+            ])
+            ->select('requests.*')
+            ->with([
+                'requestDestinations',
+                'carTypes',
+            ])
+            ->distinct()
+            ->get();
     }
 }

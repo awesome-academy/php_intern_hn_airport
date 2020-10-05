@@ -9,6 +9,9 @@ use App\Models\Contract;
 use App\Models\ContractDriver;
 use App\Models\HostDetail;
 use App\Models\Request as ModelsRequest;
+use App\Repositories\Contract\ContractRepository;
+use App\Repositories\ContractDriver\ContractDriverRepositoryInterface;
+use App\Repositories\Request\RequestRepositoryInterface;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +21,23 @@ use Yajra\DataTables\Facades\DataTables;
 
 class RequestController extends ViewShareController
 {
+    protected $requestRepo;
+    protected $contractRepo;
+    protected $contractDriverRepo;
+    protected $viewShare;
+
+    public function __construct(
+        RequestRepositoryInterface $requestRepo,
+        ContractRepository $contractRepo,
+        ContractDriverRepositoryInterface $contractDriverRepo,
+        ViewShareController $viewShare    
+    ) {
+        $this->requestRepo = $requestRepo;
+        $this->contractRepo = $contractRepo;
+        $this->contractDriverRepo = $contractDriverRepo;
+        $this->viewShare = $viewShare;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -27,22 +47,7 @@ class RequestController extends ViewShareController
     {
         if ($request->ajax()) {
             if ($request->type == config('constance.status.new')) {
-                $requests = ModelsRequest::join('province_airports', 'province_airports.id', '=', 'requests.province_airport_id')
-                    ->join('host_details', function($query) {
-                        $query->on('host_details.province_id', 'province_airports.province_id')
-                            ->on('host_details.car_type_id', 'requests.car_type_id');
-                    })
-                    ->where([
-                        'requests.status' => config('constance.const.request_new'),
-                        'host_details.user_id' => Auth::id(),
-                    ])
-                    ->select('requests.*')
-                    ->with([
-                        'requestDestinations',
-                        'carTypes',
-                    ])
-                    ->distinct()
-                    ->get();
+                $requests = $this->requestRepo->getRequestNewHost();
 
                 return DataTables::of($requests)
                     ->setRowData([
@@ -115,13 +120,7 @@ class RequestController extends ViewShareController
     public function show($id)
     {   
         try {
-            $requestDetail = ModelsRequest::with([
-                    'user',
-                    'carTypes',
-                    'requestDestinations',
-                    'requestCustomer',
-                ])
-                ->findOrFail($id);
+            $requestDetail = $this->requestRepo->find($id);
 
             return view('host.requestDetail.index', compact('requestDetail'));
         } catch (Exception $e) {
@@ -151,28 +150,33 @@ class RequestController extends ViewShareController
     {
         try {
             DB::beginTransaction();
-            $requestDetail = ModelsRequest::findOrFail($id);
+            $requestDetail = $this->requestRepo->find($id);
+
             $inputContract = [];
             $inputContract['request_id'] = $id;
             $inputContract['supplier_id'] = Auth::id();
             $inputContract['pickup'] = $requestDetail->pickup;
             $inputContract['status'] = config('constance.const.contract_new');
-            $contract = Contract::create($inputContract);
+            $contract = $this->contractRepo->create($inputContract);
 
             if ($contract) {
-                $requestDetail->update(['status' => config('constance.const.request_to_contract')]);
-                $inputContractDriver = $request->all();
-                $path = Storage::putFile(config('constance.image.contract'), $request->file('avatar'));
-                $path = str_replace("public", "", $path);
-                $inputContractDriver['avatar'] = $path;
-                $inputContractDriver['contract_id'] = $contract->id;
-                $contractDriver = ContractDriver::create($inputContractDriver);
-                if ($contractDriver) {
-                    alert()->success(trans('contents.common.alert.title.create_contract_success'), trans('contents.common.alert.message.create_contract_success'));
+                $update = $this->requestRepo->update($id, ['status' => config('constance.const.request_to_contract')]);
+                if ($update) {
+                    $inputContractDriver = $request->all();
+                    $path = Storage::putFile(config('constance.image.contract'), $request->file('avatar'));
+                    $path = str_replace("public", "", $path);
+                    $inputContractDriver['avatar'] = $path;
+                    $inputContractDriver['contract_id'] = $contract->id;
+                    $contractDriver = $this->contractDriverRepo->create($inputContractDriver);
+                    if ($contractDriver) {
+                        alert()->success(trans('contents.common.alert.title.create_contract_success'), trans('contents.common.alert.message.create_contract_success'));
+                    } else {
+                        alert()->error(trans('contents.common.alert.title.create_contract_fail'), trans('contents.common.alert.message.create_contract_fail'));
+                    }
+                    DB::commit();
                 } else {
                     alert()->error(trans('contents.common.alert.title.create_contract_fail'), trans('contents.common.alert.message.create_contract_fail'));
                 }
-                DB::commit();
 
                 return redirect()->route('host.contracts.index');
             }
