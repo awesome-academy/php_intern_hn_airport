@@ -12,4 +12,14 @@ class ProvinceRepository extends BaseRepository implements ProvinceRepositoryInt
     {
         return Province::class;
     }
+
+    public function getProvinceHasAiport()
+    {
+        return $this->model->has('provinceAirports')->get();
+    }
+
+    public function searchByName($cityName)
+    {
+        return $this->model->where('name', 'like', '%' . $cityName . '%')->first();
+    }
 }

@@ -4,11 +4,20 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\ProvinceAirport;
+use App\Repositories\ProvinceAirport\ProvinceAirportRepositoryInterface;
 use Exception;
 use Illuminate\Http\Request;
 
 class ProvinceAirportController extends Controller
 {
+    protected $provinceAirportRepo;
+
+    public function __construct(
+        ProvinceAirportRepositoryInterface $provinceAirportRepo
+    ) {
+        $this->provinceAirportRepo = $provinceAirportRepo;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -49,7 +58,7 @@ class ProvinceAirportController extends Controller
     public function show($id)
     {
         try {
-            $provinceAirport = ProvinceAirport::where('province_id', $id)->first();
+            $provinceAirport = $this->provinceAirportRepo->find($id);
             $data = [
                 'provinceAirport' => $provinceAirport,
             ];

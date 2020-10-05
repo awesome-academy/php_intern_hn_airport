@@ -4,11 +4,20 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\CarType;
+use App\Repositories\CarType\CarTypeRepositoryInterface;
 use Exception;
 use Illuminate\Http\Request;
 
 class CarTypeController extends Controller
 {
+    protected $carTypeRepo;
+
+    public function __construct(
+        CarTypeRepositoryInterface $carTypeRepo
+    ) {
+        $this->carTypeRepo = $carTypeRepo;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +26,7 @@ class CarTypeController extends Controller
     public function index()
     {
         try {
-            $carTypes = CarType::all();
+            $carTypes = $this->carTypeRepo->getAll();
             $data = [
                 'carTypes' => $carTypes,
             ];

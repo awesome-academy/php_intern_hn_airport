@@ -35,8 +35,16 @@
                 </div>
                 <nav id="nav-menu-container">
                     <ul class="nav-menu">
-                       <li><a href="{{ route('agency.getLogin') }}" class="genric-btn default circle">{{ trans('contents.common.form.login') }}</a></li>
-                       <li><a href="{{ route('agency.signup.index') }}" class="genric-btn default circle">{{ trans('contents.common.form.register') }}</a></li>
+                       <li>
+                           <a href="{{ route('agency.getLogin') }}" 
+                                class="btn btn-default btn-lg btn-block text-center text-uppercase">{{ trans('contents.common.form.login') }}
+                            </a>
+                        </li>
+                       <li>
+                           <a href="{{ route('agency.signup.index') }}" 
+                                class="btn btn-default btn-lg btn-block text-center text-uppercase">{{ trans('contents.common.form.register') }}
+                            </a>
+                        </li>
                     </ul>
                 </nav>
             </div>

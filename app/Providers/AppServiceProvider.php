@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Models\CarType;
 use App\Models\Province;
+use App\Repositories\CarType\CarTypeRepository;
+use App\Repositories\CarType\CarTypeRepositoryInterface;
 use App\Repositories\Contract\ContractRepository;
 use App\Repositories\Contract\ContractRepositoryInterface;
 use App\Repositories\ContractDriver\ContractDriverRepository;
@@ -12,6 +14,8 @@ use App\Repositories\HostDetail\HostDetailRepository;
 use App\Repositories\HostDetail\HostDetailRepositoryInterface;
 use App\Repositories\Province\ProvinceRepository;
 use App\Repositories\Province\ProvinceRepositoryInterface;
+use App\Repositories\ProvinceAirport\ProvinceAirportRepository;
+use App\Repositories\ProvinceAirport\ProvinceAirportRepositoryInterface;
 use App\Repositories\Request\RequestRepository;
 use App\Repositories\Request\RequestRepositoryInterface;
 use App\Repositories\RequestCustomer\RequestCustomerRepository;
@@ -77,6 +81,16 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             RequestCustomerRepositoryInterface::class,
             RequestCustomerRepository::class
+        );
+
+        $this->app->singleton(
+            CarTypeRepositoryInterface::class,
+            CarTypeRepository::class
+        );
+
+        $this->app->singleton(
+            ProvinceAirportRepositoryInterface::class,
+            ProvinceAirportRepository::class
         );
     }
 
