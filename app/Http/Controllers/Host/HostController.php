@@ -12,6 +12,10 @@ use App\Models\HostDetail;
 use App\Models\Province;
 use App\Models\Role;
 use App\Models\User;
+use App\Repositories\HostDetail\HostDetailRepositoryInterface;
+use App\Repositories\Province\ProvinceRepositoryInterface;
+use App\Repositories\Role\RoleRepositoryInterface;
+use App\Repositories\User\UserRepositoryInterface;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +24,26 @@ use Yajra\Datatables\Datatables;
 
 class HostController extends ViewShareController
 {
+    protected $roleRepo;
+    protected $userRepo;
+    protected $viewShare;
+    protected $hostDetailRepo;
+    protected $provinceRepo;
+
+    public function __construct(
+        RoleRepositoryInterface $roleRepo,
+        UserRepositoryInterface $userRepo,
+        HostDetailRepositoryInterface $hostDetailRepo,
+        ProvinceRepositoryInterface $provinceRepo,
+        ViewShareController $viewShare
+    ) {
+        $this->roleRepo = $roleRepo;
+        $this->userRepo = $userRepo;
+        $this->hostDetailRepo = $hostDetailRepo;
+        $this->provinceRepo = $provinceRepo;
+        $this->viewShare = $viewShare;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -48,7 +72,7 @@ class HostController extends ViewShareController
      */
     public function store(StoreUserPost $request)
     {
-        $role = Role::where('name', 'host')->select('id')->first();
+        $role = $this->roleRepo->findRoleByName(config('constance.role.host'));
 
         $input = $request->all();
         $input['status'] = config('constance.const.user_active');;
@@ -56,7 +80,7 @@ class HostController extends ViewShareController
         $input['role_id'] = $role->id;
         $input['password'] = Hash::make($request->password);
 
-        $user = User::create($input);
+        $user = $this->userRepo->create($input);
 
         if ($user) {
             alert()->success(trans('contents.common.alert.title.create_account_success'), trans('contents.common.alert.message.create_account_success'));
@@ -119,7 +143,7 @@ class HostController extends ViewShareController
 
     public function postLogin(LoginPostRequest $request) 
     {
-        $role = Role::where('name', config('constance.role.host'))->first();
+        $role = $this->roleRepo->findRoleByName(config('constance.role.host'));
         $login = [
             'phone' => $request->phone,
             'password' =>$request->password,
@@ -148,15 +172,8 @@ class HostController extends ViewShareController
     public function getDetail(Request $request) 
     {
         if ($request->ajax()) {
-            $hostDetails = HostDetail::where('user_id', Auth::id())
-                ->with('provinces')
-                ->with('carTypes')    
-                ->get();
-            $number = 1;
-            foreach ($hostDetails as $hostDetail) {
-                $hostDetail->number = $number;
-                $number++;
-            }
+            $hostDetails = $this->hostDetailRepo->getAll();
+            
             // return response()->json($hostDetails, 200);
             return Datatables::of($hostDetails)
                 ->setRowData([
@@ -169,9 +186,10 @@ class HostController extends ViewShareController
                         <button type="button" class="btn btn-danger btn-delete"><i class="fa fa-trash"></i>'.trans('contents.common.table.delete').'</button>';
                 })
                 ->rawColumns(['action'])
+                ->addIndexColumn()
                 ->make(true);
         }
-        $provinces = Province::all();
+        $provinces = $this->provinceRepo->getAll();
 
         return view('host.hostDetail.index', compact('provinces'));
     }
@@ -179,13 +197,12 @@ class HostController extends ViewShareController
     public function putDetail(StoreHostDetailPost $request, $id) 
     {
         try {
-            $hostDetail = HostDetail::findOrFail($id);
+            $hostDetail = $this->hostDetailRepo->find($id);
             if ($hostDetail->province_id != $request->province_id || $hostDetail->car_type_id != $request->car_type_id) {
                 return response()->json(trans('contents.common.alert.title.update_host_detail_fail'), 500);    
             } else {
-                $hostDetail->quantity = $request->quantity;
-                $hostDetail->save();
-                if ($hostDetail->save()) {
+                $update = $this->hostDetailRepo->update($id, ['quantity' => $request->quantity]);
+                if ($update) {
                     return response()->json(trans('contents.common.alert.title.update_host_detail_success'), 200);
                 } else {
                     return response()->json(trans('contents.common.alert.title.update_host_detail_fail'), 500);      
@@ -199,7 +216,7 @@ class HostController extends ViewShareController
     public function deleteDetail(Request $request, $id) 
     {
         try {
-            $hostDetail = HostDetail::destroy($id);
+            $hostDetail = $this->hostDetailRepo->delete($id);
             if ($hostDetail) {
                 return response()->json(trans('contents.common.alert.title.delete_host_detail_success'), 200);
             } else {
@@ -216,10 +233,7 @@ class HostController extends ViewShareController
         $input['car_type_id'] = $request->car_type_id;
         $input['user_id'] = Auth::id();
         $quantity = $request->quantity;
-        $hostDetail = HostDetail::firstOrCreate(
-            $input,
-            ['quantity' => $quantity]
-        );
+        $hostDetail = $this->hostDetailRepo->createHostDetail($input, $quantity);
         if ($hostDetail->quantity != $quantity) {
             alert()->error(trans('contents.common.alert.title.create_host_detail_fail'), trans('contents.common.alert.message.create_host_detail_fail'));
         } else {

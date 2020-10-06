@@ -10,4 +10,6 @@ interface RequestRepositoryInterface
     public function getContractNewAgency();
 
     public function getContractCancelAgency();
+
+    public function getRequestNewHost();
 }

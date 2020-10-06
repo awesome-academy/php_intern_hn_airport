@@ -7,24 +7,19 @@ $(document).ready(function ()
         serverSide: true,
         ajax: '/',
         columns: [{
-                data: 'number',
-                name: 'id'
+                data: 'DT_RowIndex',
             },
             {
                 data: 'provinces.name',
-                name: 'province'
             },
             {
                 data: 'DT_RowData.car_types',
-                name: 'car_type'
             },
             {
                 data: 'quantity',
-                name: 'quantity'
             },
             {
                 data: 'action',
-                name: 'action'
             },
         ]
     });
