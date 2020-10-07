@@ -12,6 +12,9 @@ return [
         'title_host_login' => 'Host Login',
         'title_admin_login' => 'Admin Login',
         '404' => 'Page Not Found',
+        'title_admin' => 'Admin Local Driver',
+        'title_agency' => 'Agency Local Driver',
+        'title_host' => 'Host Local Driver',
     ],
     'const' => [
         'zero' => 0,
@@ -32,6 +35,7 @@ return [
         'm_to_km' => 1000,
         'percent' => 100,
         'format_money' => -3,
+        'month_in_year' => 12,
     ],
     'role' => [
         'agency' => 'agency',
@@ -95,4 +99,8 @@ return [
         'en' => 'en',
         'vi' => 'vi',
     ],
+    'chart' => [
+        'monthly' => 'monthly',
+        'yearly' => 'yearly',
+    ]
 ];

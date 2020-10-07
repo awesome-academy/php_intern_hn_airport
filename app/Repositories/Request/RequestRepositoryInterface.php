@@ -12,4 +12,16 @@ interface RequestRepositoryInterface
     public function getContractCancelAgency();
 
     public function getRequestNewHost();
+
+    public function countRequestByDate($date);
+
+    public function countUniqueRequestByDate($date);
+
+    public function getRequestByMonth($month);
+
+    public function getCancelRequestByMonth($month);
+
+    public function countRequestByMonth($month);
+
+    public function countCancelRequestByMonth($month);
 }

@@ -28,7 +28,8 @@ Route::group(['middleware' => 'locale'], function () {
         Route::post('login', 'AdminController@postLogin')->name('postLogin');
         Route::group(['middleware' => 'admin'], function () {
             Route::post('logout', 'AdminController@postLogout')->name('postLogout');
-            Route::get('/', 'DashboardController@index')->name('dashboard.index'); 
+            Route::get('/', 'DashboardController@index')->name('dashboard.index');
+            Route::resource('configs', 'ConfigController');
         });
     });
     
