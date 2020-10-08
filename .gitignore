@@ -18,3 +18,4 @@ yarn-error.log
 /public/vendor/*
 /coverage/*
 /tests/Browser/console/*
+laravel-echo-server.json
