@@ -17,4 +17,9 @@ class CarType extends Model
     {
         return $this->hasMany(HostDetail::class, 'car_type_id');
     }
+
+    public function configBasics()
+    {
+        return $this->hasMany(ConfigBasic::class, 'car_type_id');
+    }
 }

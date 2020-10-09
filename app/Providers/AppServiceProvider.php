@@ -6,6 +6,8 @@ use App\Models\CarType;
 use App\Models\Province;
 use App\Repositories\CarType\CarTypeRepository;
 use App\Repositories\CarType\CarTypeRepositoryInterface;
+use App\Repositories\ConfigBasic\ConfigBasicRepository;
+use App\Repositories\ConfigBasic\ConfigBasicRepositoryInterface;
 use App\Repositories\Contract\ContractRepository;
 use App\Repositories\Contract\ContractRepositoryInterface;
 use App\Repositories\ContractDriver\ContractDriverRepository;
@@ -91,6 +93,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             ProvinceAirportRepositoryInterface::class,
             ProvinceAirportRepository::class
+        );
+
+        $this->app->singleton(
+            ConfigBasicRepositoryInterface::class,
+            ConfigBasicRepository::class
         );
     }
 
