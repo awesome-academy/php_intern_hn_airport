@@ -26,7 +26,7 @@
     <link rel="stylesheet"
         href="{{ asset('bower_components/bower_localdriver/AdminLTE/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
     <link href="{{ asset('bower_components/bower_localdriver/AdminLTE/plugins/fonts/fonts.css') }}" rel="stylesheet">
-    <link rel="stylesheet" 
+    <link rel="stylesheet"
         href="{{ asset('bower_components/bower_localdriver/AdminLTE/plugins/flag-icon-css/css/flag-icon.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
@@ -99,6 +99,17 @@
                         </a>
                     </div>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false" id="noti">
+                        <i class="far fa-bell"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <span class="dropdown-item dropdown-header" id="num-noti"></span>
+                        <div class="dropdown-divider"></div>
+                        <div id="list-noti"></div>
+                        <a href="{{ route('host.notifications.index') }}" class="dropdown-item dropdown-footer">{{ trans('contents.common.notification.read') }}</a>
+                    </div>
+                </li>
                 <li class="nav-item">
                     <form action="{{ route('host.postLogout') }}" method="post">
                         @csrf
@@ -167,7 +178,7 @@
     </div>
 
     <script src="{{ asset('js/host/host.js') }}"></script>
-    <script src="{{ asset('js/host/notification.js') }}"></script>
+    <script src="{{ asset('js/notification.js') }}"></script>
 </body>
 
 </html>

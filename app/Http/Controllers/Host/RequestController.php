@@ -117,10 +117,20 @@ class RequestController extends ViewShareController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {   
         try {
             $requestDetail = $this->requestRepo->find($id);
+
+            if ($request->ajax()) {
+                $data = [
+                    'requestDetail' => $requestDetail,
+                    'vnd' => trans('contents.common.vnd'),
+                    'seat' => trans('contents.common.form.seat'),
+                ];
+
+                return response()->json($data, 200);
+            }
 
             return view('host.requestDetail.index', compact('requestDetail'));
         } catch (Exception $e) {

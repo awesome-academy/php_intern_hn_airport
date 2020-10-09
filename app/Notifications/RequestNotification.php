@@ -5,6 +5,7 @@ namespace App\Notifications;
 use App\Models\Request;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -12,16 +13,15 @@ class RequestNotification extends Notification
 {
     use Queueable;
 
-    protected $request;
-
+    protected $notification;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Request $request)
+    public function __construct($notification = [])
     {
-        $this->request = $request;
+        $this->notification = $notification;
     }
 
     /**
@@ -44,6 +44,16 @@ class RequestNotification extends Notification
      */
     public function toArray($notifiable)
     {
-        return $this->request->toArray();
+        return $this->notification;
+    }
+
+    public function toBroadCast($notifiable)
+    {
+        return new BroadcastMessage($this->notification);
+    }
+
+    public function broadcastType()
+    {
+        return config('notification.request_notification');
     }
 }

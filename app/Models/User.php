@@ -62,4 +62,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(HostDetail::class);
     }
+
+    public function receivesBroadcastNotificationsOn()
+    {
+        return config('notification.user_channel') . $this->id;
+    }
 }

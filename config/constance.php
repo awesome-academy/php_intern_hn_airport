@@ -36,6 +36,7 @@ return [
         'percent' => 100,
         'format_money' => -3,
         'month_in_year' => 12,
+        'num_noti' => 3,
     ],
     'role' => [
         'agency' => 'agency',

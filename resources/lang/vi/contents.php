@@ -159,6 +159,11 @@ return [
             'monthly' => 'Hàng Tháng',
             'yearly' => 'Hàng Năm',
         ],
+        'notification' => [
+            'title' => 'Thông báo',
+            'new_request' => 'Bạn có yêu cầu mới',
+            'read' => 'Danh sách thống báo',
+        ],
     ],
     'web' => [
         'form' => [

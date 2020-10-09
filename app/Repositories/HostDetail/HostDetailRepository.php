@@ -28,4 +28,14 @@ class HostDetailRepository extends BaseRepository implements HostDetailRepositor
             ['quantity' => $quantity]
         );
     }
+
+    public function filterHostDetail($carTypeId, $provinceAirportId)
+    {
+        return $this->model->where('car_type_id', $carTypeId)
+            ->whereHas('provinces', function($query) use ($provinceAirportId) {
+                $query->whereHas('provinceAirports', function($query) use ($provinceAirportId){
+                    $query->where('id', $provinceAirportId);
+                });
+            })->get();
+    }
 }
