@@ -123,6 +123,9 @@
                         <div class="info">
                             <a href="#" class="d-block">{{ Auth::user()->name }}</a>
                         </div>
+                        <div>
+                            <input type="text" id="user_id" value="{{ Auth::id() }}" hidden>
+                        </div>
                     </div>
                 @endauth
 
@@ -164,6 +167,7 @@
     </div>
 
     <script src="{{ asset('js/host/host.js') }}"></script>
+    <script src="{{ asset('js/host/notification.js') }}"></script>
 </body>
 
 </html>
