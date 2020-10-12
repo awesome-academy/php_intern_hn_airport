@@ -19,3 +19,6 @@ yarn-error.log
 /coverage/*
 /tests/Browser/console/*
 laravel-echo-server.json
+/storage/*
+/stubs/*
+/public/excels

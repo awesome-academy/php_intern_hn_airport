@@ -191,6 +191,11 @@ return [
             'config' => 'Cài đặt',
             'basic' => 'Cơ bản',
         ],
+        'email' => [
+            'title' => 'Đây là thư gửi hàng ngày của hệ thống',
+            'filter_request' => 'Mail này chứa danh sách những yêu cầu đã quá hạn và đã bị hủy bởi hệ thống',
+            'sender' => 'Đây là thư gửi tự động. Vui lòng không trả lời',
+        ],
     ],
     'agency' => [
         'title' => 'AgencyLocalDriver',

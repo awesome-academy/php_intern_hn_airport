@@ -161,4 +161,12 @@ class RequestRepository extends BaseRepository implements RequestRepositoryInter
     {
         return $this->model->withTrashed()->whereMonth('deleted_at', $month)->count();
     }
+
+    public function getOutdateRequestByDate($date)
+    {
+        return $this->model->where([
+            ['pickup', '<=', $date],
+            ['status', config('constance.const.request_new')],
+        ])->get();
+    }
 }

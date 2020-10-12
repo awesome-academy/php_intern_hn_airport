@@ -188,6 +188,11 @@ return [
             'config' => 'Config',
             'basic' => 'Basic',
         ],
+        'email' => [
+            'title' => 'This is the daily mail sent by System',
+            'filter_request' => 'This Email contains the list of outdated request and has been canceled by the System',
+            'sender' => 'This is an automatic mail. Please dont reply',
+        ],
     ],
     'agency' => [
         'title' => 'AgencyLocalDriver',
