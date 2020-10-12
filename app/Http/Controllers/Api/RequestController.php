@@ -5,12 +5,21 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRequestPost;
 use App\Http\Requests\StoreRequestWebPost;
+use App\Repositories\ConfigBasic\ConfigBasicRepositoryInterface;
 use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class RequestController extends Controller
-{
+{   
+    protected $configBasicRepo;
+
+    public function __construct(
+        ConfigBasicRepositoryInterface $configBasicRepo
+    ) {
+        $this->configBasicRepo = $configBasicRepo;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -111,7 +120,7 @@ class RequestController extends Controller
             $distance = calculateDistance($pickupLocation, $dropoffLocation);
 
             if (function_exists('calculatePrice')) {
-                $budget = calculatePrice($distance, $carTypeId, $provinceAirportId, $hour, $numPickup);
+                $budget = calculatePrice($distance, $carTypeId, $provinceAirportId, $hour, $numPickup, $this->configBasicRepo);
                 $budget = round($budget, config('constance.const.format_money'));
 
                 if ($update) {
