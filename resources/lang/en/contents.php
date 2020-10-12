@@ -156,6 +156,11 @@ return [
             'monthly' => 'Monthly',
             'yearly' => 'Yearly',
         ],
+        'notification' => [
+            'title' => 'Notifications',
+            'new_request' => 'You have new request.',
+            'read' => 'Read All Notifications',
+        ],
     ],
     'web' => [
         'form' => [

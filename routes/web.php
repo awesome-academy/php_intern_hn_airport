@@ -71,6 +71,10 @@ Route::group(['middleware' => 'locale'], function () {
                     'show',
                     'update',
                 ]);
+                Route::resource('notifications', 'NotificationController')->only([
+                    'index',
+                    'update',
+                ]);
             });
         });
     });

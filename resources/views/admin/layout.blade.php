@@ -172,7 +172,7 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="{{ route('admin.config.index') }}" class="nav-link">
+                                    <a href="{{ route('admin.configs.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>{{ trans('contents.admin.config.basic') }}</p>
                                     </a>

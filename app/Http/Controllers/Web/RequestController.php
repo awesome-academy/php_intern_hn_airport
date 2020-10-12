@@ -7,10 +7,14 @@ use App\Http\Controllers\ViewShare\ViewShareController;
 use App\Http\Requests\StoreRequestPost;
 use App\Http\Requests\StoreRequestWebPost;
 use App\Models\CarType;
+use App\Models\HostDetail;
 use App\Models\Province;
 use App\Models\Request as ModelsRequest;
 use App\Models\RequestCustomer;
 use App\Models\RequestDestination;
+use App\Models\User;
+use App\Notifications\RequestNotification;
+use App\Repositories\HostDetail\HostDetailRepositoryInterface;
 use App\Repositories\Request\RequestRepositoryInterface;
 use App\Repositories\RequestCustomer\RequestCustomerRepositoryInterface;
 use App\Repositories\RequestDestination\RequestDestinationRepositoryInterface;
@@ -23,17 +27,20 @@ class RequestController extends ViewShareController
     protected $requestRepo;
     protected $requestCustomerRepo;
     protected $requestDestinationRepo;
+    protected $hostDetailRepo;
 
     public function __construct(
         ViewShareController $viewShare,
         RequestRepositoryInterface $requestRepo,
         RequestCustomerRepositoryInterface $requestCustomerRepo,
-        RequestDestinationRepositoryInterface $requestDestinationRepo
+        RequestDestinationRepositoryInterface $requestDestinationRepo,
+        HostDetailRepositoryInterface $hostDetailRepo
     ) {
         $this->viewShare = $viewShare;
         $this->requestRepo = $requestRepo;
         $this->requestCustomerRepo = $requestCustomerRepo;
         $this->requestDestinationRepo = $requestDestinationRepo;
+        $this->hostDetailRepo = $hostDetailRepo;
     }
     /**
      * Display a listing of the resource.
@@ -66,7 +73,7 @@ class RequestController extends ViewShareController
         $input = $request->all();
 
         $input['pickup'] = date(config('constance.datetime'), strtotime($request->pickup));
-        $input['status'] = config('constance.const.request_new');;
+        $input['status'] = config('constance.const.request_new');
 
         $createRequest = $this->requestRepo->create($input);
         if ($createRequest) {
@@ -94,7 +101,19 @@ class RequestController extends ViewShareController
                 $requestDestination->save();
 
                 $this->requestDestinationRepo->create($inputPickup);
+            }
 
+            $hosts = $this->hostDetailRepo->filterHostDetail($request->get('car_type_id'), $request->get('province_airport_id'));
+            if (count($hosts) > 0) {
+                $notification = [
+                    'title' => trans('contents.common.notification.new_request'),
+                    'link' => route('host.requests.show', $createRequest->id),
+                ];
+
+                foreach ($hosts as $host) {
+                    $user = User::find($host->user_id);
+                    $user->notify(new RequestNotification($notification));
+                }
             }
 
             return response()->json(trans('contents.common.alert.message.create_request_success'), 201); 
