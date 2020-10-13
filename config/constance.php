@@ -37,6 +37,7 @@ return [
         'format_money' => -3,
         'month_in_year' => 12,
         'num_noti' => 3,
+        'num_email' => 8,
     ],
     'role' => [
         'agency' => 'agency',
@@ -103,5 +104,9 @@ return [
     'chart' => [
         'monthly' => 'monthly',
         'yearly' => 'yearly',
-    ]
+    ],
+    'excel' => [
+        'path' => 'excels/',
+        'default' => 'DailyReport.xlsx',
+    ], 
 ];

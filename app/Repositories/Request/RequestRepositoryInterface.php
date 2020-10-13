@@ -24,4 +24,6 @@ interface RequestRepositoryInterface
     public function countRequestByMonth($month);
 
     public function countCancelRequestByMonth($month);
+
+    public function getOutdateRequestByDate($date);
 }

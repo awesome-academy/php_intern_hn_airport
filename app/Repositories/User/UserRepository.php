@@ -14,4 +14,11 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     {
         return User::class;
     }
+
+    public function getAllAdmin()
+    {
+        return $this->model->whereHas('roles', function($query) {
+            $query->where('name', config('constance.role.admin'));
+        })->where('status', config('constance.const.user_active'))->get();
+    }
 }
