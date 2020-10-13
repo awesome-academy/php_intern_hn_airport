@@ -5,12 +5,11 @@ namespace App\Http\Controllers\Agency;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ViewShare\ViewShareController;
 use App\Http\Requests\StoreRequestPost;
-use App\Models\CarType;
-use App\Models\Province;
-use App\Models\Request as ModelsRequest;
-use App\Models\RequestDestination;
+use App\Notifications\RequestNotification;
+use App\Repositories\HostDetail\HostDetailRepositoryInterface;
 use App\Repositories\Request\RequestRepositoryInterface;
 use App\Repositories\RequestDestination\RequestDestinationRepositoryInterface;
+use App\Repositories\User\UserRepositoryInterface;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -23,15 +22,21 @@ class RequestController extends ViewShareController
     protected $requestRepo;
     protected $viewShare;
     protected $requestDestinationRepo;
+    protected $hostDetailRepo;
+    protected $userRepo;
 
     public function __construct(
         RequestRepositoryInterface $requestRepo, 
         RequestDestinationRepositoryInterface $requestDestinationRepo,
-        ViewShareController $viewShare
+        ViewShareController $viewShare,
+        HostDetailRepositoryInterface $hostDetailRepo,
+        UserRepositoryInterface $userRepo
     ) {
         $this->requestRepo = $requestRepo;
         $this->requestDestinationRepo = $requestDestinationRepo;
         $this->viewShare = $viewShare;
+        $this->hostDetailRepo = $hostDetailRepo;
+        $this->userRepo = $userRepo;
     }
     
     /**
@@ -90,6 +95,19 @@ class RequestController extends ViewShareController
                 $inputPickup['type'] = config('constance.const.request_dropoff');
                 
                 $this->requestDestinationRepo->create($inputPickup);
+            }
+
+            $hosts = $this->hostDetailRepo->filterHostDetail($request->get('car_type_id'), $request->get('province_airport_id'));
+            if (count($hosts) > 0) {
+                $notification = [
+                    'title' => trans('contents.common.notification.new_request'),
+                    'link' => route('host.requests.show', $createRequest->id),
+                ];
+
+                foreach ($hosts as $host) {
+                    $user = $this->userRepo->find($host->user_id);
+                    $user->notify(new RequestNotification($notification));
+                }
             }
 
             return response()->json(trans('contents.common.alert.message.create_request_success'), 201);

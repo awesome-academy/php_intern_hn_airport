@@ -5,14 +5,20 @@ namespace Tests\Unit\Http\Controllers;
 use App\Http\Controllers\Agency\RequestController;
 use App\Http\Controllers\ViewShare\ViewShareController;
 use App\Http\Requests\StoreRequestPost;
+use App\Models\HostDetail;
 use App\Models\Request;
+use App\Models\User;
+use App\Notifications\RequestNotification;
+use App\Repositories\HostDetail\HostDetailRepositoryInterface;
 use App\Repositories\Request\RequestRepositoryInterface;
 use App\Repositories\RequestDestination\RequestDestinationRepositoryInterface;
+use App\Repositories\User\UserRepositoryInterface;
 use Carbon\Carbon;
 use Exception;
 use Facade\FlareClient\Http\Response;
 use Illuminate\Database\Eloquent\Collection;
 use Faker\Factory as Faker;
+use Illuminate\Support\Facades\Notification;
 use Mockery;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Tests\TestCase;
@@ -28,6 +34,8 @@ class RequestControllerTest extends TestCase
     protected $viewShareMock;
     protected $requestDestinationMock;
     protected $requestController;
+    protected $hostDetailMock;
+    protected $userMock;
 
     public function setUp(): void
     {
@@ -37,10 +45,16 @@ class RequestControllerTest extends TestCase
         $this->requestDestinationMock = Mockery::mock(RequestDestinationRepositoryInterface::class);
         /** @var ViewShareController|PHPUnit_Framework_MockObject_MockObject */
         $this->viewShareMock = Mockery::mock(ViewShareController::class);
+        /** @var HostDetailRepositoryInterface|PHPUnit_Framework_MockObject_MockObject */
+        $this->hostDetailMock = Mockery::mock(HostDetailRepositoryInterface::class);
+        /** @var UserRepositoryInterface|PHPUnit_Framework_MockObject_MockObject */
+        $this->userMock = Mockery::mock(UserRepositoryInterface::class);
         $this->requestController = new RequestController(
             $this->requestMock,
             $this->requestDestinationMock,
-            $this->viewShareMock
+            $this->viewShareMock,
+            $this->hostDetailMock,
+            $this->userMock
         );
         parent::setUp();
     }
@@ -79,9 +93,18 @@ class RequestControllerTest extends TestCase
 
     public function testStoreFunction()
     {
+        Notification::fake();
         $this->faker = Faker::create();
         $request = new Request();
         $request->id = config('constance.const.one');
+
+        $hosts = new Collection();
+        $host = new HostDetail();
+        $hosts->push($host);
+
+        $user = new User();
+        $user->id = config('constance.const.one');
+
         $this->requestMock
             ->shouldReceive('create')
             ->once()
@@ -91,6 +114,18 @@ class RequestControllerTest extends TestCase
             ->shouldReceive('create')
             ->twice()
             ->andReturn(true);
+
+        $this->hostDetailMock
+            ->shouldReceive('filterHostDetail')
+            ->once()
+            ->andReturn($hosts);
+
+        $this->userMock
+            ->shouldReceive('find')
+            ->once()
+            ->andReturn($user);
+
+        Notification::assertNothingSent();
 
         $data = [
             'car_type_id' => config('constance.const.one'),

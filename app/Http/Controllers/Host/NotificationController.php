@@ -15,8 +15,9 @@ class NotificationController extends Controller
      */
     public function index(Request $request)
     {
+        $user = Auth::user();
+
         if ($request->ajax()) {
-            $user = Auth::user();
             $notifications = $user->unreadNotifications()->take(config('constance.const.num_noti'))->get();
             $numNoti = count($user->unreadNotifications);
             $data = [
@@ -26,6 +27,9 @@ class NotificationController extends Controller
 
             return response()->json($data, 200);
         }
+        $notifications = $user->unreadNotifications()->get();
+
+        return view('host.listNotification.index', compact('notifications'));
     }
 
     /**

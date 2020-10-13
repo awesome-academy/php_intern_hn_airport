@@ -167,6 +167,14 @@
                                 </p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('host.notifications.index') }}" class="nav-link">
+                                <i class="nav-icon fas fa-bell"></i>
+                                <p>
+                                    {{ trans('contents.common.notification.title') }}
+                                </p>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
             </div>
