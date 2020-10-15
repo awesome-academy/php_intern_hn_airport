@@ -1,5 +1,7 @@
 import Echo from "laravel-echo"
-import { functionsIn } from "lodash";
+import {
+    functionsIn
+} from "lodash";
 
 var user_id;
 var list_noti;
@@ -7,7 +9,7 @@ var num_noti;
 const pickup = 0;
 const dropoff = 1;
 
-$(document).ready(function() {
+$(document).ready(function () {
     initVarible();
     connenctChannel(user_id);
     getNotification();
@@ -16,6 +18,9 @@ $(document).ready(function() {
 function initVarible() {
     user_id = $('#user_id').val();
     list_noti = $('#list-noti');
+    if ($('#table-notification-new').length > 0) {
+        $('#table-notification-new').DataTable();
+    }
 }
 
 function connenctChannel(user_id) {
@@ -30,7 +35,7 @@ function connenctChannel(user_id) {
     window.Echo.private(`user_channel_${user_id}`)
         .notification((notification) => {
             let html = notiHtml(notification);
-            list_noti.append(html);
+            list_noti.prepend(html);
             if (list_noti.children("a").length > 2) {
                 list_noti.children("a").last().remove();
             }
@@ -49,7 +54,7 @@ function connenctChannel(user_id) {
                 $.ajax({
                     type: 'GET',
                     url: `/requests/${requestId}`,
-                    success: function(data) {
+                    success: function (data) {
                         var row = [];
                         for (let index = 0; index < data.requestDetail.request_destinations.length; index++) {
                             if (data.requestDetail.request_destinations[index].type == pickup) {
@@ -68,14 +73,43 @@ function connenctChannel(user_id) {
                         row.push(`${data.requestDetail.budget} ${data.vnd}`);
                         row.push(`<a href="${notification.link}" class="btn btn-warning btn-detail">
                         <i class="fa fa-eye"></i>View</a>`);
-                        
+
                         table.row.add(row).draw(false);
                     },
-                    error: function(data) {
-            
+                    error: function (data) {
+
                     }
                 })
             }
+
+            if ($('#table-notification-new').length > 0) {
+                let table = $('#table-notification-new').DataTable();
+                var row = [];
+                row.push(parseInt(array[0]) + 1);
+                row.push(notification.title);
+                row.push(`<a href="${notification.link }">${notification.link}</a>`);
+                row.push(`<button class="btn btn-success btn-noti" data-id="${notification.id}">
+                    <i class="fas fa-check"></i>&nbsp;Read</button>`);
+
+                table.row.add(row).draw(false);
+            }
+
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'bottom-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: 'info',
+                title: notification.title,
+            })
         });
 }
 
@@ -83,7 +117,7 @@ function getNotification() {
     $.ajax({
         type: 'GET',
         url: '/notifications',
-        success: function(data) {
+        success: function (data) {
             num_noti = data.numNoti;
             $('#num-noti').text(num_noti);
             for (let index = 0; index < data.notifications.length; index++) {
@@ -100,25 +134,25 @@ function getNotification() {
 function notiHtml(data) {
     let html;
     if (data.data) {
-        html = 
-        `<a href="${data.data.link}" class="dropdown-item item-noti" data-id="${data.id}">
+        html =
+            `<a href="${data.data.link}" class="dropdown-item item-noti" data-id="${data.id}">
             <i class="fas fa-file mr-2"></i> ${data.data.title}
-            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i>${moment(data.create_at).fromNow()}</p>
+            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i>${moment(data.created_at.toString()).fromNow()}</p>
         </a>
         <div class="dropdown-divider"></div>`;
     } else {
-        html = 
-        `<a href="${data.link}" class="dropdown-item item-noti" data-id="${data.id}">
+        html =
+            `<a href="${data.link}" class="dropdown-item item-noti" data-id="${data.id}">
             <i class="fas fa-file mr-2"></i> ${data.title}
             <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i>${moment().fromNow()}</p>
         </a>
         <div class="dropdown-divider"></div>`;
     }
-    
+
     return html;
 }
 
-$("body").delegate("a.item-noti", "click", function(e) {
+$("body").delegate("a.item-noti", "click", function (e) {
     e.preventDefault();
     let notiId = $(this).data("id");
     let href = $(this).attr('href');
@@ -130,13 +164,48 @@ $("body").delegate("a.item-noti", "click", function(e) {
     $.ajax({
         type: 'PUT',
         url: `/notifications/${notiId}`,
-        success: function(data) {
+        success: function (data) {
             window.location.href = href;
         },
-        error: function(data) {
+        error: function (data) {
 
         }
     })
 })
 
+if ($('#table-notification-new').length > 0) {
+    $('#table-notification-new').on('click', 'button.btn-noti', function () {
+        let notiId = $(this).data("id");
+        let row = $('#table-notification-new').DataTable().row($(this).parent());
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'PUT',
+            url: `/notifications/${notiId}`,
+            success: function (data) {
+                row.remove().draw();
+                let check_noti = $("#list-noti").find(`[data-id='${notiId}']`);
+                if (check_noti.length > 0) {
+                    check_noti.remove();
+                    let array = num_noti.split(" ");
+                    num_noti = `${parseInt(array[0]) - 1} ${array[1]}`
+                    $('#num-noti').text(num_noti);
+                }
+            },
+            error: function (data) {
+    
+            }
+        });
+    });
 
+    $('#table-notification-new').on('click', 'a', function (e) {
+        e.preventDefault();
+        let href = $(this).attr('href');
+
+        $(this).parent().parent().find('button').click();
+        window.location.href = href;  
+    });
+}

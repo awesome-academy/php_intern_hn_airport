@@ -6,18 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\ViewShare\ViewShareController;
 use App\Http\Requests\StoreRequestPost;
 use App\Http\Requests\StoreRequestWebPost;
-use App\Models\CarType;
-use App\Models\HostDetail;
-use App\Models\Province;
-use App\Models\Request as ModelsRequest;
-use App\Models\RequestCustomer;
-use App\Models\RequestDestination;
-use App\Models\User;
 use App\Notifications\RequestNotification;
 use App\Repositories\HostDetail\HostDetailRepositoryInterface;
 use App\Repositories\Request\RequestRepositoryInterface;
 use App\Repositories\RequestCustomer\RequestCustomerRepositoryInterface;
 use App\Repositories\RequestDestination\RequestDestinationRepositoryInterface;
+use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -28,19 +22,22 @@ class RequestController extends ViewShareController
     protected $requestCustomerRepo;
     protected $requestDestinationRepo;
     protected $hostDetailRepo;
+    protected $userRepo;
 
     public function __construct(
         ViewShareController $viewShare,
         RequestRepositoryInterface $requestRepo,
         RequestCustomerRepositoryInterface $requestCustomerRepo,
         RequestDestinationRepositoryInterface $requestDestinationRepo,
-        HostDetailRepositoryInterface $hostDetailRepo
+        HostDetailRepositoryInterface $hostDetailRepo,
+        UserRepositoryInterface $userRepo
     ) {
         $this->viewShare = $viewShare;
         $this->requestRepo = $requestRepo;
         $this->requestCustomerRepo = $requestCustomerRepo;
         $this->requestDestinationRepo = $requestDestinationRepo;
         $this->hostDetailRepo = $hostDetailRepo;
+        $this->userRepo = $userRepo;
     }
     /**
      * Display a listing of the resource.
@@ -94,12 +91,11 @@ class RequestController extends ViewShareController
             }
 
             for ($i = 0; $i < count($dropoff_location); $i++) { 
-                $requestDestination = new RequestDestination();
-                $requestDestination->request_id = $requestId;
-                $requestDestination->location = $dropoff_location[$i];
-                $requestDestination->type = config('constance.const.request_dropoff');
-                $requestDestination->save();
-
+                $inputPickup = [];
+                $inputPickup['request_id'] = $requestId;
+                $inputPickup['location'] = $dropoff_location[$i];
+                $inputPickup['type'] = config('constance.const.request_dropoff');
+                
                 $this->requestDestinationRepo->create($inputPickup);
             }
 
@@ -111,7 +107,7 @@ class RequestController extends ViewShareController
                 ];
 
                 foreach ($hosts as $host) {
-                    $user = User::find($host->user_id);
+                    $user = $this->userRepo->find($host->user_id);
                     $user->notify(new RequestNotification($notification));
                 }
             }

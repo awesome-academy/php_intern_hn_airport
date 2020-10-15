@@ -136,6 +136,9 @@ return [
             'user_phone' => 'Client Phone',
             'new' => 'New',
             'cancel' => 'Canceled',
+            'title' => 'Title',
+            'link' => 'Link',
+            'read' => 'Read',
         ],
         'month' => [
             'jan' => 'January',
@@ -160,6 +163,7 @@ return [
             'title' => 'Notifications',
             'new_request' => 'You have new request.',
             'read' => 'Read All Notifications',
+            'list_notification' => 'List Notifications',
         ],
     ],
     'web' => [

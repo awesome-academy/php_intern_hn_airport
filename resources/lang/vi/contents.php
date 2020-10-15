@@ -139,6 +139,9 @@ return [
             'user_phone' => 'Số đt khách',
             'new' => 'Mới',
             'cancel' => 'Đã hủy',
+            'title' => 'Thông báo',
+            'link' => 'Link',
+            'read' => 'Đã đọc',
         ],
         'month' => [
             'jan' => 'Tháng 1',
@@ -163,6 +166,7 @@ return [
             'title' => 'Thông báo',
             'new_request' => 'Bạn có yêu cầu mới',
             'read' => 'Danh sách thống báo',
+            'list_notification' => 'Danh sách thông báo',
         ],
     ],
     'web' => [
