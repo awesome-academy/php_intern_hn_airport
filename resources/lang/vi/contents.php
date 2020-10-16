@@ -23,6 +23,7 @@ return [
         'en' => 'English',
         'vi' => 'Tiếng Việt',
         'vnd' => 'VNĐ',
+        'km' => 'km',
         'form' => [
             'name' => 'Họ tên',
             'email' => 'Email',
@@ -67,6 +68,9 @@ return [
             'car_name' => 'Tên xe',
             'update_driver' => 'Cập nhật lái xe',
             'price' => 'Gía tiền',
+            'min' => 'Khoảng cách tối thiểu',
+            'max' => 'Khoảng cách tối đa',
+            'cost' => 'Giá cơ bản',
         ],
         'alert' => [
             'title' => [
@@ -194,6 +198,9 @@ return [
         'config' => [
             'config' => 'Cài đặt',
             'basic' => 'Cơ bản',
+            'distance' => 'Khoảng cách',
+            'add_basic' => 'Thêm cài đặt',
+            'add_distance' => 'Thêm khoảng cách',
         ],
         'email' => [
             'title' => 'Đây là thư gửi hàng ngày của hệ thống',
