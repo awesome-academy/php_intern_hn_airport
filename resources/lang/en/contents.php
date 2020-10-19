@@ -22,6 +22,7 @@ return [
         'en' => 'English',
         'vi' => 'Vietnam',
         'vnd' => 'VND',
+        'km' => 'km',
         'form' => [
             'name' => 'Full name',
             'email' => 'Email',
@@ -66,6 +67,9 @@ return [
             'car_name' => 'Car Name',
             'update_driver' => 'Update Driver',
             'price' => 'Price',
+            'min' => 'Min Distance',
+            'max' => 'Max Distance',
+            'cost' => 'Base Cost',
         ],
         'alert' => [
             'title' => [
@@ -191,6 +195,9 @@ return [
         'config' => [
             'config' => 'Config',
             'basic' => 'Basic',
+            'distance' => 'Distance',
+            'add_basic' => 'Add Basic',
+            'add_distance' => 'Add Distance',
         ],
         'email' => [
             'title' => 'This is the daily mail sent by System',

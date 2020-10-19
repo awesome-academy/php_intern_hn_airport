@@ -3,10 +3,26 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ViewShare\ViewShareController;
+use App\Repositories\ConfigBasic\ConfigBasicRepositoryInterface;
+use App\Repositories\ConfigDistance\ConfigDistanceRepositoryInterface;
 use Illuminate\Http\Request;
 
-class ConfigController extends Controller
+class ConfigController extends ViewShareController
 {
+    protected $configBasicRepo;
+    protected $configDistanceRepo;
+    protected $viewShare;
+
+    public function __construct(
+        ViewShareController $viewShare,
+        ConfigBasicRepositoryInterface $configBasicRepo,
+        ConfigDistanceRepositoryInterface $configDistanceRepo
+    ) {
+        $this->viewShare = $viewShare;
+        $this->configBasicRepo = $configBasicRepo;
+        $this->configDistanceRepo = $configDistanceRepo;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +30,11 @@ class ConfigController extends Controller
      */
     public function index()
     {
-        return view('admin.config.index');
+        $configBasics = $this->configBasicRepo->getAll();
+        $configDistances = $this->configDistanceRepo->getAll();
+
+
+        return view('admin.config.index', compact('configBasics', 'configDistances'));
     }
 
     /**

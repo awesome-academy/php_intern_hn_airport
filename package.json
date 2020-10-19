@@ -22,6 +22,7 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
+    "laravel-echo": "^1.9.0",
     "webpack": "^4.44.2"
   }
 }

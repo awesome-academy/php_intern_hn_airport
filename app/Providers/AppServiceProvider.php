@@ -8,6 +8,8 @@ use App\Repositories\CarType\CarTypeRepository;
 use App\Repositories\CarType\CarTypeRepositoryInterface;
 use App\Repositories\ConfigBasic\ConfigBasicRepository;
 use App\Repositories\ConfigBasic\ConfigBasicRepositoryInterface;
+use App\Repositories\ConfigDistance\ConfigDistanceRepository;
+use App\Repositories\ConfigDistance\ConfigDistanceRepositoryInterface;
 use App\Repositories\Contract\ContractRepository;
 use App\Repositories\Contract\ContractRepositoryInterface;
 use App\Repositories\ContractDriver\ContractDriverRepository;
@@ -98,6 +100,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             ConfigBasicRepositoryInterface::class,
             ConfigBasicRepository::class
+        );
+
+        $this->app->singleton(
+            ConfigDistanceRepositoryInterface::class,
+            ConfigDistanceRepository::class
         );
     }
 

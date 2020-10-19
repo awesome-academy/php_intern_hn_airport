@@ -22,4 +22,13 @@ class ConfigBasicRepository extends BaseRepository implements ConfigBasicReposit
             $query->where('type', $carType);
         })->select('cost')->first();
     }
+
+    public function getAll()
+    {
+        return $this->model
+            ->with([
+                'configDistances',
+                'carTypes',
+            ])->orderBy('car_type_id')->get();
+    }
 }
