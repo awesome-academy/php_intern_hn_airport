@@ -70,33 +70,6 @@ return [
         'condition_1' => 23,
         'condition_2' => 9,
     ],
-    'price' => [
-        'tier_1' => [
-            'type_1' => 10000,
-            'type_2' => 10000,
-            'type_3' => 13000,
-            'type_4' => 16000,
-        ],
-        'tier_2' => [
-            'type_1' => 8000,
-            'type_2' => 8000,
-            'type_3' => 11000,
-            'type_4' => 14000,
-        ],
-        'tier_3' => [
-            'type_1' => 6000,
-            'type_2' => 6000,
-            'type_3' => 9000,
-            'type_4' => 12000,
-        ],
-        'tier_special' => [
-            'default' => 140000,
-            'type_1' => 10000,
-            'type_2' => 10000,
-            'type_3' => 15000,
-            'type_4' => 20000,
-        ],
-    ],
     'lang' => [
         'en' => 'en',
         'vi' => 'vi',
@@ -109,4 +82,8 @@ return [
         'path' => 'excels/',
         'default' => 'DailyReport.xlsx',
     ], 
+    'config_type' => [
+        'cost' => 'cost',
+        'distance' => 'distance',
+    ],
 ];

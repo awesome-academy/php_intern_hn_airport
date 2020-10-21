@@ -106,8 +106,10 @@
                                                             <td>{{ $config->min }} {{ trans('contents.common.km') }}</td>
                                                             <td>{{ $config->max }} {{ trans('contents.common.km') }}</td>
                                                             <td>
-                                                                <button type="button" class="btn btn-warning btn-distance-detail">
+                                                                <button type="button" class="btn btn-warning btn-distance-detail" data-id="{{ $config->id }}">
                                                                     <i class="fa fa-eye"></i>{{ trans('contents.common.table.view') }}</button>
+                                                                <button type="button" class="btn btn-danger btn-distance-delete" data-id="{{ $config->id }}"> 
+                                                                    <i class="fa fa-trash"></i>{{ trans('contents.common.table.delete') }}</button>
                                                             </td>
                                                         </tr>
                                                         @php $indexDistance++ @endphp
@@ -147,7 +149,7 @@
                                                             <td>{{ $config->configDistances->max }} {{ trans('contents.common.km') }}</td>
                                                             <td>{{ $config->cost }} {{ trans('contents.common.vnd') }}</td>
                                                             <td>
-                                                                <button type="button" class="btn btn-warning btn-config-detail">
+                                                                <button type="button" class="btn btn-warning btn-config-detail" data-id="{{ $config->id }}">
                                                                     <i class="fa fa-eye"></i>{{ trans('contents.common.table.view') }}</button>
                                                             </td>
                                                         </tr>
@@ -208,7 +210,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default"
                         data-dismiss="modal">{{ trans('contents.common.form.close') }}</button>
-                    <button type="button" class="btn btn-primary" id="btn-submit-update">{{ trans('contents.common.form.update') }}</button>
+                    <button type="button" class="btn btn-primary" id="btn-submit-update-config">{{ trans('contents.common.form.update') }}</button>
                 </div>
             </div>
         </div>
@@ -226,6 +228,7 @@
                 <div class="modal-body">
                     <form class="form-horizontal">
                         <div class="card-body">
+                            <input type="text" hidden id="distance-id">
                             <div class="form-group row">
                                 <label class="col-sm-4">{{ trans('contents.common.form.min') }}</label>
                                 <div class="col-sm-8">
