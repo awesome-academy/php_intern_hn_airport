@@ -31,4 +31,26 @@ class ConfigBasicRepository extends BaseRepository implements ConfigBasicReposit
                 'carTypes',
             ])->orderBy('car_type_id')->get();
     }
+
+    public function findAllCarTypes()
+    {
+        return $this->model->select('car_type_id')->distinct()->get();
+    }
+
+    public function findLowestCostCarType($carType)
+    {
+        return $this->model->where('car_type_id', $carType)->orderBy('cost', 'asc')->first();
+    }
+
+    public function deleteConfigByDistance($distance)
+    {
+        $result = $this->model->where('distance_id', $distance);
+        if ($result) {
+            $result->delete();
+
+            return true;
+        }
+
+        return false;
+    }
 }

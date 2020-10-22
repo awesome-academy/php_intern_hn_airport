@@ -8,6 +8,12 @@ class ConfigBasic extends Model
 {
     protected $table = 'config_basics';
 
+    protected $fillable = [
+        'car_type_id',
+        'distance_id',
+        'cost',
+    ];
+
     public function configDistances()
     {
         return $this->belongsTo(ConfigDistance::class, 'distance_id');
