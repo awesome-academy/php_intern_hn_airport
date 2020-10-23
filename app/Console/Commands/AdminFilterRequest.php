@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Events\AdminFilterRequestEvent;
 use App\Exports\AdminDailyExport;
 use App\Mail\AdminFilterRequestMail;
 use App\Repositories\Request\RequestRepositoryInterface;
@@ -9,7 +10,8 @@ use App\Repositories\User\UserRepositoryInterface;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -97,7 +99,7 @@ class AdminFilterRequest extends Command
             }
 
             foreach ($users as $user) {
-                Mail::to($user)->send(new AdminFilterRequestMail($email));
+                event(new AdminFilterRequestEvent($email, $user));
             }
             
             foreach ($requests as $request) {
@@ -105,11 +107,11 @@ class AdminFilterRequest extends Command
                 $request->delete();
             }
 
-            if ($email['file']) {
-                Storage::delete(config('constance.excel.path') . $this->email['file']->getFile()->getFilename());
+            if (array_key_exists('file', $email)) {
+                Storage::delete(config('constance.excel.path') . $email['file']->getFile()->getFilename());
             }
         } catch (Exception $e) {
-
+            Log::error($e);
         }
     }
 }

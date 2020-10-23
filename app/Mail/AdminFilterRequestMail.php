@@ -30,7 +30,7 @@ class AdminFilterRequestMail extends Mailable
      */
     public function build()
     {
-        if ($this->email['file']) {
+        if (array_key_exists('file', $this->email)) {
             return $this->from(env('MAIL_USERNAME'))
                 ->markdown('emails.admin_filter.request')
                 ->attach(public_path(config('constance.excel.path') . $this->email['file']->getFile()->getFilename()))
